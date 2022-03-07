@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "397875240276",
+    "project_id": "lead-one-attendance",
+    "storage_bucket": "lead-one-attendance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397875240276:android:ff5fbda6ac5d30bd70fcc1",
+        "android_client_info": {
+          "package_name": "com.leadonemx.leadoneattendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397875240276-sli04q73gl1mjdfd8j3bidppi5hfiset.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Ak1W0-UlEhmSpn7T4wL-BfIuiNFscXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397875240276-sli04q73gl1mjdfd8j3bidppi5hfiset.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
