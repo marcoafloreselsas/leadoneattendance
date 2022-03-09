@@ -3,11 +3,15 @@ import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/loginpage_screen.dart';
 import 'package:leadoneattendance/screens/mainpage_screen.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:leadoneattendance/services/supported_locales.dart';
 
 
 void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   try {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
@@ -20,8 +24,15 @@ void main()async{
       )
     );
   // ignore: empty_catches
-  } on Exception {}
-  runApp(const MyApp());
+  } on Exception catch (e) {}
+  runApp(
+     EasyLocalization(
+       child: const MyApp(),
+       supportedLocales: supportedLocales,
+        fallbackLocale: english,
+        path: 'assets/resources/langs', 
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,16 +42,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
-      title: 'E L S A S PRODUCCIONES',
+      title: 'Lead One: Attendance App',
       theme: AppTheme.lightTheme,
       home: StreamBuilder(
           stream: FirebaseServices().firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
           if(snapshot.hasData){
-            return MainScreen(); 
+            return const MainScreen(); 
           }
-          return LoginPage();
+          return const LoginPage();
         }
       ),
     );
