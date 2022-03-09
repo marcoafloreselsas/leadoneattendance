@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/loginpage_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:leadoneattendance/screens/main_screen.dart';
+import 'package:leadoneattendance/screens/mainpage_screen.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 
 void main()async{
   try {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
       apiKey: "AIzaSyDwn_s0VbGgXZY19nwst_zR13ctmlaATG4", 
       appId: "1:397875240276:android:ff5fbda6ac5d30bd70fcc1", 
       messagingSenderId: '397875240276', 
@@ -17,7 +19,8 @@ void main()async{
       authDomain: "lead-one-attendance.firebaseapp.com"
       )
     );
-  } on Exception catch (e) {}
+  // ignore: empty_catches
+  } on Exception {}
   runApp(const MyApp());
 }
 
@@ -30,9 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E L S A S PRODUCCIONES',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
+      theme: AppTheme.lightTheme,
       home: StreamBuilder(
           stream: FirebaseServices().firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {

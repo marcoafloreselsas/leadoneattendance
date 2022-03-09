@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:leadoneattendance/screens/main_screen.dart';
+import 'package:leadoneattendance/screens/mainpage_screen.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,9 +8,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Center(
-        child: Container(
+        child: SizedBox(
           height: 50,
           width: 180,
           child: SignInButton(
