@@ -24,7 +24,7 @@ void main()async{
       )
     );
   // ignore: empty_catches
-  } on Exception catch (e) {}
+  } on Exception {}
   runApp(
      EasyLocalization(
        child: const MyApp(),

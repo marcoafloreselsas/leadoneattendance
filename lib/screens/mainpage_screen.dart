@@ -22,7 +22,7 @@ class MainScreen extends StatelessWidget {
         centerTitle: true,
         actions: [IconButton(onPressed: () async{
           await FirebaseServices().signOut();
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginPage()));
         }, icon: const Icon(Icons.logout))],
       ),
       body: Column(
@@ -32,7 +32,7 @@ class MainScreen extends StatelessWidget {
             tileColor: Colors.white,
             leading: const Icon(Icons.person, color: AppTheme.primary, size: 30,),
             title: Text(DateTime.now().toString()),
-            subtitle: Text(DateTime.wednesday.toString()),
+            subtitle: Text(DateTime.now().toString()),
           ),
           const SizedBox(height: 10,)
         ],
