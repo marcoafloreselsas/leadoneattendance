@@ -1,7 +1,55 @@
 {
+    "loginpage":{
+
+    },
     "mainpage":
     {
         "title":"Welcome",
         "subtitle":"Recent Records"
+    },
+    "recordpage":{ 
+        "P E N D I E N T E":" E S T A SECCION ES EL ALERT DIALOG",
+        "selectDate":"Select Date",
+        "selectTime":"Time",
+        "typeRecord":"Type of Record",
+        "in":"In",
+        "out":"out",
+        "saveButton":"Save"
+    },
+    "insertpage":{
+        "title":"Insert Page",
+        "selectDate":"Select Date",
+        "selectTime":"Time",
+        "typeRecord":"Type of Record",
+        "in":"In",
+        "out":"out",
+        "saveButton":"Save"
+    }, 
+    "editpage":{
+        "title":"Edit Page",
+        "selectDate":"Select Date",
+        "selectTime":"Tiempo",
+        "typeRecord":"Type of Record",
+        "in":"In",
+        "out":"out",
+        "saveButton":"Save",
+        "discardChanges":"Discard Changes"
+    },
+    "requestpage":{
+
+    },
+    "generatereports":{
+        "title":"Generate Report",
+        "dateRange":"Date Range",
+        "fromDate":"From",
+        "toDate":"To",
+        "employeeLabel":"Employee",
+        "applyButton":"Apply"
+    },
+    "reportviewer":{
+
+    },
+    "sendreport":{
+
     }
 }

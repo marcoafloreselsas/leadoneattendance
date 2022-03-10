@@ -1,7 +1,55 @@
 {
+    "loginpage":{
+
+    },
     "mainpage":
     {
-        "title": "Bienvenido",
+        "title":"Bienvenido",
         "subtitle":"Registros Recientes"
+    },
+    "recordpage":{ 
+        "P E N D I E N T E":" E S T A SECCION ES EL ALERT DIALOG",
+        "selectDate":"Seleccione la Fecha",
+        "selectTime":"Hora",
+        "typeRecord":"Tipo de Registro",
+        "in":"Inicio",
+        "out":"Fin",
+        "saveButton":"Guardar"
+    },
+    "insertpage":{
+        "title":"Insertar Registro",
+        "selectDate":"Seleccione la Fecha",
+        "selectTime":"Hora",
+        "typeRecord":"Tipo dec Registro",
+        "in":"Inicio",
+        "out":"Fin",
+        "saveButton":"Guardar"
+    }, 
+    "editpage":{
+        "title":"Editar Registro",
+        "selectDate":"Seleccione la Fecha",
+        "selectTime": "Hora",
+        "typeRecord":"Tipo de Registro",
+        "in":"Inicio",
+        "out":"Fin",
+        "saveButton":"Guardar Cambios",
+        "discardChanges":"Descartar Cambios"
+    },
+    "requestpage":{
+
+    },
+    "generatereports":{
+        "title":"Generar Reporte",
+        "dateRange":"Rango de Fechas",
+        "fromDate":"De",
+        "toDate":"A",
+        "employeeLabel":"Empleado",
+        "applyButton":"Aplicar"
+    },
+    "reportviewer":{
+        
+    },
+    "sendreport":{
+
     }
 }
