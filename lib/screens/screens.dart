@@ -6,6 +6,6 @@ export 'package:leadoneattendance/screens/recordpage_screen.dart';
 export 'package:leadoneattendance/screens/insertpage_screen.dart';
 export 'package:leadoneattendance/screens/editpage_screen.dart';
 export 'package:leadoneattendance/screens/requestpage_screen.dart';
-export 'package:leadoneattendance/screens/generaterecords_screen.dart';
+export 'package:leadoneattendance/screens/generatereports_screen.dart';
 export 'package:leadoneattendance/screens/reportviewer_screen.dart';
 export 'package:leadoneattendance/screens/sendresport_screen.dart';

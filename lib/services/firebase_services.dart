@@ -22,5 +22,7 @@ FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   }
   Future signOut()async{
     await GoogleSignIn().signOut();
+    await firebaseAuth.signOut();
+
   }
 }

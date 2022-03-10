@@ -22,10 +22,13 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginPage()));
         }, icon: const Icon(Icons.logout))],
       ),
-      body: Column(
-        children: [
-          Text(tr("subtitle",))],
-      )
+      body: Card(
+        child: Column(
+          children: [
+           Text(tr("subtitle",)
+        ,),
+        ])
+        )
     );
   }
   }
