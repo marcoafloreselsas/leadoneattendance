@@ -13,8 +13,7 @@ void main()async{
   await EasyLocalization.ensureInitialized();
 
   try {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
+      await Firebase.initializeApp(
       options: const FirebaseOptions(
       apiKey: "AIzaSyDwn_s0VbGgXZY19nwst_zR13ctmlaATG4", 
       appId: "1:397875240276:android:ff5fbda6ac5d30bd70fcc1", 
