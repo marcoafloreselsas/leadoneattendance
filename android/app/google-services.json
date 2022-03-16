@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "397875240276",
+    "firebase_url": "https://lead-one-attendance-default-rtdb.firebaseio.com",
     "project_id": "lead-one-attendance",
     "storage_bucket": "lead-one-attendance.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "397875240276-f10eq2nijaui12lmni9plfacv80qasvd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.leadonemx.leadoneattendance",
+            "certificate_hash": "f18ea46dc3cc1bcbb9a59df28b295a06f7267257"
+          }
+        },
         {
           "client_id": "397875240276-sli04q73gl1mjdfd8j3bidppi5hfiset.apps.googleusercontent.com",
           "client_type": 3
