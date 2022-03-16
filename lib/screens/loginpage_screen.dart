@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
+
 
 
 class LoginPage extends StatelessWidget {
@@ -30,8 +30,13 @@ class LoginPage extends StatelessWidget {
           elevation: 10,
           text: 'Sign In with Google',
           onPressed: () async{
-            await FirebaseServices().signInWithGoogle();
-            //Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+            await FirebaseServices().signInWithGoogle();            
+            // if('role' == 'admin') {
+            //   Navigator.push(context, MaterialPageRoute(builder: (context)=> const MainScreenAdmin()));
+            // }
+            // else if ('role' == 'user'){
+            //   Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+            // }
           }
           ),
         ),
