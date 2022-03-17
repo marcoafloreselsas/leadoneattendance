@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
-import 'package:leadoneattendance/screens/loginpage_screen.dart';
-import 'package:leadoneattendance/screens/mainpage_screen.dart';
+import 'package:leadoneattendance/screens/loginpage_screendart';
+import 'package:leadoneattendance/screens/mainpage_screen_usert.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +28,7 @@ void main()async{
      EasyLocalization(
        child: const MyApp(),
        supportedLocales: supportedLocales,
-        fallbackLocale: english,
+        fallbackLocale: english, //Idioma por defecto.
         path: 'assets/resources/langs', 
     )
   );
@@ -41,14 +41,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
+      supportedLocales: context.supportedLocales, // Obtiene el listado de idiomas soportados.
       locale: context.locale,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, 
       title: 'Lead One: Attendance App',
       theme: AppTheme.lightTheme,
       home: StreamBuilder(
           stream: FirebaseServices().firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
+            //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
           if(snapshot.hasData){
             return const MainScreen(); 
           }
