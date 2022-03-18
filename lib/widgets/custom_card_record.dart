@@ -11,7 +11,6 @@ class Record extends StatelessWidget {
       child: ListTile(
         title: Text('DATE'),
         leading: Icon(Icons.lock_open_outlined),
-
       ),
     );
   }
