@@ -9,7 +9,9 @@ class Record extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Card(
       child: ListTile(
-        
+        title: Text('DATE'),
+        leading: Icon(Icons.lock_open_outlined),
+
       ),
     );
   }
