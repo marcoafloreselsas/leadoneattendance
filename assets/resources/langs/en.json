@@ -1,6 +1,7 @@
 {
     "loginpage":{ 
-        "title":"Welcome!"
+        "title":"Welcome!",
+        "subtitle":"Please, Sign In."
     },
     "mainpage":
     {

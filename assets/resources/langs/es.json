@@ -1,6 +1,7 @@
 {
     "loginpage":{
-        "title":"¡Bienvenido!"
+        "title":"¡Bienvenido!",
+        "subtitle":"Por favor, inicie sesión."
     },
     "mainpage":
     {
