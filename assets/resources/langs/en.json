@@ -18,12 +18,16 @@
         "saveButton":"Save"
     },
     "insertpage":{
-        "title":"Insert Page",
-        "selectDate":"Select Date",
-        "selectTime":"Time",
+        "title":"Insert Record",
+        "selectDate":"Select the Date",
+        "selectTime":"Select the Time",
         "typeRecord":"Type of Record",
+        "TRattendance":"Attendance",
+        "TRlunch":"Lunch",
+        "TRovertime":"Overtime",
+        "TRpermit":"Permit",
         "in":"In",
-        "out":"out",
+        "out":"Out",
         "saveButton":"Save"
     }, 
     "editpage":{

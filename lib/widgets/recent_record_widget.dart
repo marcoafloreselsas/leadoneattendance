@@ -17,7 +17,7 @@ class RecentRecord extends StatelessWidget {
           //COLUMNA QUE CORRESPONDE A LA FECHA DEL REGISTRO
           Column(
             children: const [
-              Icon(Icons.date_range_outlined, color: AppTheme.primary),
+              // Icon(Icons.date_range_outlined, color: AppTheme.primary),
               Text('March 21th'),
             ],
           ),

@@ -4,9 +4,10 @@ import '../services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -46,8 +47,4 @@ class MainScreen extends StatefulWidget {
           ],
         ));
   }
-
-  @override
-  // ignore: no_logic_in_create_state
-  State<StatefulWidget> createState() => throw UnimplementedError();
 }

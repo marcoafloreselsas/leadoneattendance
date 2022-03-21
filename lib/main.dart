@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
-import 'package:leadoneattendance/screens/loginpage_screen.dart';
-import 'package:leadoneattendance/screens/mainpage_screen_usert.dart';
+import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,7 +46,7 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
             if (snapshot.hasData) {
-              return const MainScreen();
+              return const MainScreenAdmin();
             }
             return const LoginPage();
           }),
