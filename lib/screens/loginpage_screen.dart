@@ -38,12 +38,6 @@ class LoginPage extends StatelessWidget {
                   elevation: 10,
                   text: 'Sign In with Google', onPressed: () async {
                 await FirebaseServices().signInWithGoogle();
-                // if('role' == 'admin') {
-                //   Navigator.push(context, MaterialPageRoute(builder: (context)=> const MainScreenAdmin()));
-                // }
-                // else if ('role' == 'user'){
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
-                // }
               }),
             ),
           ],

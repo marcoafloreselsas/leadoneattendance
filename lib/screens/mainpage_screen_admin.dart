@@ -31,6 +31,28 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               icon: const Icon(Icons.logout))
         ],
       ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       body: Card(
           child: Column(children: [
         Card(
@@ -45,12 +67,15 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           ),
         ),
         RecentRecord(),
-        RecentRecord(),
-        RecentRecord(),
-      ])),
+      ],
+
+  ),
+  
+),
 
       //Botón secundario para añadir un nuevo registro.
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppTheme.primary,
         child: const Icon(
           Icons.add,
           color: Colors.white,

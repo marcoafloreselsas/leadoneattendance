@@ -66,6 +66,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
           //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
             onTap: _pickDate,
           ),
+          //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           Row(
             children: [
               const Text('insertpage.selectTime').tr(),
@@ -73,7 +74,6 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
             ],
           mainAxisAlignment: MainAxisAlignment.center,
           ),
-          //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           ListTile(
             title: Text("${time.hour}:${time.minute}", textAlign: TextAlign.center,),
            // trailing: const Icon(Icons.keyboard_arrow_down_outlined),
@@ -114,7 +114,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
               children: [
               const Text('insertpage.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
-              buildSwitch(),
+              buildSwitch(), //WIDGET DEL SWITCH
               const Padding(padding: EdgeInsets.all(25.0)),
               const Text('insertpage.out').tr(),
             ],
@@ -125,8 +125,8 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: AppTheme.primary,
-                primary: Colors.white,
-                minimumSize: const Size(120, 50)
+                primary: Colors.white, //TEXT COLOR
+                minimumSize: const Size(120, 50) //TAMANO - WH
               ),
               onPressed: (){}, 
               child: const Text('insertpage.saveButton').tr())
