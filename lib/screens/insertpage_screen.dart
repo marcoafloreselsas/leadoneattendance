@@ -14,7 +14,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   bool value = true;
-  
+
     // Initial Selected Value
   String dropdownvalue = 'insertpage.TRattendance'.tr();   
   
@@ -109,7 +109,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
 
           ),
-           
+           //SWITCH
             Row(
               children: [
               const Text('insertpage.in').tr(),
@@ -120,10 +120,18 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
             ],
               mainAxisAlignment: MainAxisAlignment.center
             ),
-          //SWITCH
+            const SizedBox(height: 20,),
+            //BOTON DE GUARDAR CAMBIOS
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: AppTheme.primary,
+                primary: Colors.white,
+                minimumSize: const Size(120, 50)
+              ),
+              onPressed: (){}, 
+              child: const Text('insertpage.saveButton').tr())
         ],
       ),
-      
       ),
     );
   }
