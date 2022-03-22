@@ -29,6 +29,9 @@ class RecordPageScreen extends StatelessWidget {
             ]),
 
         //EN ESTA SECCION, COMIENZA LA INFORMACION DEL REGISTRO SELECCIONADO
+        /* Para fines de acomodo, hay cuatro list tile, que son las columnas que muestran cada actividad,
+          Hay un Wrap que permite añadir más de dos íconos y más de dos texto. El spacing, es el espaciado
+          que habrá entre íconos, independientemente de los textos. */
         body: Container(
           color: Colors.white,
           child: Column(
