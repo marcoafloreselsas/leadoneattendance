@@ -12,7 +12,11 @@
         "P E N D I E N T E":" E S T A SECCION ES EL ALERT DIALOG",
         "selectDate":"Seleccione la Fecha",
         "selectTime":"Hora",
-        "typeRecord":"Tipo de Registro",
+        "activity":"Actividad",
+        "TRattendance":"Asistencia",
+        "TRlunch":"Comida",
+        "TRovertime":"Horas Extra",
+        "TRpermit":"Permiso",
         "in":"Inicio",
         "out":"Fin",
         "saveButton":"Guardar"
