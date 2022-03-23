@@ -38,7 +38,16 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
         appBar: AppBar(
             title: const Text('Consulta').tr(),
             centerTitle: true,
-            actions: const []),
+            actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const GenerateReportsScreen()));
+                },
+                icon: const Icon(Icons.description_outlined)),
+          ]),
         body: Card(
           child: Column(
             children: [
