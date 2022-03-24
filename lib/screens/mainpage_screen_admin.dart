@@ -49,12 +49,19 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                 title: Text(DateTime.now().toString()),
                 subtitle: Text(DateTime.now().toString()),
                 contentPadding: (const EdgeInsets.symmetric( vertical: 16.0, horizontal: 5.0)),
+                onTap: (){
+                   Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const InsertPageScreen()));
+                },
               ),
               const SizedBox(
                 height: 10,
               )
             ],
           ),
+
+          //R E G I S T R O S 
+          //                   R E C I E N T E S 
           Row(
             children: [const Text('mainpage.subtitle', style: TextStyle(fontSize: 20)).tr()],
             mainAxisAlignment: MainAxisAlignment.center,
