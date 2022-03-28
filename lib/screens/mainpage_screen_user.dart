@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/models/posts.dart';
+import 'package:leadoneattendance/models/recent_records.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/services/remote_services.dart';
 import 'package:leadoneattendance/widgets/widgets.dart';
@@ -18,7 +19,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-    List<Posts>?  posts;
+    List<RecentRecords>?  recentRecords;
     var isLoaded = false;
 
     @override
@@ -29,8 +30,8 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     getData() async{
-      posts = await RemoteService().getPosts();
-      if(posts != null){
+      recentRecords = await RemoteService().getPosts();
+      if(recentRecords != null){
         setState(() {
           isLoaded = true;
         });
@@ -59,19 +60,40 @@ class _MainScreenState extends State<MainScreen> {
       body: Visibility(
         visible: isLoaded,
         child: ListView.builder(
-              itemCount: posts?.length,
+              itemCount: recentRecords?.length,
               itemBuilder: (context, index){
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      Text(posts![index].title,
-                      maxLines: 2,),
-                      Text(posts![index].body,
-                      maxLines: 3,),
-                    ],
-                  ),
-                );
+                // return Container(
+                //   padding: const EdgeInsets.all(16),
+                //   child: Column(
+                //     children: [
+                //       Text(posts![index].title,
+                //       maxLines: 2,),
+                //       Text(posts![index].body,
+                //       maxLines: 3,),
+                //     ],
+                //   ),
+                // );
+                return  ListTile(
+                title: Text(recentRecords![index].RecordDate.toString()),
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: <Widget>[
+                    const Icon(
+                      Icons.arrow_upward_outlined,
+                      color: AppTheme.green,
+                    ), // icon-1
+                    Text(recentRecords![index].EntryTime.toString(), style: const TextStyle(fontSize: 18),),
+                    const Icon(
+                      Icons.arrow_downward_outlined,
+                      color: AppTheme.red,
+                    ), // icon-2
+                    Text(
+                      recentRecords![index].EntryTime.toString(),
+                      style: const TextStyle(fontSize: 18),
+                    )
+                  ],
+                ),
+                onTap: () {});
               }
             ),
           replacement: const Center(
