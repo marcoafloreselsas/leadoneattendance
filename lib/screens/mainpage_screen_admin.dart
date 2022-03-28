@@ -31,7 +31,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
         ],
       ),
 /*  */
-      body: ListView(
+      body: Column(
         children: [
           const SizedBox(
             height: 10,

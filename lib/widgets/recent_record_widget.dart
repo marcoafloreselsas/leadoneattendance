@@ -19,19 +19,32 @@ class _RecentRecordState extends State<RecentRecord> {
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return Container(
-        color: Colors.white,
-        child: ListTile(
-          title: const Text("March 22th, 2022"),
-          trailing: Wrap(
-            spacing: 12, // space between two icons
-            children: const <Widget>[
-              Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
-              Text('09:30', style: TextStyle(fontSize: 18),),
-              Icon(Icons.arrow_downward_outlined, color: AppTheme.red,), // icon-2
-              Text('17:30',style: TextStyle(fontSize: 18),)
-            ],
-          ),
-        onTap: (){}
-        ));
+            color: Colors.white,
+            //REGISTRO 25 DE MARZO E INFERIORES
+            child: ListTile(
+                title: const Text("March 22th, 2022"),
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: const <Widget>[
+                    Icon(
+                      Icons.arrow_upward_outlined,
+                      color: AppTheme.green,
+                    ), // icon-1
+                    Text(
+                      '09:30',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Icon(
+                      Icons.arrow_downward_outlined,
+                      color: AppTheme.red,
+                    ), // icon-2
+                    Text(
+                      '17:30',
+                      style: TextStyle(fontSize: 18),
+                    )
+                  ],
+                ),
+                onTap: () {}),
+          );
   }
 }

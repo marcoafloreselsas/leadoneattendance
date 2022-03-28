@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 
 /* WIDGET QUE SE MOSTRARA EN RECORD PAGE, A SUSTITUCION DEL POP UP DE LA APLICACION,
@@ -10,36 +11,61 @@ class Record extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(children: [
-        //ACTIVIDADES
-        Column(
-          children: const [
-            Text('Actividades'),
-            Text('Attendance'), //ATTENDANCE •
-            Text('Lunch'), //LUNCH •
-            Text('Overtime'), //OVERTIME •
-          ],
-        ),
-        //HORAS DE INICIO
-        Column(
-          children: const [
-            Icon(Icons.arrow_upward_outlined, color: AppTheme.green),
-            Text('09:00'), //ATTENDANCE •
-            Text('12:30'), //LUNCH •
-            Text('17:30'), //OVERTIME •
-          ],
-        ),
-        //HORAS DE FINALIZACION
-        Column(
-          children: const [
-            Icon(Icons.arrow_downward_outlined, color: AppTheme.red),
-            Text('17:00'), //ATTENDANCE •
-            Text('13:00'), //LUNCH •
-            Text('18:30'), //OVERTIME •
-          ],
-        ),
-      ]),
+    return Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              ListTile(
+                title: Text("recordpage.TRattendance".tr()),
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: const <Widget>[
+                    Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
+                    Text('09:30', style: TextStyle(fontSize: 18),),
+                    Icon(Icons.arrow_downward_outlined, color: AppTheme.red,), // icon-2
+                    Text('17:30', style: TextStyle(fontSize: 18),)
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text("recordpage.TRlunch".tr()),
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: const <Widget>[
+                    Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
+                    Text('09:30', style: TextStyle(fontSize: 18),),
+                    Icon(Icons.arrow_downward_outlined, color: AppTheme.red,), // icon-2
+                    Text('17:30', style: TextStyle(fontSize: 18),)
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text("recordpage.TRovertime".tr()),
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: const <Widget>[
+                    Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
+                    Text('09:30', style: TextStyle(fontSize: 18),),
+                    Icon(Icons.arrow_downward_outlined, color: AppTheme.red,), // icon-2
+                    Text('17:30', style: TextStyle(fontSize: 18),)
+                  ],
+                ),
+              ),
+              //ESTE ES UN COMENTARIO
+              ListTile(
+                title: Text("recordpage.TRpermit".tr()),
+                trailing: Wrap(
+                  spacing: 12, // space between two icons
+                  children: const <Widget>[
+                    Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
+                    Text('08:30', style: TextStyle(fontSize: 18),),
+                    Icon(Icons.arrow_downward_outlined, color: AppTheme.red,), // icon-2
+                    Text('17:30', style: TextStyle(fontSize: 18),)
+                  ],
+                ),
+              ),
+            ],
+          ),
     );
   }
 }
