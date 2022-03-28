@@ -12,23 +12,26 @@ String postsToJson(List<RecentRecords> data) => json.encode(List<dynamic>.from(d
 
 class RecentRecords {
     RecentRecords({
+        required this.UserID,
         required this.RecordDate,
         required this.EntryTime,
         required this.ExitTime,
     });
 
+    int UserID;
     DateTime RecordDate;
     DateTime EntryTime;
     DateTime ExitTime;
 
     factory RecentRecords.fromJson(Map<String, dynamic> json) => RecentRecords(
+        UserID: json["1"],
         RecordDate: json["RecordDate"],
         EntryTime: json["EntryTime"],
         ExitTime: json["ExitTime"],
     );
 
     Map<String, dynamic> toJson() => {
-        "UserID": 1,
+        "UserID": UserID,
         "RecordDate": RecordDate,
         "EntryTime": EntryTime,
         "ExitTime": ExitTime,

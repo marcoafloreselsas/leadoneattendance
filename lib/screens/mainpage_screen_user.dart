@@ -62,17 +62,7 @@ class _MainScreenState extends State<MainScreen> {
         child: ListView.builder(
               itemCount: recentRecords?.length,
               itemBuilder: (context, index){
-                // return Container(
-                //   padding: const EdgeInsets.all(16),
-                //   child: Column(
-                //     children: [
-                //       Text(posts![index].title,
-                //       maxLines: 2,),
-                //       Text(posts![index].body,
-                //       maxLines: 3,),
-                //     ],
-                //   ),
-                // );
+
                 return  ListTile(
                 title: Text(recentRecords![index].RecordDate.toString()),
                 trailing: Wrap(
@@ -88,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
                       color: AppTheme.red,
                     ), // icon-2
                     Text(
-                      recentRecords![index].EntryTime.toString(),
+                      recentRecords![index].ExitTime.toString(),
                       style: const TextStyle(fontSize: 18),
                     )
                   ],
