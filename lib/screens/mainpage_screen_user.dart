@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/models/posts.dart';
 import 'package:leadoneattendance/models/recent_records.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/services/remote_services.dart';
-import 'package:leadoneattendance/widgets/widgets.dart';
 import '../services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';

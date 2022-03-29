@@ -15,19 +15,12 @@ class LoginPage extends StatelessWidget {
             child: Column(
           children: [
             const SizedBox(height: 250),
-            const Text(
-              'loginpage.title',
-              style: TextStyle(fontSize: 27, fontStyle: FontStyle.normal),
+            const Text('loginpage.title', style: TextStyle(fontSize: 27, fontStyle: FontStyle.normal),
             ).tr(),
-            const Text(
-              'loginpage.subtitle',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            const Text('loginpage.subtitle',style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ).tr(),
             const SizedBox(height: 20),
-            Image.asset(
-              'assets/leadone_logo.png',
-              width: 300,
-            ),
+            Image.asset('assets/leadone_logo.png', width: 300,),
             const SizedBox(
               height: 20,
             ),

@@ -1,4 +1,3 @@
-import 'package:leadoneattendance/models/posts.dart';
 import 'package:http/http.dart' as http;
 import 'package:leadoneattendance/models/recent_records.dart';
 class RemoteService{

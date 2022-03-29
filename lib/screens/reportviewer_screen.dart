@@ -8,7 +8,7 @@ class ReportViewerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          AppBar(title: const Text('Sample Text'), centerTitle: true, actions: [
+        AppBar(title: const Text('Sample Text'), centerTitle: true, actions: [
         IconButton(
             onPressed: () {
               Navigator.push(

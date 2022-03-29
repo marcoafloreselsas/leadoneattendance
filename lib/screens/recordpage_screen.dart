@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
-import 'package:leadoneattendance/widgets/widgets.dart';
 
 class RecordPageScreen extends StatelessWidget {
   const RecordPageScreen({Key? key}) : super(key: key);
