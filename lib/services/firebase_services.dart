@@ -26,5 +26,4 @@ class FirebaseServices {
     await firebaseAuth.signOut();
   }
 
-  void getUserRole() {}
 }

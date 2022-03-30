@@ -22,7 +22,8 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
     'ALL EMPLOYEES',
     'JOHAN GARCIA',
     'MARCO FLORES',
-    'CARLOS SALINAS',
+    'ARI PEREZ',
+    'GIOVANNI ARRAZOLA'
   ];
 
   @override

@@ -46,10 +46,16 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
             if (snapshot.hasData) {
-              return const MainScreen();
+            // if (snapshot.data["role"] == "admin") {
+              return const MainScreenAdmin();
+            // } else {
+            //   return const MainScreen();
             }
-            return const LoginPage();
-          }),
+            // } else {
+              return const LoginPage();
+            }
+          // }
+          ),
     );
   }
 }

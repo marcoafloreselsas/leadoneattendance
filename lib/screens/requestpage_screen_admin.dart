@@ -22,7 +22,8 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
     'ALL EMPLOYEES',
     'JOHAN GARCIA',
     'MARCO FLORES',
-    'CARLOS SALINAS',
+    'ARI PEREZ',
+    'GIOVANNI ARRAZOLA'
   ];
 
   @override

@@ -33,13 +33,9 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 /*  */
       body: Column(
         children: [
-          const SizedBox(
-            height: 10,
-        ),
           Column(
             children: [
-              // Text(('mainpage.subtitle').tr(),)
-              ListTile(
+                ListTile(
                 tileColor: Colors.white,
                 leading: const Icon(
                   Icons.person,
@@ -59,7 +55,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               )
             ],
           ),
-
           //R E G I S T R O S 
           //                   R E C I E N T E S 
           Row(

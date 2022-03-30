@@ -6,7 +6,6 @@ import '../services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 
-
 @override
 class MainScreen extends StatefulWidget {
 
@@ -26,7 +25,6 @@ class _MainScreenState extends State<MainScreen> {
       //fetch data from API
       getData();
     }
-
     getData() async{
       recentRecords = await RemoteService().getPosts();
       if(recentRecords != null){
@@ -36,6 +34,7 @@ class _MainScreenState extends State<MainScreen> {
       }
     }
 
+// APP BAR 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,13 +53,35 @@ class _MainScreenState extends State<MainScreen> {
               icon: const Icon(Icons.logout))
         ],
       ),
-/*  */
-      body: Visibility(
+/*  BODY CON EL LIST TILE QUE MUESTRA LOS REGISTROS RECIENTES */
+      body: 
+          Column(
+            children: [
+              // Text(('mainpage.subtitle').tr(),)
+              ListTile(
+                tileColor: Colors.white,
+                leading: const Icon(
+                  Icons.person,
+                  color: AppTheme.primary,
+                  size: 80,
+                ),
+                title: Text(DateTime.now().toString()),
+                subtitle: Text(DateTime.now().toString()),
+                contentPadding: (const EdgeInsets.symmetric( vertical: 16.0, horizontal: 5.0)),
+                onTap: (){
+                   Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const InsertPageScreen()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+
+Visibility(
         visible: isLoaded,
         child: ListView.builder(
               itemCount: recentRecords?.length,
               itemBuilder: (context, index){
-
                 return  ListTile(
                 title: Text(recentRecords![index].RecordDate.toString()),
                 trailing: Wrap(
@@ -84,10 +105,15 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {});
               }
             ),
+            //CIRCULO DE ESPERA
           replacement: const Center(
             child: CircularProgressIndicator(),
           ),
       ),
+            ],
+            
+          ),
+
 
       //Botón secundario para añadir un nuevo registro.
       floatingActionButton: FloatingActionButton(

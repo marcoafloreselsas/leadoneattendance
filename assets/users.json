@@ -2,11 +2,13 @@
   "users":{
     "SDnIHbpWZUd0qQv76MhnvbAfxED2":{
       "email":"marcoafloresmx@gmail.com",
-      "role":"admin"
+      "role":"admin",
+      "uid":"SDnIHbpWZUd0qQv76MhnvbAfxED2"
     },
     "kx3o1Lw02seqoC3fY5iIyRxa1nH2":{
       "email":"elingeflores@gmail.com",
-      "role":"user"
+      "role":"user",
+      "uid":"kx3o1Lw02seqoC3fY5iIyRxa1nH2"
     }
   }
 }
