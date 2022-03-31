@@ -26,12 +26,14 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
     'insertpage.TRpermit'.tr(),
   ];
 
+//Sobreescritura de la clase y dek widget
   @override
   void initState() {
         super.initState();
         pickedDate = DateTime.now();
         time = TimeOfDay.now();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EditRecordScreen()));
+                          builder: (context) => const MainScreen()));
                 },
                 icon: const Icon(Icons.add_outlined)),
           ]),
@@ -59,7 +61,6 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
               const Icon(Icons.keyboard_arrow_down_outlined),
             ],
           mainAxisAlignment: MainAxisAlignment.center,
-
           ),
           ListTile(
             title: Text("${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}", textAlign: TextAlign.center,),
@@ -76,7 +77,6 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
           ),
           ListTile(
             title: Text("${time.hour}:${time.minute}", textAlign: TextAlign.center,),
-           // trailing: const Icon(Icons.keyboard_arrow_down_outlined),
             onTap: _pickTime,
           ),
           //TIPO DE REGISTRO
@@ -85,20 +85,14 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
               const Text('insertpage.typeRecord').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               DropdownButton(
-              // Initial Value
               value: dropdownvalue,
-              // Down Arrow Icon
               icon: const Icon(Icons.keyboard_arrow_down_outlined),    
-                
-              // Array list of items
               items: items.map((String items) {
                 return DropdownMenuItem(
                   value: items,
                   child: Text(items),
                 );
               }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
               onChanged: (String? newValue) { 
                 setState(() {
                   dropdownvalue = newValue!;
@@ -107,7 +101,6 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
             ),
             ],                          
             mainAxisAlignment: MainAxisAlignment.center,
-
           ),
            //SWITCH
             Row(
@@ -135,8 +128,6 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
       ),
     );
   }
-
-
 //WIDGET DEL SWITCH
 Widget buildSwitch() => Transform.scale(
   scale: 2,

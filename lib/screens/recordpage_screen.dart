@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 
-class RecordPageScreen extends StatelessWidget {
+class RecordPageScreen extends StatefulWidget {
   const RecordPageScreen({Key? key}) : super(key: key);
+
+  @override
+  State<RecordPageScreen> createState() => _RecordPageScreenState();
+}
+
+class _RecordPageScreenState extends State<RecordPageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppTheme.background,
         appBar:
-
-            //APP BAR
+            //APP BAR 
             AppBar(
                 title: Text(DateTime.now().toString()),
                 centerTitle: true,

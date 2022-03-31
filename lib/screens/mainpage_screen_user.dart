@@ -60,10 +60,16 @@ class _MainScreenState extends State<MainScreen> {
               // Text(('mainpage.subtitle').tr(),)
               ListTile(
                 tileColor: Colors.white,
-                leading: const Icon(
+                leading: CircleAvatar(
+                  child: const Icon(
                   Icons.person,
                   color: AppTheme.primary,
-                  size: 80,
+                  size: 50
+                  ),
+                  radius: 60,
+                  backgroundColor: Colors.grey[300]
+
+
                 ),
                 title: Text(DateTime.now().toString()),
                 subtitle: Text(DateTime.now().toString()),

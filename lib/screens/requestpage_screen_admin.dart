@@ -65,7 +65,6 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
                   "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
                   textAlign: TextAlign.center,
                 ),
-                //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
                 onTap: _pickDate,
               ),
               Row(

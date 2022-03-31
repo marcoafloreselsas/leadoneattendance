@@ -14,10 +14,7 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
 
-  // Initial Selected Value
   String dropdownvalue = 'ALL EMPLOYEES';
-
-  // List of items in our dropdown menu
   var items = [
     'ALL EMPLOYEES',
     'JOHAN GARCIA',
