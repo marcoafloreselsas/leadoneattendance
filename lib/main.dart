@@ -7,19 +7,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:leadoneattendance/services/supported_locales.dart';
 
 void main() async {
+  //Verifica que la Localización y el Framework-Fuente están inicializados correctamente.
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
   try {
     await Firebase.initializeApp(
+      //Conexión con la base de datos de firebase
         options: const FirebaseOptions(
             apiKey: "AIzaSyDwn_s0VbGgXZY19nwst_zR13ctmlaATG4",
             appId: "1:397875240276:android:ff5fbda6ac5d30bd70fcc1",
             messagingSenderId: '397875240276',
             projectId: "lead-one-attendance",
             authDomain: "lead-one-attendance.firebaseapp.com"));
-    // ignore: empty_catches
+  //No borrar la siguiente línea
+  // ignore: empty_catches
   } on Exception {}
+  //Carga de la localización
   runApp(EasyLocalization(
     child: const MyApp(),
     supportedLocales: supportedLocales,
@@ -38,15 +42,16 @@ class MyApp extends StatelessWidget {
       supportedLocales:
           context.supportedLocales, // Obtiene el listado de idiomas soportados.
       locale: context.locale,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //Quita la cinta de 'debug' del superior derecho.
       title: 'Lead One: Attendance App',
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.lightTheme, // Tema de la aplicación, carga el App Theme de la carpeta Themes.
       home: StreamBuilder(
           stream: FirebaseServices().firebaseAuth.authStateChanges(),
           builder: (context, snapshot) {
             //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
             if (snapshot.hasData) {
-              return const MainScreenAdmin();
+              //VERIFICAR: Empleado = MainScreen, Administrador = MainScreenAdmin.
+              return const MainScreen();
             }
               return const LoginPage();
             }

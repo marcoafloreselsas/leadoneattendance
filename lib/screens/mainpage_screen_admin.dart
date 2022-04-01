@@ -16,21 +16,20 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(
+      appBar: AppBar( //Sección del AppBar
         title: const Text('mainpage.title').tr(),
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestPageScreenAdmin()));
           }, icon: const Icon(Icons.search_outlined)),
-          IconButton(
-              onPressed: () async {
+          IconButton(onPressed: () async {
                 await FirebaseServices().signOut();
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));},
               icon: const Icon(Icons.logout))
         ],
       ),
-/*  */
+/* 1.- Insertar Registro 2.- Registros Recientes 3.- Insertar Registro (botón auxiliar) */
       body: Column(
         children: [
           Column(

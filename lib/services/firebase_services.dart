@@ -20,7 +20,7 @@ class FirebaseServices {
     }
     return null;
   }
-
+  //Función que realiza el cierre de sesión.
   Future signOut() async {
     await GoogleSignIn().signOut();
     await firebaseAuth.signOut();
