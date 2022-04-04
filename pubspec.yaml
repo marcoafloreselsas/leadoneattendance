@@ -44,6 +44,7 @@ dependencies:
   shared_preferences_web: ^2.0.3
   firebase_database: ^9.0.8
   http: ^0.13.4
+  intl: ^0.17.0
 
 
 dev_dependencies:

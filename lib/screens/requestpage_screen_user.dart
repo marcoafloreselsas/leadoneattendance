@@ -20,17 +20,15 @@ class _RequestPageScreenState extends State<RequestPageScreen> {
           title: const Text('Consulta').tr(),
           centerTitle: true,
           actions: const []),
-      body: Container(
-        child: Column(
-          children: [
-            CalendarDatePicker(
-              initialDate: selectedDate, //Fecha por default, será la actual.
-              firstDate: firstDate, //Desde que fecha funciona el calendario.
-              lastDate: lastDate, //Hasta que fecha funciona el calendario.
-              onDateChanged: (DateTime value) {}, // Si la fecha cambia.
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          CalendarDatePicker(
+            initialDate: selectedDate, //Fecha por default, será la actual.
+            firstDate: firstDate, //Desde que fecha funciona el calendario.
+            lastDate: lastDate, //Hasta que fecha funciona el calendario.
+            onDateChanged: (DateTime value) {}, // Si la fecha cambia.
+          ),
+        ],
       ),
     );
   }

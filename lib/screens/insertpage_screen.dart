@@ -52,7 +52,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
           ]),
       body: Card(
           //CALENDARIO PARA SELECCIONAR UNA FECHA
-          child: Column(
+        child: Column(
         children: [
           //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           Row(

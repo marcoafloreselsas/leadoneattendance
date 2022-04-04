@@ -69,7 +69,7 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
               ),
               Row(
                 children: [
-                  const Text('EDIT Seleccione el Empleado Guachin').tr(),
+                  const Text('Selecciona el Empleado').tr(),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -106,8 +106,7 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
               Row(
                 children: [
                   const Text('mainpage.subtitle',
-                          style: TextStyle(fontSize: 20))
-                      .tr()
+                          style: TextStyle(fontSize: 20)).tr()
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -120,131 +119,6 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
                 //REGISTRO 25 DE MARZO E INFERIORES
                 child: ListTile(
                     title: const Text("March 25th, 2022"),
-                    trailing: Wrap(
-                      spacing: 12, // space between two icons
-                      children: const <Widget>[
-                        Icon(
-                          Icons.arrow_upward_outlined,
-                          color: AppTheme.green,
-                        ), // icon-1
-                        Text(
-                          '09:30',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Icon(
-                          Icons.arrow_downward_outlined,
-                          color: AppTheme.red,
-                        ), // icon-2
-                        Text(
-                          '17:30',
-                          style: TextStyle(fontSize: 18),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecordPageScreen()));
-                    }),
-              ),
-              //24 de marzo
-              Container(
-                color: Colors.white,
-                //REGISTRO 25 DE MARZO E INFERIORES
-                child: ListTile(
-                    title: const Text("March 24th, 2022"),
-                    trailing: Wrap(
-                      spacing: 12, // space between two icons
-                      children: const <Widget>[
-                        Icon(
-                          Icons.arrow_upward_outlined,
-                          color: AppTheme.green,
-                        ), // icon-1
-                        Text(
-                          '09:30',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Icon(
-                          Icons.arrow_downward_outlined,
-                          color: AppTheme.red,
-                        ), // icon-2
-                        Text(
-                          '17:30',
-                          style: TextStyle(fontSize: 18),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecordPageScreen()));
-                    }),
-              ),
-              Container(
-                color: Colors.white,
-                //REGISTRO 25 DE MARZO E INFERIORES
-                child: ListTile(
-                    title: const Text("March 23th, 2022"),
-                    trailing: Wrap(
-                      spacing: 12, // space between two icons
-                      children: const <Widget>[
-                        Icon(
-                          Icons.arrow_upward_outlined,
-                          color: AppTheme.green,
-                        ), // icon-1
-                        Text(
-                          '09:30',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Icon(
-                          Icons.arrow_downward_outlined,
-                          color: AppTheme.red,
-                        ), // icon-2
-                        Text(
-                          '17:30',
-                          style: TextStyle(fontSize: 18),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecordPageScreen()));
-                    }),
-              ),
-              Container(
-                color: Colors.white,
-                //REGISTRO 25 DE MARZO E INFERIORES
-                child: ListTile(
-                    title: const Text("March 22th, 2022"),
-                    trailing: Wrap(
-                      spacing: 12, // space between two icons
-                      children: const <Widget>[
-                        Icon(
-                          Icons.arrow_upward_outlined,
-                          color: AppTheme.green,
-                        ), // icon-1
-                        Text(
-                          '09:30',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Icon(
-                          Icons.arrow_downward_outlined,
-                          color: AppTheme.red,
-                        ), // icon-2
-                        Text(
-                          '17:30',
-                          style: TextStyle(fontSize: 18),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecordPageScreen()));
-                    }),
-              ),
-              Container(
-                color: Colors.white,
-                //REGISTRO 25 DE MARZO E INFERIORES
-                child: ListTile(
-                    title: const Text("March 21th, 2022"),
                     trailing: Wrap(
                       spacing: 12, // space between two icons
                       children: const <Widget>[

@@ -8,7 +8,6 @@ import 'package:leadoneattendance/themes/app_themes.dart';
 
 @override
 class MainScreen extends StatefulWidget {
-
   const MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,25 +15,27 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-    List<RecentRecords>?  recentRecords;
-    var isLoaded = false;
+  DateTime now = DateTime.now();
+  List<RecentRecords>? recentRecords;
+  var isLoaded = false;
 
-    @override
-    void initState() {
-      super.initState();
-      //fetch data from API
-      getData();
-    }
-    getData() async{
-      recentRecords = await RemoteService().getPosts();
-      if(recentRecords != null){
-        setState(() {
-          isLoaded = true;
-        });
-      }
-    }
+  @override
+  void initState() {
+    super.initState();
+    //fetch data from API
+    getData();
+  }
 
-// APP BAR 
+  getData() async {
+    recentRecords = await RemoteService().getPosts();
+    if (recentRecords != null) {
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  }
+
+// APP BAR
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,84 +44,88 @@ class _MainScreenState extends State<MainScreen> {
         title: const Text('mainpage.title').tr(),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestPageScreenAdmin()));
-          }, icon: const Icon(Icons.search_outlined)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RequestPageScreenAdmin()));
+              },
+              icon: const Icon(Icons.search_outlined)),
           IconButton(
               onPressed: () async {
                 await FirebaseServices().signOut();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));},
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
+              },
               icon: const Icon(Icons.logout))
         ],
       ),
 /*  BODY CON EL LIST TILE QUE MUESTRA LOS REGISTROS RECIENTES */
-      body: 
-          Column(
-            children: [
-              // Text(('mainpage.subtitle').tr(),)
-              ListTile(
-                tileColor: Colors.white,
-                leading: CircleAvatar(
-                  child: const Icon(
-                  Icons.person,
-                  color: AppTheme.primary,
-                  size: 50
-                  ),
-                  radius: 60,
-                  backgroundColor: Colors.grey[300]
-
-
-                ),
-                title: Text(DateTime.now().toString()),
-                subtitle: Text(DateTime.now().toString()),
-                contentPadding: (const EdgeInsets.symmetric( vertical: 16.0, horizontal: 5.0)),
-                onTap: (){
-                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const InsertPageScreen()));
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-Visibility(
-        visible: isLoaded,
-        child: ListView.builder(
-              itemCount: recentRecords?.length,
-              itemBuilder: (context, index){
-                return  ListTile(
-                title: Text(recentRecords![index].RecordDate.toString()),
-                trailing: Wrap(
-                  spacing: 12, // space between two icons
-                  children: <Widget>[
-                    const Icon(
-                      Icons.arrow_upward_outlined,
-                      color: AppTheme.green,
-                    ), // icon-1
-                    Text(recentRecords![index].EntryTime.toString(), style: const TextStyle(fontSize: 18),),
-                    const Icon(
-                      Icons.arrow_downward_outlined,
-                      color: AppTheme.red,
-                    ), // icon-2
-                    Text(
-                      recentRecords![index].ExitTime.toString(),
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-                onTap: () {});
-              }
+      body: Column(
+        children: [
+          // Text(('mainpage.subtitle').tr(),)
+          ListTile(
+            tileColor: Colors.white,
+            leading: CircleAvatar(
+                child:
+                    const Icon(Icons.person, color: AppTheme.primary, size: 50),
+                radius: 60,
+                backgroundColor: Colors.grey[300]),
+            title: Text(DateFormat('MMMMEEEEd').format(now),
+                style: const TextStyle(fontSize: 24)),
+            subtitle: Text(
+              DateFormat('Hm').format(now),
+              style: const TextStyle(fontSize: 18),
             ),
+            contentPadding:
+                (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const InsertPageScreen()));
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          //en caso de que la carga no esté lista, aparecerá el circular progress indicator
+          Visibility(
+            visible: isLoaded,
+            child: ListView.builder(
+                itemCount: recentRecords?.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      title: Text(recentRecords![index].RecordDate.toString()),
+                      trailing: Wrap(
+                        spacing: 12, // space between two icons
+                        children: <Widget>[
+                          const Icon(
+                            Icons.arrow_upward_outlined,
+                            color: AppTheme.green,
+                          ), // icon-1
+                          Text(
+                            recentRecords![index].EntryTime.toString(),
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          const Icon(
+                            Icons.arrow_downward_outlined,
+                            color: AppTheme.red,
+                          ), // icon-2
+                          Text(
+                            recentRecords![index].ExitTime.toString(),
+                            style: const TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
+                      onTap: () {});
+                }),
             //CIRCULO DE ESPERA
-          replacement: const Center(
-            child: CircularProgressIndicator(),
+            replacement: const Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
+        ],
       ),
-            ],
-            
-          ),
-
-
       //Botón secundario para añadir un nuevo registro.
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppTheme.primary,
