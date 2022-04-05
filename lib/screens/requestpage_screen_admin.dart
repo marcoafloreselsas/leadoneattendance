@@ -13,7 +13,6 @@ class RequestPageScreenAdmin extends StatefulWidget {
 class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
-
   // Initial Selected Value
   String dropdownvalue = 'ALL EMPLOYEES';
 
@@ -80,7 +79,6 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
                     value: dropdownvalue,
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down_outlined),
-
                     // Array list of items
                     items: items.map((String items) {
                       return DropdownMenuItem(
@@ -113,12 +111,11 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
               const SizedBox(
                 height: 10,
               ),
-
+// Este contenedor sirve para cargar los registros recientes.
               Container(
                 color: Colors.white,
-                //REGISTRO 25 DE MARZO E INFERIORES
                 child: ListTile(
-                    title: const Text("March 25th, 2022"),
+                    title: const Text(""), //fecha del registro
                     trailing: Wrap(
                       spacing: 12, // space between two icons
                       children: const <Widget>[
@@ -128,7 +125,7 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
                         ), // icon-1
                         Text(
                           '09:30',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18), //hora de entrada
                         ),
                         Icon(
                           Icons.arrow_downward_outlined,
@@ -136,7 +133,7 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
                         ), // icon-2
                         Text(
                           '17:30',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18), //hora de salida
                         )
                       ],
                     ),

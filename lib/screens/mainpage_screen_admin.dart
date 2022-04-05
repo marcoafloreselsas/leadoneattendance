@@ -54,8 +54,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               )
             ],
           ),
-          //R E G I S T R O S 
-          //                   R E C I E N T E S 
+          //Registros Recientes
           Row(
             children: [const Text('mainpage.subtitle', style: TextStyle(fontSize: 20)).tr()],
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +65,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 
           Container(
             color: Colors.white,
-            //REGISTRO 25 DE MARZO E INFERIORES
             child: ListTile(
                 title: const Text("March 25th, 2022"),
                 trailing: Wrap(

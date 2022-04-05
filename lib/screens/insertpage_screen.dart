@@ -51,7 +51,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
                 icon: const Icon(Icons.add_outlined)),
           ]),
       body: Card(
-          //CALENDARIO PARA SELECCIONAR UNA FECHA
+          //Calendario para seleccionar una fecha.
         child: Column(
         children: [
           //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
@@ -128,7 +128,7 @@ class _InsertPageScreenState extends State<InsertPageScreen> {
       ),
     );
   }
-//WIDGET DEL SWITCH
+//Widget del Switch
 Widget buildSwitch() => Transform.scale(
   scale: 2,
   child: Switch.adaptive(
@@ -141,7 +141,7 @@ Widget buildSwitch() => Transform.scale(
 );
 
 
-//FUNCION QUE MUESTRA EL DATE PICKER
+//Función que muestra el Date Picker.
 _pickDate() async {
   DateTime? date = await showDatePicker(
     context: context,
@@ -156,7 +156,7 @@ _pickDate() async {
   }
 }
 
-//FUNCION QUE MUESTRA EL TIME PICKER
+//Función que muestra el Time Picker.
 _pickTime() async{
     TimeOfDay? t = await showTimePicker(
     context: context,

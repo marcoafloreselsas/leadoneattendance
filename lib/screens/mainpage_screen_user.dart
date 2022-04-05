@@ -34,13 +34,12 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
   }
-
-// APP BAR
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(
+      appBar: AppBar(                                   
         title: const Text('mainpage.title').tr(),
         centerTitle: true,
         actions: [
@@ -64,7 +63,6 @@ class _MainScreenState extends State<MainScreen> {
 /*  BODY CON EL LIST TILE QUE MUESTRA LOS REGISTROS RECIENTES */
       body: Column(
         children: [
-          // Text(('mainpage.subtitle').tr(),)
           ListTile(
             tileColor: Colors.white,
             leading: CircleAvatar(
@@ -88,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             height: 10,
           ),
-          //en caso de que la carga no esté lista, aparecerá el circular progress indicator
+          //En caso de que la carga no esté lista, aparecerá el Circular Progress Indicator.
           Visibility(
             visible: isLoaded,
             child: ListView.builder(
@@ -119,7 +117,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       onTap: () {});
                 }),
-            //CIRCULO DE ESPERA
+            //Círculo de espera.
             replacement: const Center(
               child: CircularProgressIndicator(),
             ),

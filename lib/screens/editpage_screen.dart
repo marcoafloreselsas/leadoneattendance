@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
-
 class EditRecordScreen extends StatefulWidget {
   const EditRecordScreen({Key? key}) : super(key: key);
 
@@ -81,7 +79,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
            // trailing: const Icon(Icons.keyboard_arrow_down_outlined),
             onTap: _pickTime,
           ),
-          //TIPO DE REGISTRO
+          //Tipo de registro
           Row(
             children: [
               const Text('insertpage.typeRecord').tr(),
@@ -111,19 +109,19 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
 
           ),
-           //SWITCH
+           //Switch
             Row(
               children: [
               const Text('insertpage.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
-              buildSwitch(), //WIDGET DEL SWITCH
+              buildSwitch(), //Manda llamar el switch.
               const Padding(padding: EdgeInsets.all(25.0)),
               const Text('insertpage.out').tr(),
             ],
               mainAxisAlignment: MainAxisAlignment.center
             ),
             const SizedBox(height: 20,),
-            //BOTON DE GUARDAR CAMBIOS
+            //Botón de guardar cambios.
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: AppTheme.primary,
@@ -138,8 +136,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
     );
   }
 
-
-//WIDGET DEL SWITCH
+//Widget del Switch
 Widget buildSwitch() => Transform.scale(
   scale: 2,
   child: Switch.adaptive(
@@ -151,8 +148,7 @@ Widget buildSwitch() => Transform.scale(
     onChanged: (value) => setState(() => this.value = value)),
 );
 
-
-//FUNCION QUE MUESTRA EL DATE PICKER
+//Función que muestra el Date Picker.
 _pickDate() async {
   DateTime? date = await showDatePicker(
     context: context,
@@ -167,12 +163,11 @@ _pickDate() async {
   }
 }
 
-//FUNCION QUE MUESTRA EL TIME PICKER
+//Función que muestra el Time Picker.
 _pickTime() async{
     TimeOfDay? t = await showTimePicker(
     context: context,
     initialTime: time,
-
   );
   if(t != null){
     setState(() {

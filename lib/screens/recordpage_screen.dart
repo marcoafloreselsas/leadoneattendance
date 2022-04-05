@@ -42,7 +42,7 @@ class _RecordPageScreenState extends State<RecordPageScreen> {
               ListTile(
                 title: Text("recordpage.TRattendance".tr()),
                 trailing: Wrap(
-                  spacing: 12, // space between two icons
+                  spacing: 12, // Espacio entre dos íconos
                   children: const <Widget>[
                     Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
                     Text('09:30', style: TextStyle(fontSize: 18),),
@@ -54,7 +54,7 @@ class _RecordPageScreenState extends State<RecordPageScreen> {
               ListTile(
                 title: Text("recordpage.TRlunch".tr()),
                 trailing: Wrap(
-                  spacing: 12, // space between two icons
+                  spacing: 12, // Espacio entre dos íconos
                   children: const <Widget>[
                     Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
                     Text('09:30', style: TextStyle(fontSize: 18),),
@@ -66,7 +66,7 @@ class _RecordPageScreenState extends State<RecordPageScreen> {
               ListTile(
                 title: Text("recordpage.TRovertime".tr()),
                 trailing: Wrap(
-                  spacing: 12, // space between two icons
+                  spacing: 12, // Espacio entre dos íconos
                   children: const <Widget>[
                     Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
                     Text('09:30', style: TextStyle(fontSize: 18),),
@@ -75,11 +75,10 @@ class _RecordPageScreenState extends State<RecordPageScreen> {
                   ],
                 ),
               ),
-              //ESTE ES UN COMENTARIO
               ListTile(
                 title: Text("recordpage.TRpermit".tr()),
                 trailing: Wrap(
-                  spacing: 12, // space between two icons
+                  spacing: 12, // Espacio entre dos íconos.
                   children: const <Widget>[
                     Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
                     Text('08:30', style: TextStyle(fontSize: 18),),
