@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 
-class RequestPageScreen extends StatefulWidget {
-  const RequestPageScreen({Key? key}) : super(key: key);
+class QueryRecordsScreen extends StatefulWidget {
+  const QueryRecordsScreen({Key? key}) : super(key: key);
 
   @override
-  State<RequestPageScreen> createState() => _RequestPageScreenState();
+  State<QueryRecordsScreen> createState() => _QueryRecordsScreenState();
 }
 
-class _RequestPageScreenState extends State<RequestPageScreen> {
+class _QueryRecordsScreenState extends State<QueryRecordsScreen> {
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2022,2); //A partir de que fecha funciona el calendario
   final lastDate = DateTime.now(); //Hasta que fecha funciona el calendario

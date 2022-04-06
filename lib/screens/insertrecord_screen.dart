@@ -1,16 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-class InsertPageScreen extends StatefulWidget {
-  const InsertPageScreen({Key? key}) : super(key: key);
+class InsertRecordScreen extends StatefulWidget {
+  const InsertRecordScreen({Key? key}) : super(key: key);
 
   @override
-  State<InsertPageScreen> createState() => _InsertPageScreenState();
+  State<InsertRecordScreen> createState() => _InsertRecordScreenState();
 }
 
-class _InsertPageScreenState extends State<InsertPageScreen> {
+class _InsertRecordScreenState extends State<InsertRecordScreen> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   bool value = true;

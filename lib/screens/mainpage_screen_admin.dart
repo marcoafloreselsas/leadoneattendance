@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import '../services/firebase_services.dart';
-import '../themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class MainScreenAdmin extends StatefulWidget {
@@ -21,7 +21,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestPageScreenAdmin()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const QueryRecordsScreenAdmin()));
           }, icon: const Icon(Icons.search_outlined)),
           IconButton(onPressed: () async {
                 await FirebaseServices().signOut();
@@ -46,7 +46,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                 contentPadding: (const EdgeInsets.symmetric( vertical: 16.0, horizontal: 5.0)),
                 onTap: (){
                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const InsertPageScreen()));
+                      builder: (context) => const InsertRecordScreen()));
                 },
               ),
               const SizedBox(
@@ -90,7 +90,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                 ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const RecordPageScreen()));
+                      builder: (context) => const DisplayRecordScreen()));
                 }),
           ),
         ],
@@ -107,7 +107,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const InsertPageScreen()));
+                  builder: (context) => const InsertRecordScreen()));
         },
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/services/firebase_services.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:leadoneattendance/services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

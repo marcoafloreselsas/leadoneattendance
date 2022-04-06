@@ -1,16 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-class RecordPageScreen extends StatefulWidget {
-  const RecordPageScreen({Key? key}) : super(key: key);
+class DisplayRecordScreen extends StatefulWidget {
+  const DisplayRecordScreen({Key? key}) : super(key: key);
 
   @override
-  State<RecordPageScreen> createState() => _RecordPageScreenState();
+  State<DisplayRecordScreen> createState() => _DisplayRecordScreenState();
 }
 
-class _RecordPageScreenState extends State<RecordPageScreen> {
+class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

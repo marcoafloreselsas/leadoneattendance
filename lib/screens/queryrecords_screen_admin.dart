@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-class RequestPageScreenAdmin extends StatefulWidget {
-  const RequestPageScreenAdmin({Key? key}) : super(key: key);
+class QueryRecordsScreenAdmin extends StatefulWidget {
+  const QueryRecordsScreenAdmin({Key? key}) : super(key: key);
 
   @override
-  State<RequestPageScreenAdmin> createState() => _RequestPageScreenAdminState();
+  State<QueryRecordsScreenAdmin> createState() => _QueryRecordsScreenAdminState();
 }
 
-class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
+class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   // Initial Selected Value
@@ -139,7 +139,7 @@ class _RequestPageScreenAdminState extends State<RequestPageScreenAdmin> {
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecordPageScreen()));
+                          builder: (context) => const DisplayRecordScreen()));
                     }),
               ),
             ],
