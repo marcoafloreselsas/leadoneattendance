@@ -15,7 +15,7 @@ class FirebaseServices {
             await firebaseAuth.signInWithCredential(credential);
         return userCredential.user;
       }
-    } catch (e) {
+    } catch (e) { 
       // print(e);
     }
     return null;
@@ -25,5 +25,4 @@ class FirebaseServices {
     await GoogleSignIn().signOut();
     await firebaseAuth.signOut();
   }
-
 }

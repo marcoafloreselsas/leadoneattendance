@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
             if (snapshot.hasData) {
               //VERIFICAR: Empleado = MainScreen, Administrador = MainScreenAdmin.
-              return const MainScreen();
+              return const MainScreenAdmin();
             }
               return const LoginPage();
             }
