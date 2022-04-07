@@ -1,11 +1,8 @@
 // To parse this JSON data, do
 //
 //     final posts = postsFromJson(jsonString);
-
 import 'dart:convert';
-
 // import 'dart:ffi';
-
 List<RecentRecords> postsFromJson(String str) => List<RecentRecords>.from(json.decode(str).map((x) => RecentRecords.fromJson(x)));
 
 String postsToJson(List<RecentRecords> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
