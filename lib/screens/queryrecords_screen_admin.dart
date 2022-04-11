@@ -31,7 +31,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
     pickedDate = DateTime.now();
     time = TimeOfDay.now();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +74,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               Row(
                 children: [
                   DropdownButton(
-                    // Initial Value
+                    // Valor inicial
                     value: dropdownvalue,
                     // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down_outlined),
@@ -100,7 +99,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               const SizedBox(
                 height: 50,
               ),
-
               Row(
                 children: [
                   const Text('mainpage.subtitle',
@@ -111,7 +109,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               const SizedBox(
                 height: 10,
               ),
-// Este contenedor sirve para cargar los registros recientes.
+              // Este contenedor sirve para cargar los registros recientes.
               Container(
                 color: Colors.white,
                 child: ListTile(

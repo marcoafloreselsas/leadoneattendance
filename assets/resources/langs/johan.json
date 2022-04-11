@@ -1,0 +1,14 @@
+{
+    "English": {
+        "Lead1_error_001": "Entry time must be lower than the exit time value.",
+        "Lead1_error_002": "The values are the same, no need for an update.",
+        "Lead1_error_003": "Only one record per user on the same date with the same record type.",
+        "Lead1_error_004": "Email already in use."
+    },
+    "Spanish":{
+        "Lead1_error_001": "La hora de entrada no debe ser mayor a la hora de salida.",
+        "Lead1_error_002": "Los valores de los tiempos son los mismos, no hay necesidad de actualizar.",
+        "Lead1_error_003": "Solo un registro por usuario en la misma fecha y del mismo tipo.",
+        "Lead1_error_004": "Correo electronico ya esta en uso."
+    }
+}
