@@ -15,10 +15,10 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   late TimeOfDay time;
   bool value = true;
 
-    // Initial Selected Value
+    // Valor inicial de Dropdown Value
   String dropdownvalue = 'insertpage.TRattendance'.tr();   
   
-  // List of items in our dropdown menu
+  // Lista de Articulos de Dropdown value
   var items = [    
     'insertpage.TRattendance'.tr(),
     'insertpage.TRlunch'.tr(),
@@ -107,7 +107,6 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
             ),
             ],                          
             mainAxisAlignment: MainAxisAlignment.center,
-
           ),
            //Switch
             Row(
@@ -125,8 +124,8 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: AppTheme.primary,
-                primary: Colors.white, //TEXT COLOR
-                minimumSize: const Size(120, 50) //TAMANO - WH
+                primary: Colors.white, //Color del Texto
+                minimumSize: const Size(120, 50) //Tamaño - WH
               ),
               onPressed: (){}, 
               child: const Text('insertpage.saveButton').tr())
