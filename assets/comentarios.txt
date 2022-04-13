@@ -1,0 +1,4 @@
+Abril 13 de 2022
+~ Se añadieron las palabras de error del archivo "AttendanceDB_Errors.json / johan.json" a los archivos "es.json" y "en.json".
+~ Se añadieron las palabras de pantallas faltantes a los archivos "es.json" y "en.json".
+~ Routes y MaterialPageRoute.

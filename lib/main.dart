@@ -20,7 +20,7 @@ void main() async {
             messagingSenderId: '397875240276',
             projectId: "lead-one-attendance",
             authDomain: "lead-one-attendance.firebaseapp.com"));
-  //No borrar la siguiente línea
+  //No borrar la siguiente línea 24
   // ignore: empty_catches
   } on Exception {}
   //Carga de la localización
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
             if (snapshot.hasData) {
               //VERIFICAR: Empleado = MainScreen, Administrador = MainScreenAdmin.
-              return const MainScreenAdmin();
+              return const MainScreen();
             }
               return const LoginPage();
             }

@@ -1,68 +1,85 @@
 {
-    "loginpage":{
-        "title":"¡Bienvenido!",
-        "subtitle":"Por favor, inicie sesión."
+    "loginpage":
+    {
+        "title" : "¡Bienvenido!",
+        "subtitle" : "Por favor, inicie sesión."
     },
     "mainpage":
     {
-        "title":"Bienvenido",
-        "subtitle":"Registros Recientes"
+        "title" : "Bienvenido",
+        "subtitle" : "Registros Recientes"
     },
-    "recordpage":{ 
-        "P E N D I E N T E":" E S T A SECCION ES EL ALERT DIALOG",
-        "selectDate":"Seleccione la Fecha",
-        "selectTime":"Hora",
-        "activity":"Actividad",
-        "TRattendance":"Asistencia",
-        "TRlunch":"Comida",
-        "TRovertime":"Horas Extra",
-        "TRpermit":"Permiso",
-        "in":"Inicio",
-        "out":"Fin",
-        "saveButton":"Guardar"
+    "displayrecords":
+    { 
+        "activity" : "Actividad",
+        "TRattendance" : "Asistencia",
+        "TRlunch" : "Comida",
+        "TRovertime" : "Horas Extra",
+        "TRpermit" : "Permiso"
     },
-    "insertpage":{
-        "title":"Insertar Registro",
-        "selectDate":"Seleccione la Fecha",
-        "selectTime":"Seleccione la Hora",
-        "typeRecord":"Tipo de Registro",
-        "TRattendance":"Asistencia",
-        "TRlunch":"Comida",
-        "TRovertime":"Horas Extra",
-        "TRpermit":"Permiso",
-        "in":"Inicio",
-        "out":"Fin",
-        "saveButton":"Guardar"
+    "insertrecords":
+    {
+        "title" : "Insertar Registro",
+        "selectDate" : "Seleccione la Fecha",
+        "selectTime" : "Seleccione la Hora",
+        "typeRecord" : "Tipo de Registro",
+        "TRattendance" : "Asistencia",
+        "TRlunch" : "Comida",
+        "TRovertime" : "Horas Extra",
+        "TRpermit" : "Permiso",
+        "in" : "Inicio",
+        "out" : "Fin",
+        "saveButton" : "Guardar"
     }, 
-    "editpage":{
-        "title":"Editar Registro",
-        "selectDate":"Seleccione la Fecha",
-        "selectTime": "Hora",
-        "typeRecord":"Tipo de Registro",
-        "TRattendance":"Asistencia",
-        "TRlunch":"Comida",
-        "TRovertime":"Horas Extra",
-        "TRpermit":"Permiso",
-        "in":"Inicio",
-        "out":"Fin",
-        "saveButton":"Guardar Cambios",
-        "discardChanges":"Descartar Cambios"
+    "editrecords":
+    {
+        "title" : "Editar Registro",
+        "selectDate" : "Seleccione la Fecha",
+        "selectTime" : "Seleccione la Hora",
+        "typeRecord" : "Tipo de Registro",
+        "TRattendance" : "Asistencia",
+        "TRlunch" : "Comida",
+        "TRovertime" : "Horas Extra",
+        "TRpermit" : "Permiso",
+        "in" : "Inicio",
+        "out" : "Fin",
+        "saveButton" : "Guardar Cambios",
+        "discardChanges" : "Descartar Cambios"
     },
-    "requestpage":{
-
+    "queryrecords":
+    {
+        "title" : "Consultar Registros",
+        "selectDate" : "Seleccione la Fecha",
+        "selectEmployee" : "Seleccione al Empleado",
+        "recentRecords" : "Registros Recientes"
     },
-    "generatereports":{
-        "title":"Generar Reporte",
-        "dateRange":"Rango de Fechas",
-        "fromDate":"De",
-        "toDate":"A",
-        "employeeLabel":"Empleado",
-        "applyButton":"Aplicar"
+    "generatereports":
+    {
+        "title" : "Generar Reporte",
+        "dateRange" : "Rango de Fechas",
+        "fromDate" : "De",
+        "toDate" : "A",
+        "employeeLabel" : "Empleado",
+        "applyButton" : "Aplicar"
     },
-    "reportviewer":{
-        
+    "reportviewer":
+    {
+        "title" : "Reporte"
     },
-    "sendreport":{
-
+    "sendreport":
+    {
+        "title" : "Enviar Reporte",
+        "to" : "Destinatario",
+        "subject" : "Asunto",
+        "message" : "Mensaje",
+        "attachment" : "Archivo adjunto",
+        "sendButton" : "Enviar"
+    },
+    "errors":
+    {
+        "Lead1_error_001" : "La hora de entrada no debe ser mayor a la hora de salida.", 
+        "Lead1_error_002" : "Los valores de los tiempos son los mismos, no hay necesidad de actualizar.",
+        "Lead1_error_003" : "Solo un registro por usuario en la misma fecha y del mismo tipo.",
+        "Lead1_error_004" : "Correo electronico ya está en uso."
     }
 }

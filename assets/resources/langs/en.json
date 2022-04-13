@@ -1,64 +1,85 @@
 {
-    "loginpage":{ 
-        "title":"Welcome!",
-        "subtitle":"Please, Sign In."
+    "loginpage":
+    { 
+        "title" : "Welcome!",
+        "subtitle" : "Please, Sign In."
     },
     "mainpage":
     {
-        "title":"Welcome",
-        "subtitle":"Recent Records"
+        "title" : "Welcome",
+        "subtitle" : "Recent Records"
     },
-    "recordpage":{ 
-        "P E N D I E N T E":" E S T A SECCION ES EL ALERT DIALOG",
-        "selectDate":"Select Date",
-        "selectTime":"Time",
-        "activity":"Activity",
-        "TRattendance":"Attendance",
-        "TRlunch":"Lunch",
-        "TRovertime":"Overtime",
-        "TRpermit":"Permit",
-        "in":"In",
-        "out":"out",
-        "saveButton":"Save"
+    "displayrecords":
+    { 
+        "activity" : "Activity",
+        "TRattendance" : "Attendance",
+        "TRlunch" : "Lunch",
+        "TRovertime" : "Overtime",
+        "TRpermit" : "Permit"
     },
-    "insertpage":{
-        "title":"Insert Record",
-        "selectDate":"Select the Date",
-        "selectTime":"Select the Time",
-        "typeRecord":"Type of Record",
-        "TRattendance":"Attendance",
-        "TRlunch":"Lunch",
-        "TRovertime":"Overtime",
-        "TRpermit":"Permit",
-        "in":"In",
-        "out":"Out",
-        "saveButton":"Save"
+    "insertrecords":
+    {
+        "title" : "Insert Record",
+        "selectDate" : "Select the Date",
+        "selectTime" : "Select the Time",
+        "typeRecord" : "Type of Record",
+        "TRattendance" : "Attendance",
+        "TRlunch" : "Lunch",
+        "TRovertime" : "Overtime",
+        "TRpermit" : "Permit",
+        "in" : "In",
+        "out" : "Out",
+        "saveButton" : "Save"
     }, 
-    "editpage":{
-        "title":"Edit Page",
-        "selectDate":"Select Date",
-        "selectTime":"Tiempo",
-        "typeRecord":"Type of Record",
-        "in":"In",
-        "out":"out",
-        "saveButton":"Save",
-        "discardChanges":"Discard Changes"
+    "editrecords":
+    {
+        "title" : "Edit Record",
+        "selectDate" : "Select Date",
+        "selectTime" : "Select Time",
+        "typeRecord" : "Type of Record",
+        "TRattendance" : "Attendance",
+        "TRlunch" : "Lunch",
+        "TRovertime" : "Overtime",
+        "TRpermit" : "Permit",
+        "in" : "In",
+        "out" : "out",
+        "saveButton" : "Save",
+        "discardChanges" : "Discard Changes"
     },
-    "requestpage":{
-
+    "queryrecords":
+    {
+        "title" : "Query Records",
+        "selectDate" : "Select Date",
+        "selectEmployee" : "Select Employee",
+        "recentRecords" : "Recent Records"
     },
-    "generatereports":{
-        "title":"Generate Report",
-        "dateRange":"Date Range",
-        "fromDate":"From",
-        "toDate":"To",
-        "employeeLabel":"Employee",
-        "applyButton":"Apply"
+    "generatereports":
+    {
+        "title" : "Generate Report",
+        "dateRange" : "Date Range",
+        "fromDate" : "From",
+        "toDate" : "To",
+        "employeeLabel" : "Employee",
+        "applyButton" : "Apply"
     },
-    "reportviewer":{
-
+    "reportviewer":
+    {
+        "title" : "Report"
     },
-    "sendreport":{
-
+    "sendreport":
+    {
+        "title" : "Send Report",
+        "to" : "To",
+        "subject" : "Subject",
+        "message" : "Message",
+        "attachment" : "Attachment",
+        "sendButton" : "Send"
+    },
+    "errors":
+    {
+        "Lead1_error_001" : "Entry time must be lower than the exit time value.",
+        "Lead1_error_002" : "The values are the same, no need for an update.",
+        "Lead1_error_003" : "Only one record per user on the same date with the same record type.",
+        "Lead1_error_004" : "Email already in use."
     }
 }
