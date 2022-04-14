@@ -16,14 +16,14 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   bool value = true;
 
     // Valor inicial de Dropdown Value
-  String dropdownvalue = 'insertpage.TRattendance'.tr();   
+  String dropdownvalue = 'editrecords.TRattendance'.tr();   
   
   // Lista de Articulos de Dropdown value
   var items = [    
-    'insertpage.TRattendance'.tr(),
-    'insertpage.TRlunch'.tr(),
-    'insertpage.TRovertime'.tr(),
-    'insertpage.TRpermit'.tr(),
+    'editrecords.TRattendance'.tr(),
+    'editrecords.TRlunch'.tr(),
+    'editrecords.TRovertime'.tr(),
+    'editrecords.TRpermit'.tr(),
   ];
 
   @override
@@ -36,7 +36,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('editpage.title').tr(),
+          title: const Text('editrecords.title').tr(),
           centerTitle: true,
           actions: [
             IconButton(
@@ -55,7 +55,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
           //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           Row(
             children: [
-              const Text('insertpage.selectDate').tr(),
+              const Text('editrecords.selectDate').tr(),
               const Icon(Icons.keyboard_arrow_down_outlined),
             ],
           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
           //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           Row(
             children: [
-              const Text('insertpage.selectTime').tr(),
+              const Text('editrecords.selectTime').tr(),
               const Icon(Icons.keyboard_arrow_down_outlined),
             ],
           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +82,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
           //Tipo de registro
           Row(
             children: [
-              const Text('insertpage.typeRecord').tr(),
+              const Text('editrecords.typeRecord').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               DropdownButton(
               // Initial Value
@@ -111,11 +111,11 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
            //Switch
             Row(
               children: [
-              const Text('insertpage.in').tr(),
+              const Text('editrecords.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               buildSwitch(), //Manda llamar el switch.
               const Padding(padding: EdgeInsets.all(25.0)),
-              const Text('insertpage.out').tr(),
+              const Text('editrecords.out').tr(),
             ],
               mainAxisAlignment: MainAxisAlignment.center
             ),
@@ -128,7 +128,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                 minimumSize: const Size(120, 50) //Tamaño - WH
               ),
               onPressed: (){}, 
-              child: const Text('insertpage.saveButton').tr())
+              child: const Text('editrecords.saveButton').tr())
         ],
       ),
       ),

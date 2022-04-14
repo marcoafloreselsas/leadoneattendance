@@ -15,7 +15,7 @@ class Record extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text("recordpage.TRattendance".tr()),
+                title: Text("displayrecords.TRattendance".tr()),
                 trailing: Wrap(
                   spacing: 12, // space between two icons
                   children: const <Widget>[
@@ -27,7 +27,7 @@ class Record extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text("recordpage.TRlunch".tr()),
+                title: Text("displayrecords.TRlunch".tr()),
                 trailing: Wrap(
                   spacing: 12, // space between two icons
                   children: const <Widget>[

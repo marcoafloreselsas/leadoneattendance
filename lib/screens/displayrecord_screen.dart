@@ -40,7 +40,7 @@ class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
           child: Column(
             children: [
               ListTile(
-                title: Text("recordpage.TRattendance".tr()),
+                title: Text("displayrecords.TRattendance".tr()),
                 trailing: Wrap(
                   spacing: 12, // Espacio entre dos íconos
                   children: const <Widget>[
@@ -52,7 +52,7 @@ class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
                 ),
               ),
               ListTile(
-                title: Text("recordpage.TRlunch".tr()),
+                title: Text("displayrecords.TRlunch".tr()),
                 trailing: Wrap(
                   spacing: 12, // Espacio entre dos íconos
                   children: const <Widget>[
@@ -64,7 +64,7 @@ class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
                 ),
               ),
               ListTile(
-                title: Text("recordpage.TRovertime".tr()),
+                title: Text("displayrecords.TRovertime".tr()),
                 trailing: Wrap(
                   spacing: 12, // Espacio entre dos íconos
                   children: const <Widget>[
@@ -76,7 +76,7 @@ class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
                 ),
               ),
               ListTile(
-                title: Text("recordpage.TRpermit".tr()),
+                title: Text("displayrecords.TRpermit".tr()),
                 trailing: Wrap(
                   spacing: 12, // Espacio entre dos íconos.
                   children: const <Widget>[

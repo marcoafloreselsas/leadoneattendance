@@ -16,14 +16,14 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
   bool value = true;
 
     // Initial Selected Value
-  String dropdownvalue = 'insertpage.TRattendance'.tr();   
+  String dropdownvalue = 'insertrecords.TRattendance'.tr();   
   
   // List of items in our dropdown menu
   var items = [    
-    'insertpage.TRattendance'.tr(),
-    'insertpage.TRlunch'.tr(),
-    'insertpage.TRovertime'.tr(),
-    'insertpage.TRpermit'.tr(),
+    'insertrecords.TRattendance'.tr(),
+    'insertrecords.TRlunch'.tr(),
+    'insertrecords.TRovertime'.tr(),
+    'insertrecords.TRpermit'.tr(),
   ];
 
 //Sobreescritura de la clase y dek widget
@@ -38,7 +38,7 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('insertpage.title').tr(),
+          title: const Text('insertrecords.title').tr(),
           centerTitle: true,
           actions: [
             IconButton(
@@ -57,7 +57,7 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
           //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           Row(
             children: [
-              const Text('insertpage.selectDate').tr(),
+              const Text('insertrecords.selectDate').tr(),
               const Icon(Icons.keyboard_arrow_down_outlined),
             ],
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +70,7 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
           //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
           Row(
             children: [
-              const Text('insertpage.selectTime').tr(),
+              const Text('insertrecords.selectTime').tr(),
               const Icon(Icons.keyboard_arrow_down_outlined),
             ],
           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +82,7 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
           //TIPO DE REGISTRO
           Row(
             children: [
-              const Text('insertpage.typeRecord').tr(),
+              const Text('insertrecords.typeRecord').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               DropdownButton(
               value: dropdownvalue,
@@ -105,11 +105,11 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
            //SWITCH
             Row(
               children: [
-              const Text('insertpage.in').tr(),
+              const Text('insertrecords.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               buildSwitch(), //WIDGET DEL SWITCH
               const Padding(padding: EdgeInsets.all(25.0)),
-              const Text('insertpage.out').tr(),
+              const Text('insertrecords.out').tr(),
             ],
               mainAxisAlignment: MainAxisAlignment.center
             ),
@@ -122,7 +122,7 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
                 minimumSize: const Size(120, 50) //TAMANO - WH
               ),
               onPressed: (){}, 
-              child: const Text('insertpage.saveButton').tr())
+              child: const Text('insertrecords.saveButton').tr())
         ],
       ),
       ),
