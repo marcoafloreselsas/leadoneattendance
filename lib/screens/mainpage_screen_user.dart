@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/models/recent_records.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
-import 'package:leadoneattendance/services/remote_services.dart';
 import '../services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -16,23 +14,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   DateTime now = DateTime.now();
-  List<RecentRecords>? recentRecords;
   var isLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    //fetch data from API
-    getData();
-  }
-
-  getData() async {
-    recentRecords = await RemoteService().getPosts();
-    if (recentRecords != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
   }
   
   @override
@@ -60,6 +46,11 @@ class _MainScreenState extends State<MainScreen> {
               icon: const Icon(Icons.logout))
         ],
       ),
+
+
+
+
+
 /*  BODY CON EL LIST TILE QUE MUESTRA LOS REGISTROS RECIENTES */
       body: Column(
         children: [
@@ -86,44 +77,45 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             height: 10,
           ),
-          //En caso de que la carga no esté lista, aparecerá el Circular Progress Indicator.
-          Visibility(
-            visible: isLoaded,
-            child: ListView.builder(
-                itemCount: recentRecords?.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                      title: Text(recentRecords![index].RecordDate.toString()),
-                      trailing: Wrap(
-                        spacing: 12, // space between two icons
-                        children: <Widget>[
-                          const Icon(
-                            Icons.arrow_upward_outlined,
-                            color: AppTheme.green,
-                          ), // icon-1
-                          Text(
-                            recentRecords![index].EntryTime.toString(),
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          const Icon(
-                            Icons.arrow_downward_outlined,
-                            color: AppTheme.red,
-                          ), // icon-2
-                          Text(
-                            recentRecords![index].ExitTime.toString(),
-                            style: const TextStyle(fontSize: 18),
-                          )
-                        ],
-                      ),
-                      onTap: () {});
-                }),
-            //Círculo de espera.
-            replacement: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
+
+
+          // //En caso de que la carga no esté lista, aparecerá el Circular Progress Indicator.
+          // ListView.builder(
+          //     itemCount: recentRecords?.length,
+          //     itemBuilder: (context, index) {
+          //       return ListTile(
+          //           title: Text(recentRecords![index].RecordDate.toString()),
+          //           trailing: Wrap(
+          //             spacing: 12, // space between two icons
+          //             children: <Widget>[
+          //               const Icon(
+          //                 Icons.arrow_upward_outlined,
+          //                 color: AppTheme.green,
+          //               ), // icon-1
+          //               Text(
+          //                 recentRecords![index].EntryTime.toString(),
+          //                 style: const TextStyle(fontSize: 18),
+          //               ),
+          //               const Icon(
+          //                 Icons.arrow_downward_outlined,
+          //                 color: AppTheme.red,
+          //               ), // icon-2
+          //               Text(
+          //                 recentRecords![index].ExitTime.toString(),
+          //                 style: const TextStyle(fontSize: 18),
+          //               )
+          //             ],
+          //           ),
+          //           onTap: () {});
+          //     }),
         ],
       ),
+
+
+
+
+
+
       //Botón secundario para añadir un nuevo registro.
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppTheme.primary,
