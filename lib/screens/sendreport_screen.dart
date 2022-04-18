@@ -11,7 +11,17 @@ class _SendReportScreenState extends State<SendReportScreen> {
 //Esta vista envía el reporte generado.
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+
+      appBar: AppBar(
+
+      ),
+      body: Column(
+        
+      ),
+
+
+
       //CAMPOS
       //Mail to
       //Subject
