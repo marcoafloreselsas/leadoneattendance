@@ -66,7 +66,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               ),
               Row(
                 children: [
-                  const Text('Selecciona el Empleado').tr(),
+                  const Text('queryrecords.selectEmployee').tr(),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),

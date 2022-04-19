@@ -10,7 +10,7 @@
         "subtitle" : "Recent Records"
     },
     "displayrecords":
-    { 
+    {
         "activity" : "Activity",
         "TRattendance" : "Attendance",
         "TRlunch" : "Lunch",
@@ -84,11 +84,14 @@
     },
     "alerts":
     {
+        "alert0" : "Warning",
         "alert1" : "The record has been saved successfully.",
         "alert2" : "Are you sure to modify the record?",
         "alert3" : "The record has been successfully modified.",
         "alert4" : "The 'recipient' field is required.",
         "alert5" : "The mail has been sent successfully.",
-        "alert6" : "The report has been downloaded to your device."
+        "alert6" : "The report has been downloaded to your device.",
+        "alertResponse1" : "MODIFY",
+        "alertResponse2" : "CANCEL"
     }
 }

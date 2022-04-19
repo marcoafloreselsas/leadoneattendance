@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const QueryRecordsScreenAdmin()));
+                        builder: (context) => const QueryRecordsScreen()));
               },
               icon: const Icon(Icons.search_outlined)),
           IconButton(

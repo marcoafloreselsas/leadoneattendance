@@ -84,11 +84,14 @@
     },
     "alerts":
     {
+        "alert0" : "Aviso",
         "alert1" : "El registro se ha guardado exitosamente.",
         "alert2" : "¿Está seguro de modificar el registro?",
         "alert3" : "El registro se ha modificado exitosamente.",
         "alert4" : "El campo ‘destinatario’ es obligatorio.",
         "alert5" : "El correo se ha enviado exitosamente.",
-        "alert6" : "El reporte ha sido descargado en su dispositivo."
+        "alert6" : "El reporte ha sido descargado en su dispositivo.",
+        "alertResponse1" : "MODIFICAR",
+        "alertResponse2" : "CANCELAR"
     }
 }
