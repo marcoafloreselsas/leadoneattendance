@@ -83,8 +83,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           //Text de Registros Recientes 
           Row(
             children: [
-              const Text('mainpage.subtitle', style: TextStyle(fontSize: 20))
-                  .tr()
+              const Text('mainpage.subtitle', style: TextStyle(fontSize: 20)).tr()
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
@@ -98,7 +97,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 
 
 
-// //Tarjetita simple de un resgistro.
+// //Tarjetita simple de un registro.
 //           Container(
 //             color: Colors.white,
 //             child: ListTile(
@@ -130,6 +129,8 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 //                 }),
 //           ),
 
+
+//ESTE LISTVIEW, CARGA LOS 5 REGISTROS RECIENTES DE LA API
 // Expanded(child: ListView.builder(
 //               itemCount: recentRecords?.length,
 //               itemBuilder: (context, index) {
@@ -158,12 +159,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 //                     ),
 //                     onTap: () {});
 //               }),)
-
-
-
-
-
-
 
 
         ],

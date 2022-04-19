@@ -81,5 +81,14 @@
         "Lead1_error_002" : "The values are the same, no need for an update.",
         "Lead1_error_003" : "Only one record per user on the same date with the same record type.",
         "Lead1_error_004" : "Email already in use."
+    },
+    "alerts":
+    {
+        "alert1" : "The record has been saved successfully.",
+        "alert2" : "Are you sure to modify the record?",
+        "alert3" : "The record has been successfully modified.",
+        "alert4" : "The 'recipient' field is required.",
+        "alert5" : "The mail has been sent successfully.",
+        "alert6" : "The report has been downloaded to your device."
     }
 }

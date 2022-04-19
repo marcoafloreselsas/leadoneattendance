@@ -14,11 +14,10 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   // Initial Selected Value
-  String dropdownvalue = 'ALL EMPLOYEES';
+  String dropdownvalue = 'JOHAN GARCIA';
 
   // List of items in our dropdown menu
   var items = [
-    'ALL EMPLOYEES',
     'JOHAN GARCIA',
     'MARCO FLORES',
     'ARI PEREZ',
@@ -35,7 +34,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text('Consulta').tr(),
+            title: const Text('queryrecords.title').tr(),
             centerTitle: true,
             actions: [
             IconButton(
@@ -53,7 +52,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
               Row(
                 children: [
-                  const Text('insertpage.selectDate').tr(),
+                  const Text('queryrecords.selectDate').tr(),
                   const Icon(Icons.keyboard_arrow_down_outlined),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +112,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               Container(
                 color: Colors.white,
                 child: ListTile(
-                    title: const Text(""), //fecha del registro
+                    title: const Text("April 19th, 2022"), //fecha del registro
                     trailing: Wrap(
                       spacing: 12, // space between two icons
                       children: const <Widget>[

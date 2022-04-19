@@ -36,7 +36,11 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
       appBar: AppBar(
           title: const Text('generatereports.title').tr(),
           centerTitle: true,
-          actions: const []),
+          actions: [
+            IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportViewerScreen())
+            );}, icon: const Icon(Icons.add))
+          ]),
       body: Column(
         children: [
           const SizedBox(

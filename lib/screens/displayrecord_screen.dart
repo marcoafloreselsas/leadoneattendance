@@ -18,7 +18,7 @@ class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
         appBar:
             //APP BAR 
             AppBar(
-                title: Text(DateTime.now().toString()),
+                title: const Text('l'),
                 centerTitle: true,
                 actions: [
               IconButton(

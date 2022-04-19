@@ -45,6 +45,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const EditRecordScreen()));
+                          showDialog(context: context, builder: (context) => const AlertDialog(title: Text('') , content: Text(''), actions: [],));
                 },
                 icon: const Icon(Icons.add_outlined)),
           ]),

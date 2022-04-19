@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class ReportViewerScreen extends StatelessWidget {
   const ReportViewerScreen({Key? key}) : super(key: key);
@@ -8,7 +10,7 @@ class ReportViewerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-        AppBar(title: const Text('Sample Text'), centerTitle: true, actions: [
+        AppBar(title: const Text('reportviewer.title').tr(), centerTitle: true, actions: [
         IconButton(
             onPressed: () {
               Navigator.push(

@@ -81,5 +81,14 @@
         "Lead1_error_002" : "Los valores de los tiempos son los mismos, no hay necesidad de actualizar.",
         "Lead1_error_003" : "Solo un registro por usuario en la misma fecha y del mismo tipo.",
         "Lead1_error_004" : "Correo electronico ya está en uso."
+    },
+    "alerts":
+    {
+        "alert1" : "El registro se ha guardado exitosamente.",
+        "alert2" : "¿Está seguro de modificar el registro?",
+        "alert3" : "El registro se ha modificado exitosamente.",
+        "alert4" : "El campo ‘destinatario’ es obligatorio.",
+        "alert5" : "El correo se ha enviado exitosamente.",
+        "alert6" : "El reporte ha sido descargado en su dispositivo."
     }
 }

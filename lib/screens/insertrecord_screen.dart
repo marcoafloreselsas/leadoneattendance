@@ -26,7 +26,7 @@ class _InsertRecordScreenState extends State<InsertRecordScreen> {
     'insertrecords.TRpermit'.tr(),
   ];
 
-//Sobreescritura de la clase y dek widget
+//Sobreescritura de la clase y del widget
   @override
   void initState() {
         super.initState();
