@@ -46,7 +46,7 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MainScreen()));
+                          builder: (context) => const MainScreenAdmin()));
                 },
                 icon: const Icon(Icons.add_outlined)),
           ]),
@@ -122,7 +122,8 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                 minimumSize: const Size(120, 50) //TAMANO - WH
               ),
               onPressed: (){
-                
+                Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => const MainScreenAdmin()));
               }, 
               child: const Text('insertrecords.saveButton').tr())
         ],

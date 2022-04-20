@@ -91,7 +91,7 @@
         "alert4" : "El campo ‘destinatario’ es obligatorio.",
         "alert5" : "El correo se ha enviado exitosamente.",
         "alert6" : "El reporte ha sido descargado en su dispositivo.",
-        "alert7" : "Registro no disponible",
+        "alert7" : "Registro no disponible.",
         "alertResponse1" : "MODIFICAR",
         "alertResponse2" : "CANCELAR"
     }

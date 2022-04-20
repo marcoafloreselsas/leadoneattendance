@@ -149,8 +149,8 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
 //INTERVALO DE FECHAS (FUNCIONAL)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 12),
+            children: const [
+              SizedBox(width: 12),
             ],
           ),
           const SizedBox(

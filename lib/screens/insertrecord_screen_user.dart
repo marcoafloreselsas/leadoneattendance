@@ -121,7 +121,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                 primary: Colors.white, //TEXT COLOR
                 minimumSize: const Size(120, 50) //TAMANO - WH
               ),
-              onPressed: (){}, 
+              onPressed: (){
+                 Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => const MainScreen()));
+              }, 
               child: const Text('insertrecords.saveButton').tr())
         ],
       ),
