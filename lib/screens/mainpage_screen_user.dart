@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(                                   
         title: const Text('mainpage.title').tr(),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {

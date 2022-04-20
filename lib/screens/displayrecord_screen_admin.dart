@@ -26,7 +26,7 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const EditRecordScreen()));
+                            builder: (context) => const EditRecordScreenAdmin()));
                   },
                   icon: const Icon(Icons.edit_outlined))
             ]),

@@ -41,10 +41,6 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditRecordScreenUser()));
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(

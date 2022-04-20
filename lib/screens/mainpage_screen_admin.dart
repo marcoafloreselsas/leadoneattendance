@@ -28,6 +28,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
         //Sección del AppBar
         title: const Text('mainpage.title').tr(),
         centerTitle: true,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {
