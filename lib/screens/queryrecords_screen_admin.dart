@@ -64,7 +64,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                 ),
                 onTap: _pickDate,
               ),
-              Row(
+              Row( 
                 children: [
                   const Text('queryrecords.selectEmployee').tr(),
                 ],
@@ -100,7 +100,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               ),
               Row(
                 children: [
-                  const Text('mainpage.subtitle',
+                  const Text('queryrecords.recentRecords',
                           style: TextStyle(fontSize: 20)).tr()
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +136,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DisplayRecordScreen()));
+                          builder: (context) => const DisplayRecordScreenAdmin()));
                     }),
               ),
             ],

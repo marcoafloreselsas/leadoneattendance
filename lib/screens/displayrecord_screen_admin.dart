@@ -3,14 +3,14 @@ import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class DisplayRecordScreen extends StatefulWidget {
-  const DisplayRecordScreen({Key? key}) : super(key: key);
+class DisplayRecordScreenAdmin extends StatefulWidget {
+  const DisplayRecordScreenAdmin({Key? key}) : super(key: key);
 
   @override
-  State<DisplayRecordScreen> createState() => _DisplayRecordScreenState();
+  State<DisplayRecordScreenAdmin> createState() => _DisplayRecordScreenAdminState();
 }
 
-class _DisplayRecordScreenState extends State<DisplayRecordScreen> {
+class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

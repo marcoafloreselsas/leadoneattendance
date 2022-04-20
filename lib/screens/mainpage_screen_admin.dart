@@ -20,7 +20,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +69,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                     vertical: 16.0, horizontal: 5.0)),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const InsertRecordScreen()));
+                      builder: (context) => const InsertRecordScreenAdmin()));
                 },
               ),
               const SizedBox(
@@ -179,7 +178,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const InsertRecordScreen()));
+                  builder: (context) => const InsertRecordScreenAdmin()));
         },
       ),
     );

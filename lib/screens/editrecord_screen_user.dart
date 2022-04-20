@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class EditRecordScreen extends StatefulWidget {
-  const EditRecordScreen({Key? key}) : super(key: key);
+class EditRecordScreenUser extends StatefulWidget {
+  const EditRecordScreenUser({Key? key}) : super(key: key);
 
   @override
-  State<EditRecordScreen> createState() => _EditRecordScreenState();
+  State<EditRecordScreenUser> createState() => _EditRecordScreenUserState();
 }
 
-class _EditRecordScreenState extends State<EditRecordScreen> {
+class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   bool value = true;
@@ -44,7 +44,7 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EditRecordScreen()));
+                          builder: (context) => const EditRecordScreenUser()));
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(

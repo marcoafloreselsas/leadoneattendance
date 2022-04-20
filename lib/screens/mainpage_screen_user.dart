@@ -71,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
                 (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const InsertRecordScreen()));
+                  builder: (context) => const InsertRecordScreenUser()));
             },
           ),
           const SizedBox(
@@ -127,7 +127,7 @@ class _MainScreenState extends State<MainScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const InsertRecordScreen()));
+                  builder: (context) => const InsertRecordScreenUser()));
         },
       ),
     );

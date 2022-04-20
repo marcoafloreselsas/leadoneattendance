@@ -3,14 +3,14 @@ import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class InsertRecordScreen extends StatefulWidget {
-  const InsertRecordScreen({Key? key}) : super(key: key);
+class InsertRecordScreenUser extends StatefulWidget {
+  const InsertRecordScreenUser({Key? key}) : super(key: key);
 
   @override
-  State<InsertRecordScreen> createState() => _InsertRecordScreenState();
+  State<InsertRecordScreenUser> createState() => _InsertRecordScreenUserState();
 }
 
-class _InsertRecordScreenState extends State<InsertRecordScreen> {
+class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   bool value = true;
