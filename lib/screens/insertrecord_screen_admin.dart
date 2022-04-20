@@ -121,7 +121,9 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                 primary: Colors.white, //TEXT COLOR
                 minimumSize: const Size(120, 50) //TAMANO - WH
               ),
-              onPressed: (){}, 
+              onPressed: (){
+                
+              }, 
               child: const Text('insertrecords.saveButton').tr())
         ],
       ),

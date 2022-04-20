@@ -47,13 +47,19 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                             title: const Text('alerts.alert0').tr(),
                             content: const Text('alerts.alert2').tr(),
                             actions: [
+                              //Botón "Cancelar".
                               TextButton(
-                                onPressed: () {},
                                 child: const Text('alerts.alertResponse2').tr(),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
+                              //Botón "Modificar"
                               TextButton(
-                                onPressed: () {},
                                 child: const Text('alerts.alertResponse1').tr(),
+                                onPressed: () {
+                                  
+                                },
                               ),
                             ],
                           ));

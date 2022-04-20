@@ -91,6 +91,7 @@
         "alert4" : "The 'recipient' field is required.",
         "alert5" : "The mail has been sent successfully.",
         "alert6" : "The report has been downloaded to your device.",
+        "alert7" : "Record not available.",
         "alertResponse1" : "MODIFY",
         "alertResponse2" : "CANCEL"
     }

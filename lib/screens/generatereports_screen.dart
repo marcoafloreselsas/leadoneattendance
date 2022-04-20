@@ -14,6 +14,12 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
 
+//Rango de fechas
+  DateTimeRange dateRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now(),
+  );
+
   String dropdownvalue = 'ALL EMPLOYEES';
   var items = [
     'ALL EMPLOYEES',
@@ -32,14 +38,22 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final start = dateRange.start;
+    final end = dateRange.end;
+
     return Scaffold(
       appBar: AppBar(
           title: const Text('generatereports.title').tr(),
           centerTitle: true,
           actions: [
-            IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportViewerScreen())
-            );}, icon: const Icon(Icons.add))
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ReportViewerScreen()));
+                },
+                icon: const Icon(Icons.add))
           ]),
       body: Column(
         children: [
@@ -57,25 +71,50 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
             children: [const Text('generatereports.fromDate').tr()],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
-          ListTile(
-            title: Text(
-              "${pickedDateFrom.year}, ${pickedDateFrom.month}, ${pickedDateFrom.day}",
-              textAlign: TextAlign.center,
-            ),
-            //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
-            onTap: _pickDateFrom,
+          // ListTile(
+          //   title: Text(
+          //     "${pickedDateFrom.year}, ${pickedDateFrom.month}, ${pickedDateFrom.day}",
+          //     textAlign: TextAlign.center,
+          //   ),
+          //   //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
+          //   onTap: _pickDateFrom,
+          // ),
+          Row(
+            children: [
+              Expanded(            
+                  child: ElevatedButton(
+                      onPressed: _pickDateRange,
+                      child: Text('${start.year}, ${start.month}, ${start.day}'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(AppTheme.primary),
+                      ),
+                )
+              ),
+            ],
           ),
           Row(
             children: [const Text('generatereports.toDate').tr()],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
-          ListTile(
-            title: Text(
-              "${pickedDateTo.year}, ${pickedDateTo.month}, ${pickedDateTo.day}",
-              textAlign: TextAlign.center,
-            ),
-            //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
-            onTap: _pickDateTo,
+          // ListTile(
+          //   title: Text(
+          //     "${pickedDateTo.year}, ${pickedDateTo.month}, ${pickedDateTo.day}",
+          //     textAlign: TextAlign.center,
+          //   ),
+          //   //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
+          //   onTap: _pickDateTo,
+          // ),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                    onPressed: _pickDateRange,
+                    child: Text('${end.year}, ${end.month}, ${end.day}'),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(AppTheme.primary),
+                      )),
+              ),
+            ],
           ),
           Row(
             children: [const Text('generatereports.employeeLabel').tr()],
@@ -107,18 +146,27 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
-            const SizedBox(height: 20,),
-            //BOTON DE GUARDAR CAMBIOS
-            TextButton(
+//INTERVALO DE FECHAS (FUNCIONAL)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 12),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          //BOTON DE GUARDAR CAMBIOS
+          TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: AppTheme.primary,
-                primary: Colors.white, //TEXT COLOR
-                minimumSize: const Size(120, 50) //TAMANO - WH
-              ),
-              onPressed: (){
-                 Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ReportViewerScreen()));
-              }, 
+                  backgroundColor: AppTheme.primary,
+                  primary: Colors.white, //TEXT COLOR
+                  minimumSize: const Size(120, 50) //TAMANO - WH
+                  ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ReportViewerScreen()));
+              },
               child: const Text('generatereports.applyButton').tr())
         ],
       ),
@@ -151,5 +199,17 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
         pickedDateTo = date2;
       });
     }
+  }
+
+//METODO QUE OBTIENE EL INTERVALO DE FECHAS
+  Future _pickDateRange() async {
+    DateTimeRange? newDateRange = await showDateRangePicker(
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2027),
+    );
+    if (newDateRange == null) return; // si el usuario presiona X
+    setState(() => dateRange = newDateRange); // si el usuario presiona 'save'
   }
 }
