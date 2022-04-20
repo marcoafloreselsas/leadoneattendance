@@ -173,33 +173,33 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
     );
   }
 
-  //FUNCION QUE MUESTRA EL DATE PICKER
-  _pickDateFrom() async {
-    DateTime? date = await showDatePicker(
-        context: context,
-        initialDate: pickedDateFrom,
-        firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
-    if (date != null) {
-      setState(() {
-        pickedDateFrom = date;
-      });
-    }
-  }
+  // //FUNCION QUE MUESTRA EL DATE PICKER
+  // _pickDateFrom() async {
+  //   DateTime? date = await showDatePicker(
+  //       context: context,
+  //       initialDate: pickedDateFrom,
+  //       firstDate: DateTime(DateTime.now().year - 1),
+  //       lastDate: DateTime(DateTime.now().year + 5));
+  //   if (date != null) {
+  //     setState(() {
+  //       pickedDateFrom = date;
+  //     });
+  //   }
+  // }
 
-  //FUNCION QUE MUESTRA EL DATE PICKER
-  _pickDateTo() async {
-    DateTime? date2 = await showDatePicker(
-        context: context,
-        initialDate: pickedDateTo,
-        firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
-    if (date2 != null) {
-      setState(() {
-        pickedDateTo = date2;
-      });
-    }
-  }
+  // //FUNCION QUE MUESTRA EL DATE PICKER
+  // _pickDateTo() async {
+  //   DateTime? date2 = await showDatePicker(
+  //       context: context,
+  //       initialDate: pickedDateTo,
+  //       firstDate: DateTime(DateTime.now().year - 1),
+  //       lastDate: DateTime(DateTime.now().year + 5));
+  //   if (date2 != null) {
+  //     setState(() {
+  //       pickedDateTo = date2;
+  //     });
+  //   }
+  // }
 
 //METODO QUE OBTIENE EL INTERVALO DE FECHAS
   Future _pickDateRange() async {
