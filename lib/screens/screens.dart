@@ -11,6 +11,7 @@ export 'package:leadoneattendance/screens/queryrecords_screen_admin.dart'; // CO
 export 'package:leadoneattendance/screens/generatereports_screen.dart'; //    GENERAR REPORTES
 export 'package:leadoneattendance/screens/reportviewer_screen.dart'; //       VISUALIZAR REPORTE
 export 'package:leadoneattendance/screens/sendreport_screen.dart'; //         ENVIAR REPORTE
+
 //PANTALLAS DE EMPLEADO
 export 'package:leadoneattendance/screens/mainpage_screen_user.dart'; //      MAIN SCREEN PARA EL USER
 export 'package:leadoneattendance/screens/displayrecord_screen_user.dart'; //      VISUALIZAR REGISTRO

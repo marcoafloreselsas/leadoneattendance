@@ -72,7 +72,12 @@ class _SendReportScreenState extends State<SendReportScreen> {
                       primary: Colors.white, //Color del Texto
                       minimumSize: const Size(120, 50) //Tamaño - WH
                       ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainScreenAdmin()));
+                  },
                   child: const Text('sendreport.sendButton').tr())
             ],
           ),

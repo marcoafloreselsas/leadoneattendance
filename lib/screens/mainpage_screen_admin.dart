@@ -185,3 +185,41 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// -----------------------------------------------------------------------------------------
+class Records {
+  final int albumId;
+  final int id;
+  final String title;
+  final String url;
+  final String thumbnailUrl;
+
+  const Records({
+    required this.albumId,
+    required this.id,
+    required this.title,
+    required this.url,
+    required this.thumbnailUrl,
+  });
+
+  factory Records.fromJson(Map<String, dynamic> json) {
+    return Records(
+      albumId: json['albumId'] as int,
+      id: json['id'] as int,
+      title: json['title'] as String,
+      url: json['url'] as String,
+      thumbnailUrl: json['thumbnailUrl'] as String,
+    );
+  }
+}

@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
+
 
 class InsertRecordScreenAdmin extends StatefulWidget {
   const InsertRecordScreenAdmin({Key? key}) : super(key: key);
@@ -171,5 +175,77 @@ _pickTime() async{
       time = t;
     });
   }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------------------------
+
+// 21 DE ABRIL -- COMO ENVIAR EL REGISTRO
+Future<http.Response> createAlbum(String title) {
+  return http.post(
+    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'title': title,
+    }),
+  );
+}
+}
+
+
+class Record {
+  final int id;
+  final String title;
+
+  const Record({required this.id, required this.title});
+
+  factory Record.fromJson(Map<String, dynamic> json) {
+    return Record(
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+}
+
+Future<Record> createAlbum(String title) async {
+  final response = await http.post(
+    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'title': title,
+    }),
+  ); 
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Record.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create record.');
   }
 }

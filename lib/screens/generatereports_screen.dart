@@ -14,7 +14,7 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
 
-//Rango de fechas
+//Rango de fechas (Abril 20 de 2022)
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime.now(),
     end: DateTime.now(),
@@ -38,6 +38,7 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //Declaración de fecha de inicio, fecha de fin, Abril 20 de 2022
     final start = dateRange.start;
     final end = dateRange.end;
 
@@ -79,13 +80,16 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
           //   //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
           //   onTap: _pickDateFrom,
           // ),
+          //Fila que tiene el ElevatedButton de la fecha de inicio. Abril 20 de 2022
           Row(
             children: [
               Expanded(            
                   child: ElevatedButton(
+                    //Al presionar, lanza el diálogo con el Date Time Picker
                       onPressed: _pickDateRange,
                       child: Text('${start.year}, ${start.month}, ${start.day}'),
                       style: ButtonStyle(
+                        //Color de fondo del botón.
                         backgroundColor: MaterialStateProperty.all<Color>(AppTheme.primary),
                       ),
                 )
