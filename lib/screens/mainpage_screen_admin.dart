@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/models/fiverecords.dart';
+import 'package:leadoneattendance/services/remote_services.dart';
 import '../themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import '../services/firebase_services.dart';
@@ -12,11 +14,21 @@ class MainScreenAdmin extends StatefulWidget {
 }
 
 class _MainScreenAdmin extends State<MainScreenAdmin> {
-    DateTime now = DateTime.now();
+  DateTime now = DateTime.now();
+  List<Record>? records;
 
   @override
   void initState() {
-    super.initState();
+    super.initState();  
+
+    getData();
+  }
+
+  getData() async{
+    records = (await RemoteService().getPosts())!;
+    setState(() {
+      
+    });
     
   }
 
@@ -79,23 +91,19 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
             ],
           ),
 
-
-          //Text de Registros Recientes 
+          //Text de Registros Recientes
           Row(
             children: [
-              const Text('mainpage.subtitle', style: TextStyle(fontSize: 20)).tr()
+              const Text('mainpage.subtitle', style: TextStyle(fontSize: 20))
+                  .tr()
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
-
-
 
           //LOS SIZEDBOX EN SU MAYORĪA, SON ESPACIOS SOLAMENTE.
           const SizedBox(
             height: 10,
           ),
-
-
 
 // //Tarjetita simple de un registro.
 //           Container(
@@ -129,44 +137,37 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 //                 }),
 //           ),
 
-
-//ESTE LISTVIEW, CARGA LOS 5 REGISTROS RECIENTES DE LA API
-// Expanded(child: ListView.builder(
-//               itemCount: recentRecords?.length,
-//               itemBuilder: (context, index) {
-//                 return ListTile(
-//                     title: Text(recentRecords![index].RecordDate.toString()),
-//                     trailing: Wrap(
-//                       spacing: 12, // space between two icons
-//                       children: <Widget>[
-//                         const Icon(
-//                           Icons.arrow_upward_outlined,
-//                           color: AppTheme.green,
-//                         ), // icon-1
-//                         Text(
-//                           recentRecords![index].EntryTime.toString(),
-//                           style: const TextStyle(fontSize: 18),
-//                         ),
-//                         const Icon(
-//                           Icons.arrow_downward_outlined,
-//                           color: AppTheme.red,
-//                         ), // icon-2
-//                         Text(
-//                           recentRecords![index].ExitTime.toString(),
-//                           style: const TextStyle(fontSize: 18),
-//                         )
-//                       ],
-//                     ),
-//                     onTap: () {});
-//               }),)
-
-
+// ESTE LISTVIEW, CARGA LOS 5 REGISTROS RECIENTES DE LA API
+Expanded(child: ListView.builder(
+              itemCount: records!.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(records![index].RecordDate.toString()),
+                    // trailing: Wrap(
+                    //   spacing: 12, // space between two icons
+                    //   children: <Widget>[
+                    //     const Icon(
+                    //       Icons.arrow_upward_outlined,
+                    //       color: AppTheme.green,
+                    //     ), // icon-1
+                    //     Text(
+                    //       Record![index].EntryTime.toString(),
+                    //       style: const TextStyle(fontSize: 18),
+                    //     ),
+                    //     const Icon(
+                    //       Icons.arrow_downward_outlined,
+                    //       color: AppTheme.red,
+                    //     ), // icon-2
+                    //     Text(
+                    //       Record![index].ExitTime.toString(),
+                    //       style: const TextStyle(fontSize: 18),
+                    //     )
+                    //   ],
+                    // ),
+                    onTap: () {});
+              }),)
         ],
       ),
-
-
-
-      
 
       //Botón secundario para añadir un nuevo registro.
       floatingActionButton: FloatingActionButton(
@@ -182,44 +183,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                   builder: (context) => const InsertRecordScreenAdmin()));
         },
       ),
-    );
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// -----------------------------------------------------------------------------------------
-class Records {
-  final int albumId;
-  final int id;
-  final String title;
-  final String url;
-  final String thumbnailUrl;
-
-  const Records({
-    required this.albumId,
-    required this.id,
-    required this.title,
-    required this.url,
-    required this.thumbnailUrl,
-  });
-
-  factory Records.fromJson(Map<String, dynamic> json) {
-    return Records(
-      albumId: json['albumId'] as int,
-      id: json['id'] as int,
-      title: json['title'] as String,
-      url: json['url'] as String,
-      thumbnailUrl: json['thumbnailUrl'] as String,
     );
   }
 }

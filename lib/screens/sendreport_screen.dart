@@ -11,10 +11,13 @@ class SendReportScreen extends StatefulWidget {
 }
 
 class _SendReportScreenState extends State<SendReportScreen> {
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
 //Esta vista envía el reporte generado.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //App bar de la pantalla.
         appBar: AppBar(
             title: const Text('sendreport.title').tr(),
             centerTitle: true,
@@ -28,69 +31,82 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   },
                   icon: const Icon(Icons.send)),
             ]),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: ('sendreport.to').tr(),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: ('sendreport.subject').tr(),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                maxLines: 5,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  labelText: ('sendreport.message').tr(),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+        body: Form(
+            key: _key,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: ('sendreport.to').tr(),
+                      border: const OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required.';
+                      }
+                      String pattern = r'\w+@\w+\.\w+';
+                      if (!RegExp(pattern).hasMatch(value)) {
+                        return 'Invalid Email address format.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: ('sendreport.subject').tr(),
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    maxLines: 5,
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      labelText: ('sendreport.message').tr(),
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
 
-              //Botón de guardar cambios.
-              TextButton(
-                  style: TextButton.styleFrom(
-                      backgroundColor: AppTheme.primary,
-                      primary: Colors.white, //Color del Texto
-                      minimumSize: const Size(120, 50) //Tamaño - WH
-                      ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MainScreenAdmin()));
-                  },
-                  child: const Text('sendreport.sendButton').tr())
-            ],
-          ),
-        ));
+                  //Botón de guardar cambios.
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: AppTheme.primary,
+                          primary: Colors.white, //Color del Texto
+                          minimumSize: const Size(120, 50) //Tamaño - WH
+                          ),
+                      onPressed: () {
+                        if (_key.currentState!.validate()) {
+                          _key.currentState!.save();
+                          print('ok');
+                          // Navigator.push(
+                          // context,
+                          // MaterialPageRoute(
+                          //     builder: (context) => const MainScreenAdmin()));
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const MainScreenAdmin()),
+                              (Route<dynamic> route) =>
+                                  route is MainScreenAdmin);
+                        }
+                      },
+                      child: const Text('sendreport.sendButton').tr())
+                ],
+              ),
+            )));
   }
 }
-
-
-
-
-      //CAMPOS
-      //Mail to
-      //Subject
-      //Message
-      //Attachment
-      //Send Button
