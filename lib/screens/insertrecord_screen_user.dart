@@ -1,10 +1,9 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class InsertRecordScreenUser extends StatefulWidget {
   const InsertRecordScreenUser({Key? key}) : super(key: key);
@@ -18,24 +17,31 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   late TimeOfDay time;
   bool switchValue = true;
 
+  // Initial Selected Value
+  // String dropdownvalue = 'insertrecords.TRattendance'.tr();
 
-    // Initial Selected Value
-  String dropdownvalue = 'insertrecords.TRattendance'.tr();   
-  
+  // // List of items in our dropdown menu
+  // var items = [
+  //   'insertrecords.TRattendance'.tr(),
+  //   'insertrecords.TRlunch'.tr(),
+  //   'insertrecords.TRovertime'.tr(),
+  //   'insertrecords.TRpermit'.tr(),
+  // ];
+  String dropdownvalue = 'Attendance';
+
   // List of items in our dropdown menu
-  var items = [    
-    'insertrecords.TRattendance'.tr(),
-    'insertrecords.TRlunch'.tr(),
-    'insertrecords.TRovertime'.tr(),
-    'insertrecords.TRpermit'.tr(),
+  var items = [
+    'Attendance',
+    'Lunch',
+    'Overtime',
+    'Permit',
   ];
-
 //Sobreescritura de la clase y del widget
   @override
   void initState() {
-        super.initState();
-        pickedDate = DateTime.now();
-        time = TimeOfDay.now();
+    super.initState();
+    pickedDate = DateTime.now();
+    time = TimeOfDay.now();
   }
 
   @override
@@ -55,182 +61,270 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                 icon: const Icon(Icons.add_outlined)),
           ]),
       body: Card(
-          //Calendario para seleccionar una fecha.
+        //Calendario para seleccionar una fecha.
         child: Column(
-        children: [
-          //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
-          Row(
-            children: [
-              const Text('insertrecords.selectDate').tr(),
-              const Icon(Icons.keyboard_arrow_down_outlined),
-            ],
-          mainAxisAlignment: MainAxisAlignment.center,
-          ),
-          ListTile(
-            title: Text("${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}", textAlign: TextAlign.center,),
-          //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
-            onTap: _pickDate,
-          ),
-          //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
-          Row(
-            children: [
-              const Text('insertrecords.selectTime').tr(),
-              const Icon(Icons.keyboard_arrow_down_outlined),
-            ],
-          mainAxisAlignment: MainAxisAlignment.center,
-          ),
-          ListTile(
-            title: Text("${time.hour}:${time.minute}", textAlign: TextAlign.center,),
-            onTap: _pickTime,
-          ),
-          //TIPO DE REGISTRO
-          Row(
-            children: [
-              const Text('insertrecords.typeRecord').tr(),
-              const Padding(padding: EdgeInsets.all(25.0)),
-              DropdownButton(
-              value: dropdownvalue,
-              icon: const Icon(Icons.keyboard_arrow_down_outlined),    
-              items: items.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items),
-                );
-              }).toList(),
-              onChanged: (String? newValue) { 
-                setState(() {
-                  dropdownvalue = newValue!;
-                });
-              },
-            ),
-            ],                          
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-           //SWITCH
+          children: [
+            //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
             Row(
               children: [
+                const Text('insertrecords.selectDate').tr(),
+                const Icon(Icons.keyboard_arrow_down_outlined),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            ListTile(
+              title: Text(
+                "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
+                textAlign: TextAlign.center,
+              ),
+              //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
+              onTap: _pickDate,
+            ),
+            //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
+            Row(
+              children: [
+                const Text('insertrecords.selectTime').tr(),
+                const Icon(Icons.keyboard_arrow_down_outlined),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            ListTile(
+              title: Text(
+                "${time.hour}:${time.minute}",
+                textAlign: TextAlign.center,
+              ),
+              onTap: _pickTime,
+            ),
+            //TIPO DE REGISTRO
+            Row(
+              children: [
+                const Text('insertrecords.typeRecord').tr(),
+                const Padding(padding: EdgeInsets.all(25.0)),
+                DropdownButton(
+                  value: dropdownvalue,
+                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  onChanged: (String? tipoActividad) {
+                    setState(() {
+                      dropdownvalue = tipoActividad!;
+                    });
+                  },
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            //SWITCH
+            Row(children: [
               const Text('insertrecords.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               buildSwitch(), //WIDGET DEL SWITCH
               const Padding(padding: EdgeInsets.all(25.0)),
               const Text('insertrecords.out').tr(),
-            ],
-              mainAxisAlignment: MainAxisAlignment.center
+            ], mainAxisAlignment: MainAxisAlignment.center),
+            const SizedBox(
+              height: 20,
             ),
-            const SizedBox(height: 20,),
             //BOTON DE GUARDAR CAMBIOS
             TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: AppTheme.primary,
-                primary: Colors.white, //TEXT COLOR
-                minimumSize: const Size(120, 50) //TAMANO - WH
-              ),
-              onPressed: (){
-                insertRecord();
-                 Navigator.push(context, MaterialPageRoute(
+                style: TextButton.styleFrom(
+                    backgroundColor: AppTheme.primary,
+                    primary: Colors.white, //TEXT COLOR
+                    minimumSize: const Size(120, 50) //TAMANO - WH
+                    ),
+                onPressed: () {
+                  insertRecord;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
                           builder: (context) => const MainScreen()));
-              }, 
-              child: const Text('insertrecords.saveButton').tr())
-        ],
-      ),
+                },
+                child: const Text('insertrecords.saveButton').tr())
+          ],
+        ),
       ),
     );
   }
-//Widget del Switch
-Widget buildSwitch() => Transform.scale(
-  scale: 2,
-  child: Switch.adaptive(
-    activeColor: AppTheme.red,
-    activeTrackColor: Colors.red[200],
-    inactiveThumbColor: AppTheme.green,
-    inactiveTrackColor: Colors.green[200],
-    value: switchValue, 
-    onChanged: (value) => setState(() => switchValue = value)),
-);
 
+//Widget del Switch
+  Widget buildSwitch() => Transform.scale(
+        scale: 2,
+        child: Switch.adaptive(
+            activeColor: AppTheme.red,
+            activeTrackColor: Colors.red[200],
+            inactiveThumbColor: AppTheme.green,
+            inactiveTrackColor: Colors.green[200],
+            value: switchValue,
+            onChanged: (valorSwitch) => setState(() => switchValue = valorSwitch)),
+      );
 
 //Función que muestra el Date Picker.
-_pickDate() async {
-  DateTime? date = await showDatePicker(
-    context: context,
-    initialDate: pickedDate,
-    firstDate: DateTime(DateTime.now().year-1),
-    lastDate: DateTime(DateTime.now().year+5)
-  );
-  if(date != null){
-    setState(() {
-      pickedDate = date;
-    });
+  _pickDate() async {
+    DateTime? dateRecord = await showDatePicker(
+        context: context,
+        initialDate: pickedDate,
+        firstDate: DateTime(DateTime.now().year - 1),
+        lastDate: DateTime(DateTime.now().year + 5));
+    if (dateRecord != null) {
+      setState(() {
+        pickedDate = dateRecord;
+      });
+    }
   }
-}
 
 //Función que muestra el Time Picker.
-_pickTime() async{
-    TimeOfDay? timeofday = await showTimePicker(
-    context: context,
-    initialTime: time,
-
-  );
-  if(timeofday != null){
-    setState(() {
-      time = timeofday;
-    });
-  }
+  _pickTime() async {
+    TimeOfDay? timeRecord = await showTimePicker(
+      context: context,
+      initialTime: time,
+    );
+    if (timeRecord != null) {
+      setState(() {
+        time = timeRecord;
+      });
+    }
   }
 
 //Abril 25 de 2022
 //Método para insertar registro.
-insertRecord() async {
-    DateTime RecordDate;            //Fecha del Registro
-    DateTime EntryTime;             //Hora de Inicio
-    DateTime ExitTime;              //Hora de Términoi
-    int RecordTypeId = 1;               //Tipo de Registro
-    bool switchInOut = true;        //In - Out Switch - Si el switch está en false, es IN.
-                                    //                - Si el switch está en true, es OUT.
-    switch (RecordTypeId) {
-      case 0:
-        if(RecordTypeId == 1){
-          if(switchInOut == false){
-            
+  insertRecord(DateTime dateRecord, timeRecord, String tipoActividad, bool valorSwitch) async {
+    DateTime RecordDate = dateRecord; //Fecha del Registro
+    DateTime EntryTime = timeRecord; //Hora de Inicio
+    DateTime ExitTime = timeRecord; //Hora de Términoi
+    String RecordType = tipoActividad; //Tipo de Registro
+    bool switchInOut = valorSwitch; //In - Out Switch - Si el switch está en false, es IN.
+    //                - Si el switch está en true, es OUT.
+    switch (tipoActividad) {
+      case 'Attendance':
+          if (switchInOut == false) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/insertrecord'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserID" : 1,
+                  "RecordDate" : dateRecord,
+                  "EntryTime" : timeRecord,
+                  "ExitTime" : '17:30',
+                  "RecordTypeID" : 1 
+                }));
+                print('holamundo');
             //RecordDate
             //Entry Time
-          } else if (switchInOut == true){
+          } else if (switchInOut == true) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/insertrecord'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord ,
+                  "ExitTime" : timeRecord,
+                  "RecordTypeId" : 1
+                }));
             //RecordDate
             //ExitTime
-          }
+          
         }
         break;
-      case 1:
-        if(RecordTypeId == 2){
-          if(switchInOut == false){
+      case 'Lunch':
+          if (switchInOut == false) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord,
+                  "EntryTime" : timeRecord,
+                  "RecordTypeId" : 2 
+                }));
+
             //RecordDate
             //Entry Time
-          } else if (switchInOut == true){
+          } else if (switchInOut == true) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord ,
+                  "ExitTime" : timeRecord,
+                  "RecordTypeId" : 2
+                }));
             //RecordDate
             //ExitTime
-          }
         }
         break;
-      case 2:
-        if(RecordTypeId == 3){
-          if(switchInOut == false){
+      case 'Overtime':
+          if (switchInOut == false) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord,
+                  "EntryTime" : timeRecord,
+                  "RecordTypeId" : 3
+                }));
             //RecordDate
             //Entry Time
-          } else if (switchInOut == true){
+          } else if (switchInOut == true) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord ,
+                  "ExitTime" : timeRecord,
+                  "RecordTypeId" : 3
+                }));
             //RecordDate
             //ExitTime
-          }
         }
         break;
-      case 3:
-        if(RecordTypeId == 4){
-          if(switchInOut == false){
+      case 'Permit':
+          if (switchInOut == false) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord,
+                  "EntryTime" : timeRecord,
+                  "RecordTypeId" : 4 
+                }));
             //RecordDate
             //Entry Time
-          } else if (switchInOut == true){
+          } else if (switchInOut == true) {
+            final response = await http.post(
+                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(<String, dynamic>{
+                  "UserId" : 1,
+                  "RecordDate" : dateRecord ,
+                  "ExitTime" : timeRecord,
+                  "RecordTypeId" : 4
+                }));
             //RecordDate
             //ExitTime
-          }
         }
         break;
       default:
