@@ -51,7 +51,9 @@
         "title" : "Query Records",
         "selectDate" : "Select Date",
         "selectEmployee" : "Select Employee",
-        "recentRecords" : "Recent Records"
+        "recentRecords" : "Recent Records",
+        "apply" : "Apply"
+
     },
     "generatereports":
     {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/models/fiverecords.dart';
-import 'package:leadoneattendance/services/remote_services.dart';
 import '../themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import '../services/firebase_services.dart';
@@ -15,21 +13,11 @@ class MainScreenAdmin extends StatefulWidget {
 
 class _MainScreenAdmin extends State<MainScreenAdmin> {
   DateTime now = DateTime.now();
-  List<Record>? records;
 
   @override
   void initState() {
     super.initState();  
 
-    getData();
-  }
-
-  getData() async{
-    records = (await RemoteService().getPosts())!;
-    setState(() {
-      
-    });
-    
   }
 
   @override
@@ -105,67 +93,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
             height: 10,
           ),
 
-// //Tarjetita simple de un registro.
-//           Container(
-//             color: Colors.white,
-//             child: ListTile(
-//                 title: const Text("March 25th, 2022"),
-//                 trailing: Wrap(
-//                   spacing: 12, // space between two icons
-//                   children: const <Widget>[
-//                     Icon(
-//                       Icons.arrow_upward_outlined,
-//                       color: AppTheme.green,
-//                     ), // icon-1
-//                     Text(
-//                       '09:30',
-//                       style: TextStyle(fontSize: 18),
-//                     ),
-//                     Icon(
-//                       Icons.arrow_downward_outlined,
-//                       color: AppTheme.red,
-//                     ), // icon-2
-//                     Text(
-//                       '17:30',
-//                       style: TextStyle(fontSize: 18),
-//                     )
-//                   ],
-//                 ),
-//                 onTap: () {
-//                   Navigator.of(context).push(MaterialPageRoute(
-//                       builder: (context) => const DisplayRecordScreen()));
-//                 }),
-//           ),
-
-// ESTE LISTVIEW, CARGA LOS 5 REGISTROS RECIENTES DE LA API
-Expanded(child: ListView.builder(
-              itemCount: records!.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                    title: Text(records![index].RecordDate.toString()),
-                    // trailing: Wrap(
-                    //   spacing: 12, // space between two icons
-                    //   children: <Widget>[
-                    //     const Icon(
-                    //       Icons.arrow_upward_outlined,
-                    //       color: AppTheme.green,
-                    //     ), // icon-1
-                    //     Text(
-                    //       Record![index].EntryTime.toString(),
-                    //       style: const TextStyle(fontSize: 18),
-                    //     ),
-                    //     const Icon(
-                    //       Icons.arrow_downward_outlined,
-                    //       color: AppTheme.red,
-                    //     ), // icon-2
-                    //     Text(
-                    //       Record![index].ExitTime.toString(),
-                    //       style: const TextStyle(fontSize: 18),
-                    //     )
-                    //   ],
-                    // ),
-                    onTap: () {});
-              }),)
         ],
       ),
 

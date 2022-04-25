@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
@@ -13,7 +16,8 @@ class InsertRecordScreenUser extends StatefulWidget {
 class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
-  bool value = true;
+  bool switchValue = true;
+
 
     // Initial Selected Value
   String dropdownvalue = 'insertrecords.TRattendance'.tr();   
@@ -122,6 +126,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                 minimumSize: const Size(120, 50) //TAMANO - WH
               ),
               onPressed: (){
+                insertRecord();
                  Navigator.push(context, MaterialPageRoute(
                           builder: (context) => const MainScreen()));
               }, 
@@ -139,8 +144,8 @@ Widget buildSwitch() => Transform.scale(
     activeTrackColor: Colors.red[200],
     inactiveThumbColor: AppTheme.green,
     inactiveTrackColor: Colors.green[200],
-    value: value, 
-    onChanged: (value) => setState(() => this.value = value)),
+    value: switchValue, 
+    onChanged: (value) => setState(() => switchValue = value)),
 );
 
 
@@ -161,17 +166,74 @@ _pickDate() async {
 
 //Función que muestra el Time Picker.
 _pickTime() async{
-    TimeOfDay? t = await showTimePicker(
+    TimeOfDay? timeofday = await showTimePicker(
     context: context,
     initialTime: time,
 
   );
-  if(t != null){
+  if(timeofday != null){
     setState(() {
-      time = t;
+      time = timeofday;
     });
   }
   }
-}
 
-//22
+//Abril 25 de 2022
+//Método para insertar registro.
+insertRecord() async {
+    DateTime RecordDate;            //Fecha del Registro
+    DateTime EntryTime;             //Hora de Inicio
+    DateTime ExitTime;              //Hora de Términoi
+    int RecordTypeId = 1;               //Tipo de Registro
+    bool switchInOut = true;        //In - Out Switch - Si el switch está en false, es IN.
+                                    //                - Si el switch está en true, es OUT.
+    switch (RecordTypeId) {
+      case 0:
+        if(RecordTypeId == 1){
+          if(switchInOut == false){
+            
+            //RecordDate
+            //Entry Time
+          } else if (switchInOut == true){
+            //RecordDate
+            //ExitTime
+          }
+        }
+        break;
+      case 1:
+        if(RecordTypeId == 2){
+          if(switchInOut == false){
+            //RecordDate
+            //Entry Time
+          } else if (switchInOut == true){
+            //RecordDate
+            //ExitTime
+          }
+        }
+        break;
+      case 2:
+        if(RecordTypeId == 3){
+          if(switchInOut == false){
+            //RecordDate
+            //Entry Time
+          } else if (switchInOut == true){
+            //RecordDate
+            //ExitTime
+          }
+        }
+        break;
+      case 3:
+        if(RecordTypeId == 4){
+          if(switchInOut == false){
+            //RecordDate
+            //Entry Time
+          } else if (switchInOut == true){
+            //RecordDate
+            //ExitTime
+          }
+        }
+        break;
+      default:
+    }
+  }
+}

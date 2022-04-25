@@ -15,7 +15,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   DateTime now = DateTime.now();
   var isLoaded = false;
-
   @override
   void initState() {
     super.initState();
@@ -52,9 +51,10 @@ class _MainScreenState extends State<MainScreen> {
 
 
 
-/*  BODY CON EL LIST TILE QUE MUESTRA LOS REGISTROS RECIENTES */
+/*  BODY  */
       body: Column(
         children: [
+          //ListTile de Bienvenida, para insertar registro.
           ListTile(
             tileColor: Colors.white,
             leading: CircleAvatar(
@@ -78,39 +78,20 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             height: 10,
           ),
-
-
-          // //En caso de que la carga no esté lista, aparecerá el Circular Progress Indicator.
+//List View que carga los cinco registros recientes. 
           // ListView.builder(
-          //     itemCount: recentRecords?.length,
+          //     itemCount: Record.length,
           //     itemBuilder: (context, index) {
           //       return ListTile(
-          //           title: Text(recentRecords![index].RecordDate.toString()),
-          //           trailing: Wrap(
-          //             spacing: 12, // space between two icons
-          //             children: <Widget>[
-          //               const Icon(
-          //                 Icons.arrow_upward_outlined,
-          //                 color: AppTheme.green,
-          //               ), // icon-1
-          //               Text(
-          //                 recentRecords![index].EntryTime.toString(),
-          //                 style: const TextStyle(fontSize: 18),
-          //               ),
-          //               const Icon(
-          //                 Icons.arrow_downward_outlined,
-          //                 color: AppTheme.red,
-          //               ), // icon-2
-          //               Text(
-          //                 recentRecords![index].ExitTime.toString(),
-          //                 style: const TextStyle(fontSize: 18),
-          //               )
-          //             ],
-          //           ),
+          //           title: Text(Record![index].RecordDate.toString()),
           //           onTap: () {});
           //     }),
+
         ],
+
       ),
+
+      
 
 
 

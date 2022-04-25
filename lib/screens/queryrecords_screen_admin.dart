@@ -96,8 +96,24 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
               const SizedBox(
-                height: 50,
+                height: 10,
               ),
+            //BOTON DE GUARDAR CAMBIOS
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: AppTheme.primary,
+                primary: Colors.white, //TEXT COLOR
+                minimumSize: const Size(120, 50) //TAMANO - WH
+              ),
+              onPressed: (){}, 
+              child: const Text('queryrecords.apply').tr()),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              const Divider(),
+              
               Row(
                 children: [
                   const Text('queryrecords.recentRecords',

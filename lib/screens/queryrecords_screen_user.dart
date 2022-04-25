@@ -36,6 +36,7 @@ class _QueryRecordsScreenState extends State<QueryRecordsScreen> {
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
+              
               const SizedBox(
                 height: 10,
               ),

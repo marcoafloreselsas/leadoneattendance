@@ -51,7 +51,8 @@
         "title" : "Consultar Registros",
         "selectDate" : "Seleccione la Fecha",
         "selectEmployee" : "Seleccione al Empleado",
-        "recentRecords" : "Registros Recientes"
+        "recentRecords" : "Registros Recientes",
+        "apply": "Aplicar"
     },
     "generatereports":
     {
