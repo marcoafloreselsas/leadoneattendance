@@ -3,9 +3,12 @@ import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import '../services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 @override
 class MainScreen extends StatefulWidget {
+  
   const MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,11 +16,28 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  Map data = {};
+  List recordData = [];
+
   DateTime now = DateTime.now();
   var isLoaded = false;
+  
+
+
+    getUsers() async {
+      
+    http.Response response = await http.get(Uri.parse('https://eb95-45-65-152-57.ngrok.io/get/fiverecords/1'));
+    data = json.decode(response.body);
+    debugPrint(response.body);
+    setState(() {
+      recordData = data['Records'];
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    getUsers();
   }
   
   @override
@@ -46,11 +66,6 @@ class _MainScreenState extends State<MainScreen> {
               icon: const Icon(Icons.logout))
         ],
       ),
-
-
-
-
-
 /*  BODY  */
       body: Column(
         children: [
@@ -78,14 +93,16 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             height: 10,
           ),
-//List View que carga los cinco registros recientes. 
-          // ListView.builder(
-          //     itemCount: Record.length,
-          //     itemBuilder: (context, index) {
-          //       return ListTile(
-          //           title: Text(Record![index].RecordDate.toString()),
-          //           onTap: () {});
-          //     }),
+// List View que carga los cinco registros recientes. 
+          ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: recordData.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(recordData[index].RecordDate.format(DateFormat.YEAR_MONTH_DAY),style: const TextStyle(fontSize: 18) ),
+                    onTap: () {});
+              }),
 
         ],
 

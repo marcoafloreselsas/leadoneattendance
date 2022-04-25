@@ -17,6 +17,11 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   late TimeOfDay time;
   bool switchValue = true;
 
+  getUsers() async {
+    http.Response response = await http.get(Uri.parse('https://eb95-45-65-152-57.ngrok.io/get/fiverecords/1'));
+    debugPrint(response.body);
+  }
+
   // Initial Selected Value
   // String dropdownvalue = 'insertrecords.TRattendance'.tr();
 
@@ -42,6 +47,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     super.initState();
     pickedDate = DateTime.now();
     time = TimeOfDay.now();
+    getUsers();
   }
 
   @override
@@ -213,7 +219,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                   "ExitTime" : '17:30',
                   "RecordTypeID" : 1 
                 }));
-                print('holamundo');
+                debugPrint('holamundo');
             //RecordDate
             //Entry Time
           } else if (switchInOut == true) {
