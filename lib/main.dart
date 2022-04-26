@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/screens/testing_screen_two.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/services/firebase_services.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
             //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
             if (snapshot.hasData) {
               //VERIFICAR: Empleado = MainScreen, Administrador = MainScreenAdmin.
-              return const MainScreen();
+              return const TestingScreenTwo();
             }
               return const LoginPage();
             }

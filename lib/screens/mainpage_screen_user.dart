@@ -89,6 +89,7 @@ class _MainScreenState extends State<MainScreen> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const InsertRecordScreenUser()));
             },
+            
           ),
           const SizedBox(
             height: 10,

@@ -1,6 +1,7 @@
 //AQUI SE ENCUENTRA EL DIRECTORIO DE PANTALLAS.
 //G E N E R A L
-export 'package:leadoneattendance/screens/loginpage_screen.dart'; //          LOGIN PAGE
+export 'package:leadoneattendance/screens/loginpage_screen.dart'; //          LOGIN PAGE con botón de Google.
+export 'package:leadoneattendance/screens/loginpage_fields_screen.dart'; //          LOGIN PAGE con campos de texto.
 
 //PANTALLAS DE ADMINISTRADOR
 export 'package:leadoneattendance/screens/mainpage_screen_admin.dart'; //     MAIN SCREEN PARA EL ADMIN
