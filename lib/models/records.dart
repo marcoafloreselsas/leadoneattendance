@@ -2,8 +2,8 @@
 //
 //     final welcome = welcomeFromMap(jsonString);
 
+//NOTE MODELO DE OBTENER CINCO REGISTROS RECIENTES.
 import 'dart:convert';
-import 'package:intl/intl.dart';
 
 Welcome welcomeFromMap(String str) => Welcome.fromMap(json.decode(str));
 

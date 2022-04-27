@@ -90,7 +90,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
                       onPressed: () {
                         if (_key.currentState!.validate()) {
                           _key.currentState!.save();
-                          print('ok');
                           // Navigator.push(
                           // context,
                           // MaterialPageRoute(

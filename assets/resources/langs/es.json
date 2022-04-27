@@ -2,7 +2,8 @@
     "loginpage":
     {
         "title" : "¡Bienvenido!",
-        "subtitle" : "Por favor, inicie sesión."
+        "subtitle" : "Por favor, inicie sesión.",
+        "submit" : "Ingresar"
     },
     "mainpage":
     {
@@ -11,7 +12,8 @@
     },
     "displayrecords":
     { 
-        "activity" : "Actividad",
+        "displayRecord" : "Visualizar Registro",
+        "recordDate" : "Fecha del Registro",
         "TRattendance" : "Asistencia",
         "TRlunch" : "Comida",
         "TRovertime" : "Horas Extra",

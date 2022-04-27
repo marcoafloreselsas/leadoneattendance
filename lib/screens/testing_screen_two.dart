@@ -10,16 +10,18 @@ import 'package:intl/intl.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:io';
 
+
+//HTTP Request
 Future<List<Record>> fetchRecord() async {
   final response = await http
-      .get(Uri.parse('https://1a77-45-65-152-57.ngrok.io/get/fiverecords/1'));
+      .get(Uri.parse('https://e41c-45-65-152-57.ngrok.io/get/fiverecords/1'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
 
     return parsed.map<Record>((json) => Record.fromMap(json)).toList();
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load records.');
   }
 }
 
@@ -71,61 +73,103 @@ class _TestingScreenTwoState extends State<TestingScreenTwo> {
 /*  BODY  */
       body: Column(
         children: [
+          ListTile(
+            tileColor: Colors.white,
+            leading: CircleAvatar(
+                child:
+                    const Icon(Icons.person, color: AppTheme.primary, size: 50),
+                radius: 60,
+                backgroundColor: Colors.grey[300]),
+            title: Text(DateFormat('MMMMEEEEd').format(now),
+                style: const TextStyle(fontSize: 24)),
+            subtitle: Text(
+              DateFormat('Hm').format(now),
+              style: const TextStyle(fontSize: 18),
+            ),
+            contentPadding:
+                (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const InsertRecordScreenUser()));
+            },
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          //Text de Registros Recientes
+          Row(
+            children: [
+              const Text('mainpage.subtitle', style: TextStyle(fontSize: 24))
+                  .tr()
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          //LOS SIZEDBOX EN SU MAYORĪA, SON ESPACIOS SOLAMENTE.
+          const SizedBox(
+            height: 10,
+          ),
           FutureBuilder<List<Record>>(
             future: futureRecord,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+//LIST BUILDER QUE CARGA LOS CINCO REGISTROS RECIENTES
                 return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (_, index) => Container(       
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          snapshot.data![index].RecordDate,
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) => GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DisplayRecordScreenUser())),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            padding: const EdgeInsets.all(18.0),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  convertirFecha(
+                                      snapshot.data![index].RecordDate),
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_upward_outlined,
+                                  color: Colors.green,
+                                ),
+                                Text(
+                                  convertirHora(
+                                      snapshot.data![index].EntryTime),
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_downward_outlined,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  convertirHora(snapshot.data![index].ExitTime),
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Icon(
-                          Icons.arrow_upward_outlined,
-                          color: Colors.green,
-                        ),
-                        Text(
-                          snapshot.data![index].EntryTime,
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Icon(
-                          Icons.arrow_downward_outlined,
-                          color: Colors.red,
-                        ),
-                        Text(
-                          snapshot.data![index].ExitTime,
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          
-                        ),
-
-                      ],
-                    ),
-                  ),
-                );
+                        ));
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -133,6 +177,81 @@ class _TestingScreenTwoState extends State<TestingScreenTwo> {
           ),
         ],
       ),
+      // Botón secundario para añadir un nuevo registro.
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppTheme.primary,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const InsertRecordScreenUser()));
+        },
+      ),
     );
+  }
+//NOTE: Método para convertir 17:30:00 a 17:30
+  String convertirHora(String hora) {
+    final tiempo = hora.split(':');
+    String tiempoFinal = "${tiempo[0]}:${tiempo[1]}";
+    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
+    //resultado= 17:30
+    return tiempoFinal;
+  }
+
+//NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
+  String convertirFecha(String fecha) {
+    String date = fecha;
+    String? mes;
+    String? fechaFinal;
+    final parsearFecha = DateTime.parse(date);
+    //final formatoFecha = DateFormat('MMMM dd, yyyy').format(parsearFecha);
+    switch (parsearFecha.month) {
+      case 01:
+        mes = 'Jan';
+        break;
+      case 02:
+        mes = 'Feb';
+        break;
+      case 03:
+        mes = 'Mar';
+        break;
+      case 04:
+        mes = 'Apr';
+        break;
+      case 05:
+        mes = 'May';
+        break;
+      case 06:
+        mes = 'Jun';
+        break;
+      case 07:
+        mes = 'Jul';
+        break;
+      case 08:
+        mes = 'Aug';
+        break;
+      case 09:
+        mes = 'Sep';
+        break;
+      case 10:
+        mes = 'Oct';
+        break;
+      case 11:
+        mes = 'Nov';
+        break;
+      case 12:
+        mes = 'Dec';
+        break;
+      default:
+    }
+
+    fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
+    // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
+    //resultado: Abril 8, 2022
+    return fechaFinal;
   }
 }

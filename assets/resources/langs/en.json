@@ -2,7 +2,8 @@
     "loginpage":
     { 
         "title" : "Welcome!",
-        "subtitle" : "Please, Sign In."
+        "subtitle" : "Please, Sign In.",
+        "submit" : "Log In"
     },
     "mainpage":
     {
@@ -11,7 +12,8 @@
     },
     "displayrecords":
     {
-        "activity" : "Activity",
+        "displayRecord" : "Display Record",
+        "recordDate" : "Record Date",
         "TRattendance" : "Attendance",
         "TRlunch" : "Lunch",
         "TRovertime" : "Overtime",
