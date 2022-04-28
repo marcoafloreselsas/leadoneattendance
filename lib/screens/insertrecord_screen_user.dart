@@ -1,9 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:leadoneattendance/models/models.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+Future<InsertRecord> createRecord(String title) async {
+  final response = await http.post(
+    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+        "UserID": "2",
+        "RecordDate" : "2022-04-27",
+        "RecordTypeID": "1",
+        "EntryTime" : "10:22",
+        "ExitTime": "17:30"
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return InsertRecord.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to insert record.');
+  }
+}
 
 class InsertRecordScreenUser extends StatefulWidget {
   const InsertRecordScreenUser({Key? key}) : super(key: key);
@@ -13,6 +40,7 @@ class InsertRecordScreenUser extends StatefulWidget {
 }
 
 class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
+  late Future<InsertRecord>? _futureInsertRecord;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   bool switchValue = true;
@@ -22,16 +50,6 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     debugPrint(response.body);
   }
 
-  // Initial Selected Value
-  // String dropdownvalue = 'insertrecords.TRattendance'.tr();
-
-  // // List of items in our dropdown menu
-  // var items = [
-  //   'insertrecords.TRattendance'.tr(),
-  //   'insertrecords.TRlunch'.tr(),
-  //   'insertrecords.TRovertime'.tr(),
-  //   'insertrecords.TRpermit'.tr(),
-  // ];
   String dropdownvalue = 'Attendance';
 
   // List of items in our dropdown menu
@@ -41,6 +59,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     'Overtime',
     'Permit',
   ];
+
 //Sobreescritura de la clase y del widget
   @override
   void initState() {
@@ -143,13 +162,16 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                     minimumSize: const Size(120, 50) //TAMANO - WH
                     ),
                 onPressed: () {
-                  insertRecord;
+                          setState(() {
+                          // _futureInsertRecord = createRecord(); //parametros a insertar
+        });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const MainScreen()));
                 },
-                child: const Text('insertrecords.saveButton').tr())
+                child: const Text('insertrecords.saveButton').tr()),
+                
           ],
         ),
       ),
@@ -195,145 +217,4 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     }
   }
 
-//Abril 25 de 2022
-//Método para insertar registro.
-  insertRecord(DateTime dateRecord, timeRecord, String tipoActividad, bool valorSwitch) async {
-    DateTime RecordDate = dateRecord; //Fecha del Registro
-    DateTime EntryTime = timeRecord; //Hora de Inicio
-    DateTime ExitTime = timeRecord; //Hora de Términoi
-    String RecordType = tipoActividad; //Tipo de Registro
-    bool switchInOut = valorSwitch; //In - Out Switch - Si el switch está en false, es IN.
-    //                - Si el switch está en true, es OUT.
-    switch (tipoActividad) {
-      case 'Attendance':
-          if (switchInOut == false) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/insertrecord'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserID" : 1,
-                  "RecordDate" : dateRecord,
-                  "EntryTime" : timeRecord,
-                  "ExitTime" : '17:30',
-                  "RecordTypeID" : 1 
-                }));
-                debugPrint('holamundo');
-            //RecordDate
-            //Entry Time
-          } else if (switchInOut == true) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/insertrecord'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord ,
-                  "ExitTime" : timeRecord,
-                  "RecordTypeId" : 1
-                }));
-            //RecordDate
-            //ExitTime
-          
-        }
-        break;
-      case 'Lunch':
-          if (switchInOut == false) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord,
-                  "EntryTime" : timeRecord,
-                  "RecordTypeId" : 2 
-                }));
-
-            //RecordDate
-            //Entry Time
-          } else if (switchInOut == true) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord ,
-                  "ExitTime" : timeRecord,
-                  "RecordTypeId" : 2
-                }));
-            //RecordDate
-            //ExitTime
-        }
-        break;
-      case 'Overtime':
-          if (switchInOut == false) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord,
-                  "EntryTime" : timeRecord,
-                  "RecordTypeId" : 3
-                }));
-            //RecordDate
-            //Entry Time
-          } else if (switchInOut == true) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord ,
-                  "ExitTime" : timeRecord,
-                  "RecordTypeId" : 3
-                }));
-            //RecordDate
-            //ExitTime
-        }
-        break;
-      case 'Permit':
-          if (switchInOut == false) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord,
-                  "EntryTime" : timeRecord,
-                  "RecordTypeId" : 4 
-                }));
-            //RecordDate
-            //Entry Time
-          } else if (switchInOut == true) {
-            final response = await http.post(
-                Uri.parse('https://7a40-45-65-152-57.ngrok.io/Records'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, dynamic>{
-                  "UserId" : 1,
-                  "RecordDate" : dateRecord ,
-                  "ExitTime" : timeRecord,
-                  "RecordTypeId" : 4
-                }));
-            //RecordDate
-            //ExitTime
-        }
-        break;
-      default:
-    }
-  }
 }

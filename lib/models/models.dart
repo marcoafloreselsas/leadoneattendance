@@ -1,4 +1,10 @@
 //AQUI SE ENCUENTRA EL DIRECTORIO DE MODELOS. (Consultas al Backend)
-//G E N E R A L
-export 'package:leadoneattendance/models/fullrecord.dart';        //Para llamar un registro completo.
-export 'package:leadoneattendance/models/records.dart';           //Para llamar los registros recientes.
+//G E T 
+export 'package:leadoneattendance/models/fullrecord.dart';        //Para llamar un registro completo. (Display Record)
+export 'package:leadoneattendance/models/getusers.dart';          //Obtiene los nombres de los empleados (Query Records ADMIN)
+export 'package:leadoneattendance/models/queryrecord.dart';       //Para llamar un registro reciente. (Query Records)
+export 'package:leadoneattendance/models/records.dart';           //Para llamar los registros recientes. (MainScreen)
+
+
+//POST
+export 'package:leadoneattendance/models/insertrecord.dart';      //Para insertar un registro (InsertRecord)

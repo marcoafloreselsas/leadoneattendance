@@ -14,7 +14,7 @@ import 'dart:io';
 //HTTP Request
 Future<List<Record>> fetchRecord() async {
   final response = await http
-      .get(Uri.parse('https://e41c-45-65-152-57.ngrok.io/get/fiverecords/1'));
+      .get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

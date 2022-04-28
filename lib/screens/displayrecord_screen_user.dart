@@ -15,7 +15,7 @@ Future<FullRecord> fetchFullRecord() async {
 };
 
 //http request GET
-  final response = await http.get(Uri.parse('https://e41c-45-65-152-57.ngrok.io/get/fulluserrecord/1/2022-04-08'));
+  final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fulluserrecord/1/2022-04-08'));
   if (response.statusCode == 200) {
     return FullRecord.fromJson(jsonDecode(response.body)[0]); 
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
