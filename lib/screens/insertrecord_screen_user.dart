@@ -43,7 +43,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   late Future<InsertRecord>? _futureInsertRecord;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
-  bool switchValue = true;
+  bool switchValue = false;
 
   getUsers() async {
     http.Response response = await http.get(Uri.parse('https://eb95-45-65-152-57.ngrok.io/get/fiverecords/1'));
@@ -147,7 +147,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             Row(children: [
               const Text('insertrecords.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
-              buildSwitch(), //WIDGET DEL SWITCH
+                                                                            buildSwitch(), //WIDGET DEL SWITCH
               const Padding(padding: EdgeInsets.all(25.0)),
               const Text('insertrecords.out').tr(),
             ], mainAxisAlignment: MainAxisAlignment.center),
