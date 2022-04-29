@@ -44,11 +44,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
   bool switchValue = false;
-
-
-
   String dropdownvalue = 'Attendance';
-
   // List of items in our dropdown menu
   var items = [
     'Attendance',
