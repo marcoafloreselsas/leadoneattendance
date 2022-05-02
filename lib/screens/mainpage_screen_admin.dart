@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
-import '../services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class MainScreenAdmin extends StatefulWidget {
@@ -39,11 +38,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               },
               icon: const Icon(Icons.search_outlined)),
           IconButton(
-              onPressed: () async {
-                await FirebaseServices().signOut();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()));
-              },
+              onPressed: () async {},
               icon: const Icon(Icons.logout))
         ],
       ),

@@ -25,14 +25,14 @@ Future<QueryRecord> fetchQueryRecord() async {
   }
 }
 
-class QueryRecordsScreen extends StatefulWidget {
-  const QueryRecordsScreen({Key? key}) : super(key: key);
+class QueryRecordsScreenUser extends StatefulWidget {
+  const QueryRecordsScreenUser({Key? key}) : super(key: key);
 
   @override
-  State<QueryRecordsScreen> createState() => _QueryRecordsScreenState();
+  State<QueryRecordsScreenUser> createState() => _QueryRecordsScreenUserState();
 }
 
-class _QueryRecordsScreenState extends State<QueryRecordsScreen> {
+class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
   late Future<QueryRecord> futureQueryRecord;
   DateTime selectedDate = DateTime.now();
   final firstDate =

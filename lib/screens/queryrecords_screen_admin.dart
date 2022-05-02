@@ -75,6 +75,11 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
+
+
+
+
+
               Row(
                 children: [
                   DropdownButton(
@@ -100,6 +105,12 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
+
+
+
+
+
+
               const SizedBox(
                 height: 10,
               ),
@@ -178,6 +189,10 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
       });
     }
   }
+
+
+
+
 }
 
 

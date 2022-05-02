@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/screens/testing_screen_two.dart';
+import 'package:leadoneattendance/screens/mainpage_screen_user.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
-import 'package:leadoneattendance/services/firebase_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:leadoneattendance/services/supported_locales.dart';
@@ -12,18 +11,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  try {
-    await Firebase.initializeApp(
-      //Conexión con la base de datos de firebase
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyDwn_s0VbGgXZY19nwst_zR13ctmlaATG4",
-            appId: "1:397875240276:android:ff5fbda6ac5d30bd70fcc1",
-            messagingSenderId: '397875240276',
-            projectId: "lead-one-attendance",
-            authDomain: "lead-one-attendance.firebaseapp.com"));
-  //No borrar la siguiente línea 24
-  // ignore: empty_catches
-  } on Exception {}
   //Carga de la localización
   runApp(EasyLocalization(
     child: const MyApp(),
@@ -39,24 +26,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales:
-          context.supportedLocales, // Obtiene el listado de idiomas soportados.
-      locale: context.locale,
-      debugShowCheckedModeBanner: false, //Quita la cinta de 'debug' del superior derecho.
-      title: 'Lead One: Attendance App',
-      theme: AppTheme.lightTheme, // Tema de la aplicación, carga el App Theme de la carpeta Themes.
-      home: StreamBuilder(
-          stream: FirebaseServices().firebaseAuth.authStateChanges(),
-          builder: (context, snapshot) {
-            //Si encuentra una sesión, arroja MainScreen, sino, LoginPage.
-            if (snapshot.hasData) {
-              //VERIFICAR: Empleado = MainScreen, Administrador = MainScreenAdmin.
-              return const TestingScreenTwo();
-            }
-              return const LoginFieldsPage();
-            }
-          ),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context
+            .supportedLocales, // Obtiene el listado de idiomas soportados.
+        locale: context.locale,
+        debugShowCheckedModeBanner:
+            false, //Quita la cinta de 'debug' del superior derecho.
+        title: 'Lead One: Attendance App',
+        theme: AppTheme
+            .lightTheme, // Tema de la aplicación, carga el App Theme de la carpeta Themes.
+        routes: {
+            '/': (BuildContext context) => const LoadingScreen(),
+            '/LoginScreen': (BuildContext context) => const LoginScreen(),
+            '/ChangePassword': (BuildContext context) => const ChangePasswordScreen(),
+    //A D M I N
+            '/MainScreenAdmin': (BuildContext context) => const MainScreenAdmin(),
+            '/AddUserScreen' : (BuildContext context) => const AddUserScreen(),
+            '/DisplayRecordScreenAdmin' : (BuildContext context) => const DisplayRecordScreenAdmin(),
+            '/InsertRecordScreenAdmin' : (BuildContext context) => const InsertRecordScreenAdmin(),
+            '/EdittRecordScreenAdmin' : (BuildContext context) => const EditRecordScreenAdmin(),
+            '/QueryRecordsScreenAdmin' : (BuildContext context) => const QueryRecordsScreenAdmin(),
+            '/GenerateReportsScreenAdmin' : (BuildContext context) => const GenerateReportsScreen(),
+            '/ReportViewerScreen' : (BuildContext context) => const ReportViewerScreen(),
+            '/SendReportScreen': (BuildContext context) => const SendReportScreen(),
+    //U S E R 
+            '/MainScreenUser': (BuildContext context) => const MainScreenUser(),
+            '/DisplayRecordScreenUser' : (BuildContext context) => const DisplayRecordScreenUser(),
+            '/InsertRecordScreenUser': (BuildContext context) => const InsertRecordScreenUser(),
+            '/EditRecordScreenUser' : (BuildContext context) => const EditRecordScreenAdmin(),
+            '/QueryRecordScreenUser' : (BuildContext context) => const InsertRecordScreenUser(),
+
+      },
     );
   }
 }

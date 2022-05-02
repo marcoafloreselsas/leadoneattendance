@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:leadoneattendance/dialogs/dialogs.dart';
 
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({Key? key}) : super(key: key);
+
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -27,7 +29,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginFieldsPage()));
+                          builder: (context) => const LoginScreen()));
                 },
                 icon: const Icon(Icons.save_outlined)),
           ],
@@ -115,7 +117,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const LoginFieldsPage()));
+                              builder: (context) => const LoginScreen()));
                     },
                     child: const Text('Save Changes')),
               ], //MARTHA TIENE UN MARCAPASOS QUE LE ALEGRA EL CORAZON NO TIENE QUE DARLE VUELTA ES AUTOMATICO
