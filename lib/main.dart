@@ -35,8 +35,10 @@ class MyApp extends StatelessWidget {
         title: 'Lead One: Attendance App',
         theme: AppTheme
             .lightTheme, // Tema de la aplicación, carga el App Theme de la carpeta Themes.
+        //ESTAS SON LAS RUTAS DE LAS PANTALLAS
+        //Para que puedan añadírseles parámetros más adelante.
         routes: {
-            '/': (BuildContext context) => const LoadingScreen(),
+            '/': (BuildContext context) => const LoadingScreen(), //Pantalla que verifica el estado del usuario.s
             '/LoginScreen': (BuildContext context) => const LoginScreen(),
             '/ChangePassword': (BuildContext context) => const ChangePasswordScreen(),
     //A D M I N
