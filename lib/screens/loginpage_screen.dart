@@ -1,11 +1,11 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[
                         TextFormField(
                           controller: emailController,
-                          decoration: const InputDecoration(
+                          decoration: const InputDecoration( 
                               labelText: "Email",
                               border: OutlineInputBorder(),
                               suffixIcon: Icon(Icons.email)),
@@ -105,17 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                       onPressed: () {
                         setState(() {
-                          // _futureInsertRecord = createRecord(); //parametros a insertar
+                          login(emailController, passwordController);
                         });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainScreenUser()));
-//                      showDialog(
-//                          context: context,
-//                          builder: (BuildContext context) {
-//                            return const AlertLogin();
-//                          });
                       },
                       child: const Text('ACCESS')),
                   const SizedBox(
@@ -147,14 +138,14 @@ class _LoginScreenState extends State<LoginScreen> {
         }).timeout(const Duration(seconds: 30));
 
         var datos = jsonDecode(response.body);
-        print(datos);
+        debugPrint(datos);
         if(response.body != '0'){
           guardarDatos(datos['UserID'], datos['Role']);
-          if('Role' == 'admin'){
-          Navigator.pushNamed(context, '/AdminPage', arguments: {'UserID':UserId, 'Role': Role});
+          if(datos['Role'] == 'Administrator'){                                   // REVIEW REVISAR SI LLEVA datos[Role] o solo [Role]
+          Navigator.pushNamed(context, '/AdminPage', arguments: {'UserID':UserId});
 
            } else {
-          Navigator.pushNamed(context, '/UserPage', arguments: {'UserID': UserId, 'Role': Role});
+          Navigator.pushNamed(context, '/UserPage', arguments: {'UserID': UserId});
 
           }
         } else{
@@ -164,12 +155,13 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (BuildContext context) {
                 return const AlertLogin();
               });
-          print('Usuario Incorrecto');
+          debugPrint('Usuario Incorrecto');
+          
         }
     } on TimeoutException catch(e){
-      print('Tiempo de proceso excedido.');
+      debugPrint('Tiempo de proceso excedido.');
     } on Error {
-      print('http error.');
+      debugPrint('Http error.');
     }
   }
 

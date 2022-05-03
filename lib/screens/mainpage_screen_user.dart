@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,26 +12,6 @@ import 'dart:io';
 
 
 
-
-//HTTP Request
-Future<List<Record>> fetchRecord() async {
-
-    //REVIEW Estos son los posibles parámetros para las consultas, agregados el 27 de abril, revisar.
-  final queryParameters = {
-  'UserID': 1,
-};
-
-  final response = await http
-      .get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/')); //I N S E R T A R      I   D     D E     U S U A R I O
-
-  if (response.statusCode == 200) {
-    final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
-
-    return parsed.map<Record>((json) => Record.fromMap(json)).toList();
-  } else {
-    throw Exception('Failed to load records.');
-  }
-}
 
 @override
 class MainScreenUser extends StatefulWidget {
@@ -69,7 +50,12 @@ class _MainScreenUserState extends State<MainScreenUser> {
               },
               icon: const Icon(Icons.search_outlined)),
           IconButton(
-              onPressed: () async {},
+              onPressed: () async {
+                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                //sharedPreferences.remove('UserID'); Para borrar el puro ID
+                sharedPreferences.clear(); //Para borrar T O D O.
+                Navigator.of(context).pushNamed('/');
+              },
               icon: const Icon(Icons.logout))
         ],
       ),
@@ -257,4 +243,20 @@ class _MainScreenUserState extends State<MainScreenUser> {
     //resultado: Abril 8, 2022
     return fechaFinal;
   }
+  //HTTP Request
+Future<List<Record>> fetchRecord() async {
+  final user = ModalRoute.of(context)!.settings.arguments;
+
+  //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
+  final response = await http
+      .get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/$user'));
+
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+
+    return parsed.map<Record>((json) => Record.fromMap(json)).toList();
+  } else {
+    throw Exception('Failed to load records.');
+  }
+}
 }

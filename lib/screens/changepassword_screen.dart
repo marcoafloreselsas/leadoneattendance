@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -112,7 +114,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         ),
                     onPressed: () {
                       setState(() {
-                        // _futureInsertRecord = createRecord(); //parametros a insertar
+                        changepassword(emailController, passwordController, newPasswordController);
                       });
                       Navigator.push(
                           context,
@@ -120,9 +122,43 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               builder: (context) => const LoginScreen()));
                     },
                     child: const Text('Save Changes')),
-              ], //MARTHA TIENE UN MARCAPASOS QUE LE ALEGRA EL CORAZON NO TIENE QUE DARLE VUELTA ES AUTOMATICO
+              ],
             ),
           ),
         ));
+  }
+    Future<void> changepassword(email, password, newpassword) async{
+    try{
+      var url = 'serverurl';
+      var response = await http.post(Uri.parse(url), 
+      body:
+        {
+          'Email' : email,
+          'Password' : password,
+          'NewPassword' : newpassword
+        }).timeout(const Duration(seconds: 30));
+
+        var datos = jsonDecode(response.body);
+        debugPrint(datos);
+        if(response.body != '0'){
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const AlertChangePasswordOk();
+              });
+              debugPrint('Actualización realizada exitosamente.');
+        } else{
+          //Cuadro de diálogo que indica que los datos son incorrectos.
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const AlertChangePasswordError();
+              });
+          debugPrint('Usuario Incorrecto');
+          
+        }
+    }  on Error {
+      debugPrint('Http error.');
+    }
   }
 }

@@ -58,8 +58,25 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
             initialDate: selectedDate, //Fecha por default, será la actual.
             firstDate: firstDate, //Desde que fecha funciona el calendario.
             lastDate: lastDate, //Hasta que fecha funciona el calendario.
-            onDateChanged: (DateTime value) {}, // Si la fecha cambia.
+            onDateChanged: (DateTime valueRegistro) {
+              setState(() {
+              
+              });
+            }, // Si la fecha cambia.
           ),
+          //BOTON DE GUARDAR CAMBIOS
+            TextButton(
+                style: TextButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 15, 49, 114),
+                    primary: Colors.white, //TEXT COLOR
+                    minimumSize: const Size(120, 50) //TAMANO - WH
+                    ),
+                onPressed: () {
+                  setState(() {});
+                  loadrecord;
+                  
+                },
+                child: const Text('Save and Print')),
           Row(
             children: [
               const Text('queryrecords.recentRecords',
@@ -189,5 +206,32 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
     // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
     //resultado: Abril 8, 2022
     return fechaFinal;
+  }
+
+  Future<void> loadrecord(DateTime valueRegistro) async{
+    try{
+
+      var RecordDate = valueRegistro.toString();
+      var url = 'serverurl';
+      var response = await http.post(Uri.parse(url), 
+      body:
+        {
+          'UserID' : 1,
+          'RecordDate': RecordDate
+        }).timeout(const Duration(seconds: 30));
+
+        var datos = jsonDecode(response.body);
+        debugPrint(datos);
+        if(response.body != '0'){
+              fetchQueryRecord();
+              debugPrint('Datos enviados exitosamente.');
+        } else{
+          //Cuadro de diálogo que indica que los datos son incorrectos.
+          debugPrint('Hubo un problema.');
+          
+        }
+    }  on Error {
+      debugPrint('Http error.');
+    }
   }
 }

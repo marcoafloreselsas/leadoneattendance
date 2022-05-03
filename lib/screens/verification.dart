@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
 
-  
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +24,14 @@ Future isLogged(context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // ignore: non_constant_identifier_names
   String? UserId = prefs.getString('UserID');
+  // ignore: non_constant_identifier_names
   String? Role = prefs.getString('Role');
   var userid = 0;
-    if (Role == 'admin') {
+    if (Role == 'Administrator') {
       /// If the user is an admin
     Navigator.of(context).pushNamed('/MainScreenAdmin', arguments: {userid: UserId});
     // Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreenAdmin()));
-    } else if (Role == 'user') {
+    } else if (Role == 'Employee') {
       /// If the user is not an admin
     Navigator.of(context).pushNamed('/MainScreenUser', arguments: {userid: UserId});
     } else {

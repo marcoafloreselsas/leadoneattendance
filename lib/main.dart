@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         //ESTAS SON LAS RUTAS DE LAS PANTALLAS
         //Para que puedan añadírseles parámetros más adelante.
         routes: {
-            '/': (BuildContext context) => const LoadingScreen(), //Pantalla que verifica el estado del usuario.s
+            '/': (BuildContext context) => const LoadingScreen(), //Pantalla que verifica el estado del usuario.
             '/LoginScreen': (BuildContext context) => const LoginScreen(),
             '/ChangePassword': (BuildContext context) => const ChangePasswordScreen(),
     //A D M I N
@@ -57,7 +57,6 @@ class MyApp extends StatelessWidget {
             '/InsertRecordScreenUser': (BuildContext context) => const InsertRecordScreenUser(),
             '/EditRecordScreenUser' : (BuildContext context) => const EditRecordScreenAdmin(),
             '/QueryRecordScreenUser' : (BuildContext context) => const InsertRecordScreenUser(),
-
       },
     );
   }

@@ -7,4 +7,5 @@ export 'package:leadoneattendance/models/records.dart';           //Para llamar 
 
 
 //POST
-export 'package:leadoneattendance/models/insertrecord.dart';      //Para insertar un registro (InsertRecord)
+export 'package:leadoneattendance/models/insertrecordentry.dart';      //Para insertar un registro (InsertRecord) de tipo Entry.
+export 'package:leadoneattendance/models/insertrecordexit.dart';       //Para insertar un registro (InsertRecord) de tipo Exit
