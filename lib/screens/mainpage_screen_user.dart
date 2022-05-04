@@ -6,12 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:intl/intl.dart';
-import 'package:http_parser/http_parser.dart';
-import 'dart:io';
-
-
-
 
 @override
 class MainScreenUser extends StatefulWidget {
@@ -245,11 +239,11 @@ class _MainScreenUserState extends State<MainScreenUser> {
   }
   //HTTP Request
 Future<List<Record>> fetchRecord() async {
-  final user = ModalRoute.of(context)!.settings.arguments;
+  // final user = ModalRoute.of(context)!.settings.arguments;
 
   //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
   final response = await http
-      .get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/$user'));
+      .get(Uri.parse('https://deb4-45-65-152-57.ngrok.io/get/fiverecords/1'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

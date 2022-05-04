@@ -4,24 +4,21 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
-Future<InsertRecordEntry> createEntryRecord(String RecordDate, FinalRecordTypeId, Time) async {
+//Para cuando se marca el inicio de una actividad.
+Future<InsertRecordEntry> createEntryRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
   final response = await http.post(
-    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    Uri.parse('https://deb4-45-65-152-57.ngrok.io/insertrecord/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{
-      'UserID': '1',
-      'RecordDate': RecordDate,
-      'FinalRecordTypeId': FinalRecordTypeId,
-      'EntryTime': Time
+    body: jsonEncode(<String, dynamic>{
+    "UserID": 1,
+    "RecordDate": RecordDate,
+    "RecordTypeID": FinalRecordTypeId,
+    "EntryTime": Time
     }),
   );
-
   if (response.statusCode == 201) {
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
     return InsertRecordEntry.fromJson(jsonDecode(response.body));
   } else {
     // If the server did not return a 201 CREATED response,
@@ -29,23 +26,22 @@ Future<InsertRecordEntry> createEntryRecord(String RecordDate, FinalRecordTypeId
     throw Exception('Failed to create record.');
   }
 }
-Future<InsertRecordExit> createExitRecord(String RecordDate, FinalRecordTypeId, Time) async {
+//Para cuando se marca la finalización de una actividad.
+Future<InsertRecordExit> createExitRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
   final response = await http.post(
-    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    Uri.parse('https://deb4-45-65-152-57.ngrok.io/insertrecord/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{
-      'UserID': '1',
-      'RecordDate': RecordDate,
-      'FinalRecordTypeId': FinalRecordTypeId,
-      'ExitTime': Time
+    body: jsonEncode(<String, dynamic>{
+    "UserID": 1,
+    "RecordDate": RecordDate,
+    "RecordTypeID": FinalRecordTypeId,
+    "ExitTime": Time
     }),
   );
 
   if (response.statusCode == 201) {
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
     return InsertRecordExit.fromJson(jsonDecode(response.body));
   } else {
     // If the server did not return a 201 CREATED response,
@@ -66,6 +62,8 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   Future<InsertRecordExit>? _futureInsertRecordExit;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
+  String finaltime = '';
+  String finalfinal = '';
   bool switchValue = false;
   bool isonisoff = false;
   int recordTypeId = 0;
@@ -77,10 +75,6 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     'Overtime',
     'Permit',
   ];
-
-
-
-  
 
   @override
   void initState() {
@@ -127,7 +121,9 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             ),
             ListTile(
               title: Text(
-                "${time.hour}:${time.minute}",
+                                        //Para que se vea como 17: 0 8
+                "${time.hour}:${time.minute.toString().padLeft(2,'0')}",
+                
                 textAlign: TextAlign.center,
               ),
               onTap: _pickTime,
@@ -185,22 +181,20 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                     ),
                 onPressed: () {
                   setState(() {});
-                  insertRecord();
-                  // ignore: non_constant_identifier_names
-                  var RecordDate = DateFormat('yMd').format(pickedDate);
-                  // ignore: non_constant_identifier_names
-                  var RecordTypeId2 = recordTypeId + 1;
-                  // ignore: non_constant_identifier_names
-                  var FinalRecordTypeId = RecordTypeId2.toString();
-                  // ignore: non_constant_identifier_names
-                  var OnOff = isonisoff;
-                  // ignore: non_constant_identifier_names
-                  var Time = time.toString().substring(10, 15);
+                  var RecordDate = DateFormat('yyyy-MM-dd').format(pickedDate); //Fecha
+                  var RecordTypeId2 = recordTypeId + 1; 
+                  var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
+                  var OnOff = isonisoff; //Switch
+                  var Time = finalfinal; //Hora 
 
+                  //Si el si
                   if(OnOff == false){
                     _futureInsertRecordEntry = createEntryRecord(RecordDate, FinalRecordTypeId, Time);
+                    debugPrint('Es un entry: ' + RecordDate.toString() + ' - ' + FinalRecordTypeId.toString() + '- ' + Time);
                   } else if(OnOff == true) {
                     _futureInsertRecordExit = createExitRecord(RecordDate, FinalRecordTypeId, Time);
+                    debugPrint('Es un exit: ' + RecordDate.toString() + ' - ' + FinalRecordTypeId.toString() + '- ' + Time);
+
                   }
                   
                 },
@@ -234,41 +228,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     if (timeRecord != null) {
       setState(() {
         time = timeRecord;
+        // DateTime newDateTime = DateTime(time.hour,time.minute);
+        finaltime = '${time.hour}:${time.minute}';
+        finalfinal = finaltime;
       });
-    }
-  }
-  
-
-//Este será el método encargado de gestionar la inserción
-  insertRecord() {
-    // ignore: non_constant_identifier_names
-    var RecordDate = DateFormat('yMd').format(pickedDate);
-    // ignore: non_constant_identifier_names
-    var RecordTypeId2 = recordTypeId + 1;
-    // ignore: non_constant_identifier_names
-    var FinalRecordTypeId = RecordTypeId2.toString();
-    // ignore: non_constant_identifier_names
-    var OnOff = isonisoff;
-    // ignore: non_constant_identifier_names
-    var Time = time.toString().substring(10, 15);
- 
-    if (OnOff == false) {
-      debugPrint('Es un entry: ' +
-          RecordDate +
-          ' - ' +
-          FinalRecordTypeId +
-          ' - ' +
-          Time.toString());
-
-
-          
-    } else {
-      debugPrint('Es un exit: ' +
-          RecordDate +
-          ' - ' +
-          FinalRecordTypeId +
-          ' - ' +
-          Time.toString());
     }
   }
 }
