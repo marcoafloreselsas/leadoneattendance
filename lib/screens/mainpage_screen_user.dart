@@ -239,11 +239,12 @@ class _MainScreenUserState extends State<MainScreenUser> {
   }
   //HTTP Request
 Future<List<Record>> fetchRecord() async {
+  //LA LINEA COMENTADA ABAJO, ES PARA CARGAR EL USER ID DE LA PANTALLA ANTERIOR
   // final user = ModalRoute.of(context)!.settings.arguments;
-
+  var userid = 1;
   //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
   final response = await http
-      .get(Uri.parse('https://deb4-45-65-152-57.ngrok.io/get/fiverecords/1'));
+      .get(Uri.parse('https://3a51-45-65-152-57.ngrok.io/get/fiverecords/$userid'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

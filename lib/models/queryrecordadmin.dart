@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-List<QueryRecord> queryRecordFromJson(String str) => List<QueryRecord>.from(json.decode(str).map((x) => QueryRecord.fromJson(x)));
+List<QueryRecordAdmin> queryRecordAdminFromJson(String str) => List<QueryRecordAdmin>.from(json.decode(str).map((x) => QueryRecordAdmin.fromJson(x)));
 
-String queryRecordToJson(List<QueryRecord> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String queryRecordAdminToJson(List<QueryRecordAdmin> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class QueryRecord {
-    QueryRecord({
+class QueryRecordAdmin {
+    QueryRecordAdmin({
         required this.name,
         required this.recordType,
         required this.recordDate,
@@ -27,7 +27,7 @@ class QueryRecord {
     String totalHours;
     int weekNumber;
 
-    factory QueryRecord.fromJson(Map<String, dynamic> json) => QueryRecord(
+    factory QueryRecordAdmin.fromJson(Map<String, dynamic> json) => QueryRecordAdmin(
         name: json["Name"],
         recordType: json["RecordType"],
         recordDate: json["RecordDate"],

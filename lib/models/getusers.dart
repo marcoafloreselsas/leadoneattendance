@@ -14,7 +14,7 @@ class GetUsers {
         required this.name,
     });
 
-    String userId;
+    int userId;
     String name;
 
     factory GetUsers.fromJson(Map<String, dynamic> json) => GetUsers(

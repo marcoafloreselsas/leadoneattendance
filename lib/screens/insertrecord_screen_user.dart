@@ -41,7 +41,7 @@ Future<InsertRecordExit> createExitRecord(String RecordDate, int FinalRecordType
     }),
   );
 
-  if (response.statusCode == 201) {
+  if (response.statusCode == 201) { 
     return InsertRecordExit.fromJson(jsonDecode(response.body));
   } else {
     // If the server did not return a 201 CREATED response,

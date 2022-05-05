@@ -8,15 +8,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<QueryRecord> fetchQueryRecord() async {
-  //REVIEW Estos son los posibles parámetros para las consultas, agregados el 27 de abril, revisar.
-  final queryParameters = {
-    'param1': 'one',
-    'param2': 'two',
-  };
+  //Los siguientes, son los parámetros utilizados para cargar un registro.
+  var UserID = 1;
+  var RecordTypeID = 1;
+  var RecordDate = "2022-04-29";
+  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
+  // var s = UserID.toString() + RecordDate + RecordTypeID.toString();
 
 //http request GET
-  final response = await http.get(Uri.parse(
-      'https://e5ac-45-65-152-57.ngrok.io/get/record/1/2022-02-11/1'));
+  final response = await http.get(Uri.parse('https://3a51-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecord.fromJson(jsonDecode(response.body)[0]);
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
@@ -34,9 +34,9 @@ class QueryRecordsScreenUser extends StatefulWidget {
 
 class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
   late Future<QueryRecord> futureQueryRecord;
+  DateTime valueRegistro = DateTime.parse('0000-00-00');
   DateTime selectedDate = DateTime.now();
-  final firstDate =
-      DateTime(2022, 2); //A partir de que fecha funciona el calendario
+  final firstDate = DateTime(2022, 2); //A partir de que fecha funciona el calendario
   final lastDate = DateTime.now(); //Hasta que fecha funciona el calendario
 
   @override
@@ -73,7 +73,8 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
                     ),
                 onPressed: () {
                   setState(() {});
-                  loadrecord;
+                  var newRecordDate = DateFormat('yyyy-MM-dd').format(valueRegistro);
+
                   
                 },
                 child: const Text('Save and Print')),
