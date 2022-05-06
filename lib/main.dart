@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:leadoneattendance/services/supported_locales.dart';
 
 void main() async {
+
   //Verifica que la Localización y el Framework-Fuente están inicializados correctamente.
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
             '/AddUserScreen' : (BuildContext context) => const AddUserScreen(),
             '/DisplayRecordScreenAdmin' : (BuildContext context) => const DisplayRecordScreenAdmin(),
             '/InsertRecordScreenAdmin' : (BuildContext context) => const InsertRecordScreenAdmin(),
-            '/EdittRecordScreenAdmin' : (BuildContext context) => const EditRecordScreenAdmin(),
+            '/EditRecordScreenAdmin' : (BuildContext context) => const EditRecordScreenAdmin(),
             '/QueryRecordsScreenAdmin' : (BuildContext context) => const QueryRecordsScreenAdmin(),
             '/GenerateReportsScreenAdmin' : (BuildContext context) => const GenerateReportsScreen(),
             '/ReportViewerScreen' : (BuildContext context) => const ReportViewerScreen(),
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
             '/DisplayRecordScreenUser' : (BuildContext context) => const DisplayRecordScreenUser(),
             '/InsertRecordScreenUser': (BuildContext context) => const InsertRecordScreenUser(),
             '/EditRecordScreenUser' : (BuildContext context) => const EditRecordScreenAdmin(),
-            '/QueryRecordScreenUser' : (BuildContext context) => const InsertRecordScreenUser(),
+            '/QueryRecordScreenUser' : (BuildContext context) => const QueryRecordsScreenUser(),
       },
     );
   }

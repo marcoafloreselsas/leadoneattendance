@@ -15,7 +15,7 @@ class QueryRecordAdmin {
         required this.recordDate,
         required this.entryTime,
         required this.exitTime,
-        required this.totalHours,
+        // required this.totalHours,
         required this.weekNumber,
     });
 
@@ -24,7 +24,7 @@ class QueryRecordAdmin {
     String recordDate;
     String entryTime;
     String exitTime;
-    String totalHours;
+    // String totalHours;
     int weekNumber;
 
     factory QueryRecordAdmin.fromJson(Map<String, dynamic> json) => QueryRecordAdmin(
@@ -33,7 +33,7 @@ class QueryRecordAdmin {
         recordDate: json["RecordDate"],
         entryTime: json["EntryTime"],
         exitTime: json["ExitTime"],
-        totalHours: json["TotalHours"],
+        // totalHours: json["TotalHours"],
         weekNumber: json["WeekNumber"],
     );
 
@@ -43,7 +43,7 @@ class QueryRecordAdmin {
         "RecordDate": recordDate,
         "EntryTime": entryTime,
         "ExitTime": exitTime,
-        "TotalHours": totalHours,
+        // "TotalHours": totalHours,
         "WeekNumber": weekNumber,
     };
 }

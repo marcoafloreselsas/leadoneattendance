@@ -7,24 +7,6 @@ import '../themes/app_themes.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<QueryRecord> fetchQueryRecord() async {
-  //Los siguientes, son los parámetros utilizados para cargar un registro.
-  var UserID = 1;
-  var RecordTypeID = 1;
-  var RecordDate = "2022-04-29";
-  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
-  // var s = UserID.toString() + RecordDate + RecordTypeID.toString();
-
-//http request GET
-  final response = await http.get(Uri.parse('https://3a51-45-65-152-57.ngrok.io/get/record/$s'));
-  if (response.statusCode == 200) {
-    return QueryRecord.fromJson(jsonDecode(response.body)[0]);
-    //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
-  } else {
-    throw Exception('Failed to load record.');
-  }
-}
-
 class QueryRecordsScreenUser extends StatefulWidget {
   const QueryRecordsScreenUser({Key? key}) : super(key: key);
 
@@ -33,20 +15,26 @@ class QueryRecordsScreenUser extends StatefulWidget {
 }
 
 class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
-  late Future<QueryRecord> futureQueryRecord;
-  DateTime valueRegistro = DateTime.parse('0000-00-00');
+  Future<QueryRecord>? futureQueryRecord;
+  DateTime pickedDate = DateTime.parse('0000-00-00');
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2022, 2); //A partir de que fecha funciona el calendario
   final lastDate = DateTime.now(); //Hasta que fecha funciona el calendario
+  Future<QueryRecordAdmin>? futureQueryRecordAdmin;
+
 
   @override
   void initState() {
     super.initState();
-    futureQueryRecord = fetchQueryRecord();
+        pickedDate = DateTime.now();
+
   }
 
   @override
   Widget build(BuildContext context) {
+      Map? args = ModalRoute.of(context)?.settings.arguments as Map?;
+      int userid = args!["UserID"];
+
     return Scaffold(
       appBar: AppBar(
           title: const Text('queryrecords.title').tr(),
@@ -54,15 +42,24 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
           actions: const []),
       body: Column(
         children: [
-          CalendarDatePicker(
-            initialDate: selectedDate, //Fecha por default, será la actual.
-            firstDate: firstDate, //Desde que fecha funciona el calendario.
-            lastDate: lastDate, //Hasta que fecha funciona el calendario.
-            onDateChanged: (DateTime valueRegistro) {
-              setState(() {
-              
-              });
-            }, // Si la fecha cambia.
+              //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
+              Row(
+                children: [
+                  const Text('queryrecords.selectDate').tr(),
+                  const Icon(Icons.keyboard_arrow_down_outlined),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+                                      ListTile(
+                title: Text(
+                  "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",style: const TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: _pickDate,
+              ),
+
+          const SizedBox(
+            height: 20,
           ),
           //BOTON DE GUARDAR CAMBIOS
             TextButton(
@@ -72,12 +69,23 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
                     minimumSize: const Size(120, 50) //TAMANO - WH
                     ),
                 onPressed: () {
-                  setState(() {});
-                  var newRecordDate = DateFormat('yyyy-MM-dd').format(valueRegistro);
-
-                  
+                  setState(() {
+                      fetchQueryRecord;
+                  });
+                  // var newRecordDate = DateFormat('yyyy-MM-dd').format(valueRegistro);
+                    var finalUserID = 1;
+                    var finalfinalUserID = finalUserID;
+                    var finalRecordTypeID = 1;
+                    var finalRecordDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    futureQueryRecord = fetchQueryRecord(
+                        finalfinalUserID, finalRecordDate, finalRecordTypeID);
+                    debugPrint(finalfinalUserID.toString() +
+                        finalRecordDate +
+                        finalRecordTypeID.toString());
                 },
                 child: const Text('Save and Print')),
+                
           Row(
             children: [
               const Text('queryrecords.recentRecords',
@@ -119,31 +127,70 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
                               const Icon(
                                 Icons.arrow_downward_outlined,
                                 color: AppTheme.red,
-                              ), // icon-2
+                              ), // icon-
+                              
                               Text(
                                 ((convertirHora(snapshot.data!.exitTime))),
                                 style: const TextStyle(
-                                    fontSize: 18), //hora de salida
+                                    fontSize: 18), 
+                                    //hora de salida
                               )
+                              
                             ],
                           ),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
                                     const DisplayRecordScreenUser()));
+                                    
                           })
                     ],
                   ),
                 );
               } else {
                 //NOTE En lo que carga o detecta el registro, aparecerá este Circular Progress Indicator.
+                                  debugPrint('El usuario es: ' + userid.toString());
+
                 return const CircularProgressIndicator();
+                
               }
             },
           )
-        ],
-      ),
+        ],  
+      ),   
     );
+  }
+
+Future<QueryRecord> fetchQueryRecord(int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+  // final userid = ModalRoute.of(context)!.settings.arguments;
+  final finaluserid = finalfinalUserID;
+  //Los siguientes, son los parámetros utilizados para cargar un registro.
+  var UserID = finaluserid;
+  var RecordTypeID = finalRecordTypeID;
+  var RecordDate = finalRecordDate;
+  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
+
+//http request GET
+  final response = await http.get(Uri.parse('https://a199-45-65-152-57.ngrok.io/get/record/$s'));
+  if (response.statusCode == 200) {
+    return QueryRecord.fromJson(jsonDecode(response.body)[0]);
+    //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
+  } else {
+    throw Exception('Failed to load record.');
+  }
+}
+  //FUNCION QUE MUESTRA EL DATE PICKER
+  _pickDate() async {
+    DateTime? date = await showDatePicker(
+        context: context,
+        initialDate: pickedDate,
+        firstDate: DateTime(DateTime.now().year - 1),
+        lastDate: DateTime(DateTime.now().year + 5));
+    if (date != null) {
+      setState(() {
+        pickedDate = date;
+      });
+    }
   }
 
 //ANCHOR METODOS Y OTRAS COSAS
@@ -204,35 +251,9 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
     }
 
     fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
+    
     // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
     //resultado: Abril 8, 2022
     return fechaFinal;
-  }
-
-  Future<void> loadrecord(DateTime valueRegistro) async{
-    try{
-
-      var RecordDate = valueRegistro.toString();
-      var url = 'serverurl';
-      var response = await http.post(Uri.parse(url), 
-      body:
-        {
-          'UserID' : 1,
-          'RecordDate': RecordDate
-        }).timeout(const Duration(seconds: 30));
-
-        var datos = jsonDecode(response.body);
-        debugPrint(datos);
-        if(response.body != '0'){
-              fetchQueryRecord();
-              debugPrint('Datos enviados exitosamente.');
-        } else{
-          //Cuadro de diálogo que indica que los datos son incorrectos.
-          debugPrint('Hubo un problema.');
-          
-        }
-    }  on Error {
-      debugPrint('Http error.');
-    }
   }
 }

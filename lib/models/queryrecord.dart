@@ -15,7 +15,7 @@ class QueryRecord {
         required this.recordDate,
         required this.entryTime,
         required this.exitTime,
-        required this.totalHours,
+        // required this.totalHours,
         required this.weekNumber,
     });
 
@@ -24,7 +24,7 @@ class QueryRecord {
     String recordDate;
     String entryTime;
     String exitTime;
-    String totalHours;
+    // String totalHours;
     int weekNumber;
 
     factory QueryRecord.fromJson(Map<String, dynamic> json) => QueryRecord(
@@ -32,8 +32,8 @@ class QueryRecord {
         recordType: json["RecordType"],
         recordDate: json["RecordDate"],
         entryTime: json["EntryTime"],
-        exitTime: json["ExitTime"],
-        totalHours: json["TotalHours"],
+        exitTime: json["ExitTime"], 
+        // totalHours: json["TotalHours"],
         weekNumber: json["WeekNumber"],
     );
 
@@ -43,7 +43,7 @@ class QueryRecord {
         "RecordDate": recordDate,
         "EntryTime": entryTime,
         "ExitTime": exitTime,
-        "TotalHours": totalHours,
+        // "TotalHours": totalHours,
         "WeekNumber": weekNumber,
     };
 }

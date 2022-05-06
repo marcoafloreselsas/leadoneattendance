@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/models/queryrecordadmin.dart';
 import 'package:leadoneattendance/screens/screens.dart';
@@ -9,8 +7,8 @@ import 'package:leadoneattendance/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
-Future<QueryRecordAdmin> fetchQueryRecordAdmin(int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+Future<QueryRecordAdmin> fetchQueryRecordAdmin(
+    int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
   //Los siguientes, son los parámetros utilizados para cargar un registro.
   var UserID = finalfinalUserID;
   var RecordTypeID = finalRecordTypeID;
@@ -19,7 +17,8 @@ Future<QueryRecordAdmin> fetchQueryRecordAdmin(int finalfinalUserID, String fina
   // var s = UserID.toString() + RecordDate + RecordTypeID.toString();
 
 //http request GET
-  final response = await http.get(Uri.parse('https://3a51-45-65-152-57.ngrok.io/get/record/$s'));
+  final response = await http
+      .get(Uri.parse('https://a199-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
@@ -46,7 +45,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   late int newuserid;
 
   Future<List<GetUsers>>? getData() async {
-    const String url = 'https://3a51-45-65-152-57.ngrok.io/get/names';
+    const String url = 'https://a199-45-65-152-57.ngrok.io/get/names';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -57,11 +56,11 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
       return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
-      
     } else {
       throw Exception('Failed to load');
     }
   }
+
   final myListKey = GlobalKey<AnimatedListState>();
 
   @override
@@ -115,18 +114,31 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               ),
               Row(
                 children: [
-                  DropdownButton<GetUsers>(
-                    value: selected,
+                  DropdownButton<GetUsers?>(
                     onChanged: (GetUsers? newValue) {
-                      // here you'll get selected value
                       setState(() {
                         selected = newValue!;
-                        newuserid = items.indexOf(); // h e r e
                       });
                     },
-                    items: users.map((e) => DropdownMenuItem(
-                            child: Text(e.name), 
-                            value: e,),).toList(),
+                    value: selected,
+                    hint: const Text(
+                      "Seleccione el empleado.",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: users
+                        .map(
+                          (item) => DropdownMenuItem<GetUsers?>(
+                            onTap: () {
+                              setState(() {
+                                //CREA UNA VARIABLE DE CLASE DEL ID
+                                newuserid = item.userId;
+                              });
+                            },
+                            child: Text(item.name),
+                            value: item,
+                          ),
+                        )
+                        .toList(),
                   ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -144,15 +156,20 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                       ),
                   onPressed: () {
                     setState(() {
+                      CircularProgressIndicator;
+                      futureQueryRecordAdmin;
                     });
-                   
-                    var finalUserID = newuserid + 1;
+
+                    var finalUserID = newuserid;
                     var finalfinalUserID = finalUserID;
                     var finalRecordTypeID = 1;
-                    var finalRecordDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                    futureQueryRecordAdmin = fetchQueryRecordAdmin(finalfinalUserID, finalRecordDate, finalRecordTypeID);
-                    debugPrint(finalfinalUserID.toString() + finalRecordDate + finalRecordTypeID.toString());
-                    
+                    var finalRecordDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    futureQueryRecordAdmin = fetchQueryRecordAdmin(
+                        finalfinalUserID, finalRecordDate, finalRecordTypeID);
+                    debugPrint(finalfinalUserID.toString() +
+                        finalRecordDate +
+                        finalRecordTypeID.toString());
                   },
                   child: const Text('queryrecords.apply').tr()),
 
@@ -175,55 +192,55 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               ),
               // Este contenedor sirve para cargar los registros recientes.
 //NOTE Esta sección, es el listtile que carga el registro seleccionado.
-          FutureBuilder<QueryRecordAdmin>(
-            future: futureQueryRecordAdmin,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      //ListTile que muestra la fecha y texto Record Date del registro consultado.
-                      ListTile(
-                          title: Text((convertirFecha(
-                              snapshot.data!.recordDate))), //fecha del registro
-                          trailing: Wrap(
-                            spacing: 12, // space between two icons
-                            children: <Widget>[
-                              const Icon(
-                                Icons.arrow_upward_outlined,
-                                color: AppTheme.green,
-                              ), // icon-1
-                              Text(
-                                ((convertirHora(snapshot.data!.entryTime))),
-                                style: const TextStyle(
-                                    fontSize: 18), //hora de entrada
+              FutureBuilder<QueryRecordAdmin>(
+                future: futureQueryRecordAdmin,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          //ListTile que muestra la fecha y texto Record Date del registro consultado.
+                          ListTile(
+                              title: Text((convertirFecha(snapshot
+                                  .data!.recordDate))), //fecha del registro
+                              trailing: Wrap(
+                                spacing: 12, // space between two icons
+                                children: <Widget>[
+                                  const Icon(
+                                    Icons.arrow_upward_outlined,
+                                    color: AppTheme.green,
+                                  ), // icon-1
+                                  Text(
+                                    ((convertirHora(snapshot.data!.entryTime))),
+                                    style: const TextStyle(
+                                        fontSize: 18), //hora de entrada
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_downward_outlined,
+                                    color: AppTheme.red,
+                                  ), // icon-2
+                                  Text(
+                                    ((convertirHora(snapshot.data!.exitTime))),
+                                    style: const TextStyle(
+                                        fontSize: 18), //hora de salida
+                                  )
+                                ],
                               ),
-                              const Icon(
-                                Icons.arrow_downward_outlined,
-                                color: AppTheme.red,
-                              ), // icon-2
-                              Text(
-                                ((convertirHora(snapshot.data!.exitTime))),
-                                style: const TextStyle(
-                                    fontSize: 18), //hora de salida
-                              )
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    const DisplayRecordScreenUser()));
-                          })
-                    ],
-                  ),
-                );
-              } else {
-                //NOTE En lo que carga o detecta el registro, aparecerá este Circular Progress Indicator.
-                return const CircularProgressIndicator();
-              }
-            },
-          )
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DisplayRecordScreenUser()));
+                              })
+                        ],
+                      ),
+                    );
+                  } else {
+                    //NOTE En lo que carga o detecta el registro, aparecerá este Circular Progress Indicator.
+                    return const CircularProgressIndicator();
+                  }
+                },
+              )
             ],
           ),
         ));
@@ -232,7 +249,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
 //FUNCIÓN QUE OBTIENE Y MUESTRA LOS DATOS DE LOS USUARIOS EN EL DROPDOWN LIST.
   Future<void> fetchAndShow() async {
     final users = await getData();
-    final usersid =await getData();
+    final usersid = await getData();
     setState(() {
       this.users = users ?? [];
       this.users = usersid ?? [];
@@ -252,7 +269,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
       });
     }
   }
-
 
   //ANCHOR METODOS Y OTRAS COSAS
   //NOTE: Método para convertir 17:30:00 a 17:30

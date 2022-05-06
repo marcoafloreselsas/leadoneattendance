@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if(response.body != '0'){
           guardarDatos(datos['UserID'], datos['Role']);
           if(datos['Role'] == 'Administrator'){                                   // REVIEW REVISAR SI LLEVA datos[Role] o solo [Role]
-          Navigator.pushNamed(context, '/AdminPage', arguments: {'UserID':UserId});
+          Navigator.pushNamed(context, '/AdminPage', arguments: {'UserID': UserId}); 
 
            } else {
           Navigator.pushNamed(context, '/UserPage', arguments: {'UserID': UserId});
