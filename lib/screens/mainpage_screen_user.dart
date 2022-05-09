@@ -99,11 +99,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (_, index) => GestureDetector(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DisplayRecordScreenUser())),
+                          onTap: () =>   Navigator.pushNamed(context, '/DisplayRecordScreenUser', arguments: convertirFechaArgumento(snapshot.data![index].RecordDate), ),
                           child: Container(
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
@@ -183,6 +179,13 @@ class _MainScreenUserState extends State<MainScreenUser> {
     return tiempoFinal;
   }
 
+  String convertirFechaArgumento(String fecha){
+    final parsearFecha = DateTime.parse(fecha);
+    var fechafinalargumento = DateFormat('yyyy-MM-dd').format(parsearFecha); //Fecha
+
+    return fechafinalargumento;
+  }
+
 //NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
   String convertirFecha(String fecha) {
     String date = fecha;
@@ -243,7 +246,7 @@ Future<List<Record>> fetchRecord() async {
 
   //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
   final response = await http
-      .get(Uri.parse('https://a199-45-65-152-57.ngrok.io/get/fiverecords/$userid'));
+      .get(Uri.parse('https://ecdf-45-65-152-57.ngrok.io/get/fiverecords/$userid'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

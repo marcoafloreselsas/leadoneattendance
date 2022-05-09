@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             '/MainScreenUser': (BuildContext context) => const MainScreenUser(),
             '/DisplayRecordScreenUser' : (BuildContext context) => const DisplayRecordScreenUser(),
             '/InsertRecordScreenUser': (BuildContext context) => const InsertRecordScreenUser(),
-            '/EditRecordScreenUser' : (BuildContext context) => const EditRecordScreenAdmin(),
+            '/EditRecordScreenUser' : (BuildContext context) => const EditRecordScreenUser(),
             '/QueryRecordScreenUser' : (BuildContext context) => const QueryRecordsScreenUser(),
       },
     );

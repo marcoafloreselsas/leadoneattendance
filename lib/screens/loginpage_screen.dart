@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const QueryRecordsScreenAdmin()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreenUser()));
                     },
                     icon: const Icon(Icons.settings, size: 18),
                     label: const Text("Change Password"),
