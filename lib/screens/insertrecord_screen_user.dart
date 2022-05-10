@@ -1,13 +1,47 @@
+//NOTA DE EDICIÓN • MAYO 10 DE 2022
+//changeTime será para validar que el usuario haya dado onTap al Time. si no, tome el valor del date.now de la vista.
+//Falta implementar en el botón.
+
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../dialogs/dialogs.dart';
 
-//Para cuando se marca el inicio de una actividad.
-Future<InsertRecordEntry> createEntryRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
+
+class InsertRecordScreenUser extends StatefulWidget {
+  const InsertRecordScreenUser({Key? key}) : super(key: key);
+
+  @override
+  State<InsertRecordScreenUser> createState() => _InsertRecordScreenUserState();
+}
+
+class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
+  Future<Future>? _futureInsertRecordEntry;
+  Future<Future>? _futureInsertRecordExit;
+  DateTime pickedDate = DateTime.parse('0000-00-00');
+  late TimeOfDay time;
+  String finaltime = '';
+  String finalfinal = '';
+  bool switchValue = false;
+  bool isonisoff = false;
+  int recordTypeId = 0;
+  String? changeTime;
+
+
+  String dropdownvalue = 'Attendance';
+  // List of items in our dropdown menu
+  var items = [
+    'Attendance',
+    'Lunch',
+    'Overtime',
+    'Permit',
+  ];
+  //Para cuando se marca el inicio de una actividad.
+Future<Future> createEntryRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
   final response = await http.post(
-    Uri.parse('https://deb4-45-65-152-57.ngrok.io/insertrecord/'),
+    Uri.parse('https://c4da-45-65-152-57.ngrok.io/insertrecord/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -19,7 +53,8 @@ Future<InsertRecordEntry> createEntryRecord(String RecordDate, int FinalRecordTy
     }),
   );
   if (response.statusCode == 201) {
-    return InsertRecordEntry.fromJson(jsonDecode(response.body));
+    return showDialog(context: context, builder:(_) => const AlertInsertRecordOk());
+
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
@@ -27,9 +62,9 @@ Future<InsertRecordEntry> createEntryRecord(String RecordDate, int FinalRecordTy
   }
 }
 //Para cuando se marca la finalización de una actividad.
-Future<InsertRecordExit> createExitRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
+Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
   final response = await http.post(
-    Uri.parse('https://deb4-45-65-152-57.ngrok.io/insertrecord/'),
+    Uri.parse('https://c4da-45-65-152-57.ngrok.io/insertrecord/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -42,7 +77,7 @@ Future<InsertRecordExit> createExitRecord(String RecordDate, int FinalRecordType
   );
 
   if (response.statusCode == 201) { 
-    return InsertRecordExit.fromJson(jsonDecode(response.body));
+    return showDialog(context: context, builder:(_) => const AlertInsertRecordOk());
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
@@ -50,31 +85,6 @@ Future<InsertRecordExit> createExitRecord(String RecordDate, int FinalRecordType
   }
 }
 
-class InsertRecordScreenUser extends StatefulWidget {
-  const InsertRecordScreenUser({Key? key}) : super(key: key);
-
-  @override
-  State<InsertRecordScreenUser> createState() => _InsertRecordScreenUserState();
-}
-
-class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
-  Future<InsertRecordEntry>? _futureInsertRecordEntry;
-  Future<InsertRecordExit>? _futureInsertRecordExit;
-  DateTime pickedDate = DateTime.parse('0000-00-00');
-  late TimeOfDay time;
-  String finaltime = '';
-  String finalfinal = '';
-  bool switchValue = false;
-  bool isonisoff = false;
-  int recordTypeId = 0;
-  String dropdownvalue = 'Attendance';
-  // List of items in our dropdown menu
-  var items = [
-    'Attendance',
-    'Lunch',
-    'Overtime',
-    'Permit',
-  ];
 
   @override
   void initState() {
@@ -230,6 +240,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
         time = timeRecord;
         // DateTime newDateTime = DateTime(time.hour,time.minute);
         finaltime = '${time.hour}:${time.minute}';
+        changeTime = '${time.hour}:${time.minute.toString().padLeft(2,'0')}';
         finalfinal = finaltime;
       });
     }

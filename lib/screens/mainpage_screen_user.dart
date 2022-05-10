@@ -246,7 +246,7 @@ Future<List<Record>> fetchRecord() async {
 
   //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
   final response = await http
-      .get(Uri.parse('https://ecdf-45-65-152-57.ngrok.io/get/fiverecords/$userid'));
+      .get(Uri.parse('https://c4da-45-65-152-57.ngrok.io/get/fiverecords/$userid'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

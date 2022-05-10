@@ -36,6 +36,7 @@
     "editrecords":
     {
         "title" : "Editar Registro",
+        "recordDate" : "Fecha del Registro",
         "selectDate" : "Seleccione la Fecha",
         "selectTime" : "Seleccione la Hora",
         "typeRecord" : "Tipo de Registro",

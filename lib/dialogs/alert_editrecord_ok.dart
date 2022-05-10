@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/screens/mainpage_screen_user.dart';
 
 class AlertEditRecordOk extends StatelessWidget {
   const AlertEditRecordOk({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class AlertEditRecordOk extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                
               },
               child: const Text('Aceptar'))
         ]);
