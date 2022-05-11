@@ -4,7 +4,6 @@
 
 
 //NOTE MODELO DE OBTENER UN REGISTRO COMPLETO.
-import 'dart:convert';
 
 class Album {
   final int userId;

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/screens/mainpage_screen_user.dart';
-
 class AlertEditRecordOk extends StatelessWidget {
   const AlertEditRecordOk({Key? key}) : super(key: key);
 

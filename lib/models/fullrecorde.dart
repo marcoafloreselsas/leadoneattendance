@@ -5,7 +5,6 @@
 
 //NOTE MODELO DE OBTENER UN REGISTRO COMPLETO. 
 //NOTE ESTE SE USA EN EDIT RECORD SCREEN.
-import 'dart:convert';
 class FullRecorde{
     FullRecorde({
         required this.RecordDate,

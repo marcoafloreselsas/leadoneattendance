@@ -12,7 +12,7 @@ class LoadingScreen extends StatelessWidget {
     return const Scaffold(
       body: Center(
         child: Icon(
-          Icons.beach_access,
+          Icons.change_circle_outlined,
         ),
       ),
     );
@@ -23,17 +23,17 @@ class LoadingScreen extends StatelessWidget {
 Future isLogged(context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // ignore: non_constant_identifier_names
-  String? UserId = prefs.getString('UserID');
   // ignore: non_constant_identifier_names
   String? Role = prefs.getString('Role');
-  var userid = 0;
     if (Role == 'Administrator') {
       /// If the user is an admin
-    Navigator.of(context).pushNamed('/MainScreenAdmin', arguments: {userid: UserId});
+    Navigator.of(context).pushNamed('/MainScreenAdmin');
+    debugPrint('Es Administrador el vato');
     // Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreenAdmin()));
     } else if (Role == 'Employee') {
       /// If the user is not an admin
-    Navigator.of(context).pushNamed('/MainScreenUser', arguments: {userid: UserId});
+    Navigator.of(context).pushNamed('/MainScreenUser');
+    debugPrint('Es empleado el vato');
     } else {
     Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
     debugPrint('paso por aqui');

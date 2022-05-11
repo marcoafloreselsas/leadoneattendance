@@ -73,14 +73,11 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
                       fetchQueryRecord;
                   });
                   // var newRecordDate = DateFormat('yyyy-MM-dd').format(valueRegistro);
-                    var finalUserID = 1;
-                    var finalfinalUserID = finalUserID;
                     var finalRecordTypeID = 1;
                     var finalRecordDate =
                         DateFormat('yyyy-MM-dd').format(pickedDate);
-                    futureQueryRecord = fetchQueryRecord(
-                        finalfinalUserID, finalRecordDate, finalRecordTypeID);
-                    debugPrint(finalfinalUserID.toString() +
+                    futureQueryRecord = fetchQueryRecord(finalRecordDate, finalRecordTypeID);
+                    debugPrint(
                         finalRecordDate +
                         finalRecordTypeID.toString());
                 },
@@ -161,14 +158,17 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
     );
   }
 
-Future<QueryRecord> fetchQueryRecord(int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+Future<QueryRecord> fetchQueryRecord(String finalRecordDate, int finalRecordTypeID) async {
+  UserPreferences userPreferences = UserPreferences();
+  var userId = await userPreferences.getUserId();
+  var userid = userId;
+  var userToken = await userPreferences.getUserToken();
+  var usertoken = userToken;
   // final userid = ModalRoute.of(context)!.settings.arguments;
-  final finaluserid = finalfinalUserID;
   //Los siguientes, son los parámetros utilizados para cargar un registro.
-  var UserID = finaluserid;
   var RecordTypeID = finalRecordTypeID;
   var RecordDate = finalRecordDate;
-  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
+  var s = usertoken.toString()+ "/"+ userid.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
 
 //http request GET
   final response = await http.get(Uri.parse('https://c4da-45-65-152-57.ngrok.io/get/record/$s'));

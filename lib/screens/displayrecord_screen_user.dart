@@ -32,11 +32,17 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
   }
 
   Future<FullRecord> fetchFullRecord() async {
+    UserPreferences userPreferences = UserPreferences();
     var args = ModalRoute.of(context)!.settings.arguments;
-    var s = args; //RecordDate
+    var recorddate = args;
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
+    var userToken = await userPreferences.getUserToken();
+    var usertoken = userToken;
+    var s = usertoken.toString() + '/' +userid.toString() + '/' + recorddate.toString();
 
     final response = await http.get(Uri.parse(
-        'https://c4da-45-65-152-57.ngrok.io/get/fulluserrecord/1/$s'));
+        'https://4aa8-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
       //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
@@ -145,7 +151,6 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                       onTap: () {
                         if(convertirHora(snapshot.data!.entryTime2) == "00:00"){
                           showDialog(context: context, builder:(_) => const AlertEditRecordErrorTwo());
-                          print('Se cumplió el if');
                         } else{
                           Navigator.pushNamed(context, '/EditRecordScreenUser',
                             arguments: {
@@ -168,7 +173,7 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                           ), // icon-1
                           Text(
                             convertirHora(snapshot.data!.entrytime3),
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                           const Icon(
                             Icons.arrow_downward_outlined,
@@ -176,14 +181,13 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                           ), // icon-2
                           Text(
                             convertirHora(snapshot.data!.exitTime3),
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
                       onTap: () {
                         if(convertirHora(snapshot.data!.entrytime3) == "00:00"){
                           showDialog(context: context, builder:(_) => const AlertEditRecordErrorTwo());
-                          print('Se cumplió el if');
                         } else{
                           Navigator.pushNamed(context, '/EditRecordScreenUser',
                             arguments: {

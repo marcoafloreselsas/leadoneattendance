@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -90,11 +89,14 @@ String? changeFinalTime;
   }
 //PARA OBTENER LOS DATOS Y CARGARLOS EN LA PANTALLA
   Future<FullRecorde> fetchFullRecord() async {
+    UserPreferences userPreferences = UserPreferences();
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
     final response = await http.get(Uri.parse(
-        'https://c4da-45-65-152-57.ngrok.io/get/record/1/$x/$y'));
+        'https://c4da-45-65-152-57.ngrok.io/get/record/$userid/$x/$y'));
     if (response.statusCode == 200) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.

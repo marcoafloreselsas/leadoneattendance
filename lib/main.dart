@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/screens/mainpage_screen_user.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:leadoneattendance/services/supported_locales.dart';
 
 void main() async {

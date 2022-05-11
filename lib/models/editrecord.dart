@@ -1,9 +1,6 @@
 // To parse this JSON data, do
 //
 //     final insertRecord = insertRecordFromJson(jsonString);
-
-import 'dart:convert';
-
 // EditRecord editRecordEntryToJson(String str) => EditRecord.toJson(json.decode(str));
 
 

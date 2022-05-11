@@ -3,7 +3,6 @@
 //Falta implementar en el botón.
 
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/models/models.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -28,7 +27,6 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   bool isonisoff = false;
   int recordTypeId = 0;
   String? changeTime;
-
 
   String dropdownvalue = 'Attendance';
   // List of items in our dropdown menu
@@ -84,7 +82,6 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
     throw Exception('Failed to create record.');
   }
 }
-
 
   @override
   void initState() {

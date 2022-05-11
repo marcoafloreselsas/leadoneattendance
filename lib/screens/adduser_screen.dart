@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
-import 'package:leadoneattendance/dialogs/dialogs.dart';
 
 class AddUserScreen extends StatefulWidget {
   const AddUserScreen({Key? key}) : super(key: key);

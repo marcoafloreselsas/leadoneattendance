@@ -22,11 +22,11 @@ class AlertChangePasswordOk extends StatelessWidget {
           ),
         ),
         actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Aceptar'))
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/LoginScreen');
+                    },
+                    child: const Text('OK')),
         ]);
   }
 }

@@ -3,6 +3,7 @@ import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -114,7 +115,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         ),
                     onPressed: () {
                       setState(() {
-                        changepassword(emailController, passwordController, newPasswordController);
+                        changepassword(emailController.text, passwordController.text, newPasswordController.text);
                       });
                       Navigator.push(
                           context,
@@ -129,24 +130,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
     Future<void> changepassword(email, password, newpassword) async{
     try{
-      var url = 'serverurl';
-      var response = await http.post(Uri.parse(url), 
-      body:
+        final response = await http.post(Uri.parse('https://4aa8-45-65-152-57.ngrok.io/password'),
+        headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+      body: jsonEncode(<String, String>
         {
           'Email' : email,
           'Password' : password,
           'NewPassword' : newpassword
-        }).timeout(const Duration(seconds: 30));
-
-        var datos = jsonDecode(response.body);
-        debugPrint(datos);
+        }));
+        // var datos = jsonDecode(response.body); // C H E C K    T H I S
         if(response.body != '0'){
+          //Cuadro de diálogo que muestra que los datos son correctos.
           showDialog(
               context: context,
               builder: (BuildContext context) {
                 return const AlertChangePasswordOk();
               });
-              debugPrint('Actualización realizada exitosamente.');
+          debugPrint('Usuario Correcto, cambios realizados.');
         } else{
           //Cuadro de diálogo que indica que los datos son incorrectos.
           showDialog(
@@ -157,8 +159,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           debugPrint('Usuario Incorrecto');
           
         }
-    }  on Error {
-      debugPrint('Http error.');
+    } on TimeoutException{
+      debugPrint('Tiempo de proceso excedido.');
     }
   }
 }

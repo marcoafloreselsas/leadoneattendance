@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/models/queryrecordadmin.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -17,16 +17,16 @@ class AlertChangePasswordError extends StatelessWidget {
         content: SingleChildScrollView(
           child: ListBody(
             children: const [
-              Text('Verifique su correo electronico y contraseña.')
+              Text('El correo electronico y/o contraseña son incorrectos.')
             ],
           ),
         ),
         actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Aceptar'))
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/LoginScreen');
+                    },
+                    child: const Text('Save Changes')),
         ]);
   }
 }

@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:http/http.dart' as http;
-
 
 class InsertRecordScreenAdmin extends StatefulWidget {
   const InsertRecordScreenAdmin({Key? key}) : super(key: key);
