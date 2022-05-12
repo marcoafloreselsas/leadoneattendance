@@ -14,6 +14,7 @@ class SendReportScreen extends StatefulWidget {
 }
 
 class _SendReportScreenState extends State<SendReportScreen> {
+
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var subjectController = TextEditingController();
@@ -23,9 +24,12 @@ class _SendReportScreenState extends State<SendReportScreen> {
   String subject = '';
   String message = '';
 
+
 //Esta vista envía el reporte generado.
   @override
   Widget build(BuildContext context) {
+    UserPreferences userPreferences = UserPreferences();
+
     return Scaffold(
       //App bar de la pantalla.
         appBar: AppBar(
@@ -108,13 +112,14 @@ class _SendReportScreenState extends State<SendReportScreen> {
                           // context,
                           // MaterialPageRoute(
                           //     builder: (context) => const MainScreenAdmin()));
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const MainScreenAdmin()),
-                              (Route<dynamic> route) =>
-                                  route is MainScreenAdmin);
+                          sendReport(emailController.text, subjectController.text, messageController.text);
+                          // Navigator.pushAndRemoveUntil(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (BuildContext context) =>
+                          //             const MainScreenAdmin()),
+                          //     (Route<dynamic> route) =>
+                          //         route is MainScreenAdmin); 
                         }
                       },
                       child: const Text('sendreport.sendButton').tr())
@@ -123,38 +128,155 @@ class _SendReportScreenState extends State<SendReportScreen> {
             )));
   }
 
-    Future<void> sendreport(email, subject, message) async{
-    try{
-      var url = 'serverurl';
-      var response = await http.post(Uri.parse(url), 
-      body:
-        {
-          'Email' : email,
-          'Subject' : subject,
-          'Message ' : message
-        }).timeout(const Duration(seconds: 30));
+    Future<void> sendReport(email, subject, message) async{
+    UserPreferences userPreferences = UserPreferences();
+    Map args = ModalRoute.of(context)!.settings.arguments as Map;
 
-        var datos = jsonDecode(response.body);
-        debugPrint(datos);
-        if(response.body != '0'){
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertChangePasswordOk();
-              });
-              debugPrint('Datos enviados exitosamente.');
-        } else{
-          //Cuadro de diálogo que indica que los datos son incorrectos.
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertChangePasswordError();
-              });
-          debugPrint('Hubo un problema.');
-          
-        }
-    }  on Error {
-      debugPrint('Http error.');
+    // Map args = ModalRoute.of(context)!.settings.arguments as Map;
+    var activity = args['userID'];
+    var userID = args['activity'].toString();
+    var firstDate = args['firstDate'];
+    var lastDate = args['lastDate'];
+
+    if(activity == 1){
+    final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/send/userhoursreport/'),
+          headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body:jsonEncode(<String, String>
+            {
+              'Email' : email,
+              'UserID': userID,
+              'Date1': firstDate,
+              'Date2': lastDate,
+              'Subject': subject,
+              'Message': message
+            }));
+        debugPrint('AT: '+email + userID + firstDate + lastDate);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertSendReport();
+                  });
+            // if(response.body != '0'){
+            //   //Cuadro de diálogo que muestra que los datos son correctos.
+
+            //   debugPrint('Usuario Correcto, cambios realizados.');
+            // } else{
+            //   //Cuadro de diálogo que indica que los datos son incorrectos.
+            //   showDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return const AlertChangePasswordError();
+            //       });
+            //   debugPrint('Usuario Incorrecto');
+              
+            // }
+
+    }else if(activity == 2){
+          final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/send/usermodifications/'),
+          headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body:jsonEncode(<String, String>
+            {
+              'Email' : email,
+              'UserID': userID,
+              'Date1': firstDate,
+              'Date2': lastDate,
+              'Subject': subject,
+              'Message': message
+            }));
+        debugPrint('MOD: '+email + userID + firstDate + lastDate);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertSendReport();
+                  });
+            // if(response.body != '0'){
+            //   //Cuadro de diálogo que muestra que los datos son correctos.
+
+            //   debugPrint('Usuario Correcto, cambios realizados.');
+            // } else{
+            //   //Cuadro de diálogo que indica que los datos son incorrectos.
+            //   showDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return const AlertChangePasswordError();
+            //       });
+            //   debugPrint('Usuario Incorrecto');
+              
+            // }
+    }
+else if(activity == 3){
+          final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/send/usershoursreport/'),
+          headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body:jsonEncode(<String, String>
+            {
+              'Email' : email,
+              'UserID': userID,
+              'Date1': firstDate,
+              'Date2': lastDate,
+              'Subject': subject,
+              'Message': message
+            }));
+        debugPrint('MOD: '+email + userID + firstDate + lastDate);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertSendReport();
+                  });
+            // if(response.body != '0'){
+            //   //Cuadro de diálogo que muestra que los datos son correctos.
+
+            //   debugPrint('Usuario Correcto, cambios realizados.');
+            // } else{
+            //   //Cuadro de diálogo que indica que los datos son incorrectos.
+            //   showDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return const AlertChangePasswordError();
+            //       });
+            //   debugPrint('Usuario Incorrecto');
+              
+            // }
+    }
+    else if(activity == 4){
+          final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/send/usersmodifications/'),
+          headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body:jsonEncode(<String, String>
+            {
+              'Email' : email,
+              'UserID': userID,
+              'Date1': firstDate,
+              'Date2': lastDate,
+              'Subject': subject,
+              'Message': message
+            }));
+        debugPrint('MOD: '+email + userID + firstDate + lastDate);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertSendReport();
+                  });
+            // if(response.body != '0'){
+            //   //Cuadro de diálogo que muestra que los datos son correctos.
+
+            //   debugPrint('Usuario Correcto, cambios realizados.');
+            // } else{
+            //   //Cuadro de diálogo que indica que los datos son incorrectos.
+            //   showDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return const AlertChangePasswordError();
+            //       });
+            //   debugPrint('Usuario Incorrecto');
+              
+            // }
     }
   }
 }

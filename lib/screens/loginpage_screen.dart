@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //si no, pues hay error.
   Future<void> login(email, password) async{
     try{
-        final response = await http.post(Uri.parse('https://4aa8-45-65-152-57.ngrok.io/login/'),
+        final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/login/'),
         headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

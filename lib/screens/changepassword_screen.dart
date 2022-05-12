@@ -130,7 +130,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
     Future<void> changepassword(email, password, newpassword) async{
     try{
-        final response = await http.post(Uri.parse('https://4aa8-45-65-152-57.ngrok.io/password'),
+        final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/password'),
         headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

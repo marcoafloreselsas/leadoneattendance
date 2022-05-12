@@ -16,9 +16,8 @@ class GenerateGeneralReportsScreen extends StatefulWidget {
 class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
-  int tipoRegistro = 0 ;
+  late int selectedactivity;
 
-//TIPOS DE REGISTRO GENERAL
   String dropdownvalue = 'Attendance History';
   var items = [
     'Attendance History',
@@ -30,31 +29,14 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
     super.initState();
     pickedDateFrom = DateTime.now();
     pickedDateTo = DateTime.now();
-    
-  }
-//LISTA QUE OBTIENE LOS NOMBRE DE LOS USUARIOS
-    Future<List<GetUsers>>? getData() async {
-    const String url = 'https://4aa8-45-65-152-57.ngrok.io/get/names';
-    var response = await http.get(
-      Uri.parse(url),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
-    );
-    if (response.statusCode == 200) {
-      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-      return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    //Declaración de fecha de inicio, fecha de fin, Abril 20 de 2022
     return Scaffold(
       appBar: AppBar(
-          title: const Text('GENERAL'),
+          title: const Text('Individual'),
           centerTitle: true,
           actions: [
             IconButton(
@@ -82,7 +64,6 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
                 value: dropdownvalue,
                 // Down Arrow Icon
                 icon: const Icon(Icons.keyboard_arrow_down_outlined),
-
                 // Array list of items
                 items: items.map((String items) {
                   return DropdownMenuItem(
@@ -95,7 +76,7 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
                 onChanged: (String? newValue) {
                   setState(() {
                     dropdownvalue = newValue!;
-                    tipoRegistro = items.indexOf(newValue);
+                    selectedactivity = items.indexOf(newValue);
                   });
                 },
               ),
@@ -138,13 +119,6 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
             onTap: _pickDateTo,
           ),
 
-//INTERVALO DE FECHAS (FUNCIONAL)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              SizedBox(width: 12),
-            ],
-          ),
           const SizedBox(
             height: 20,
           ),
@@ -156,15 +130,11 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
                   minimumSize: const Size(120, 50) //TAMANO - WH
                   ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ReportViewerScreen()));
-                if(tipoRegistro == 0){
-                  //Aquī envía a general attendance entre fechas
-                  
-                }else{
-                  //Aquí envía a general modifications entre fechas
-
-                }
+                var activity = selectedactivity + 3;
+                var firstDate = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
+                var lastDate = DateFormat('yyyy-MM-dd').format(pickedDateTo);
+                print('te estoy mandando:' + activity.toString() + firstDate.toString() + lastDate.toString());
+                Navigator.pushNamed(context, '/ReportViewerScreen', arguments:  {'activity': activity, 'firstDate':firstDate,'lastDate': lastDate});
               },
               child: const Text('generatereports.applyButton').tr())
         ],

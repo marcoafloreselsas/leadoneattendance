@@ -14,7 +14,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-        AppBar(title: const Text('reportviewer.title').tr(), centerTitle: true, actions: [
+        AppBar(title: const Text('Seleccionar Tipo de Reporte'), centerTitle: true, actions: [
         IconButton(
             onPressed: () {
               Navigator.push(
@@ -53,8 +53,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
               contentPadding:
                   (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const GenerateGeneralReportsScreen()));
+                  Navigator.pushNamed(context, '/GeneralReports'); 
               },
             ),
             const SizedBox(
@@ -76,8 +75,8 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
               contentPadding:
                   (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const GenerateReportsScreen()));
+                  Navigator.pushNamed(context, '/IndividualReports'); 
+
               },
             ),
         ],

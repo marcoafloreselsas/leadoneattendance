@@ -19,6 +19,7 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
   List<GetUsers> users = [];
   GetUsers? selected;
   late int newuserid;
+  late int selectedactivity;
 
 
   String dropdownvalue = 'Attendance History';
@@ -36,7 +37,7 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
   }
 
     Future<List<GetUsers>>? getData() async {
-    const String url = 'https://4aa8-45-65-152-57.ngrok.io/get/names';
+    const String url = 'https://beb7-45-65-152-57.ngrok.io/get/names';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -85,7 +86,6 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
                 value: dropdownvalue,
                 // Down Arrow Icon
                 icon: const Icon(Icons.keyboard_arrow_down_outlined),
-
                 // Array list of items
                 items: items.map((String items) {
                   return DropdownMenuItem(
@@ -98,6 +98,7 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
                 onChanged: (String? newValue) {
                   setState(() {
                     dropdownvalue = newValue!;
+                    selectedactivity = items.indexOf(newValue);
                   });
                 },
               ),
@@ -189,8 +190,12 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
                   minimumSize: const Size(120, 50) //TAMANO - WH
                   ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ReportViewerScreen()));
+                var activity = selectedactivity + 1;
+                var userID = newuserid;
+                var firstDate = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
+                var lastDate = DateFormat('yyyy-MM-dd').format(pickedDateTo);
+                print('te estoy mandando:' + userID.toString() + activity.toString() + firstDate.toString() + lastDate.toString());
+                Navigator.pushNamed(context, '/ReportViewerScreen', arguments:  {'userID':userID,'activity': activity, 'firstDate':firstDate,'lastDate': lastDate});
               },
               child: const Text('generatereports.applyButton').tr())
         ],

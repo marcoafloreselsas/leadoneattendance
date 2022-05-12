@@ -42,7 +42,7 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
     var s = usertoken.toString() + '/' +userid.toString() + '/' + recorddate.toString();
 
     final response = await http.get(Uri.parse(
-        'https://4aa8-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
+        'https://beb7-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
       //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.

@@ -171,7 +171,7 @@ Future<QueryRecord> fetchQueryRecord(String finalRecordDate, int finalRecordType
   var s = usertoken.toString()+ "/"+ userid.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
 
 //http request GET
-  final response = await http.get(Uri.parse('https://c4da-45-65-152-57.ngrok.io/get/record/$s'));
+  final response = await http.get(Uri.parse('https://beb7-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecord.fromJson(jsonDecode(response.body)[0]);
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.

@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
             '/InsertRecordScreenAdmin' : (BuildContext context) => const InsertRecordScreenAdmin(),
             '/EditRecordScreenAdmin' : (BuildContext context) => const EditRecordScreenAdmin(),
             '/QueryRecordsScreenAdmin' : (BuildContext context) => const QueryRecordsScreenAdmin(),
-            '/GenerateReportsScreenAdmin' : (BuildContext context) => const GenerateReportsScreen(),
+            '/SelectReportType' : (BuildContext context) => const SelectReportTypeScreen(),
+            '/GeneralReports' : (BuildContext context) => const GenerateGeneralReportsScreen(),
+            '/IndividualReports': (BuildContext context) => const GenerateReportsScreen(),
             '/ReportViewerScreen' : (BuildContext context) => const ReportViewerScreen(),
             '/SendReportScreen': (BuildContext context) => const SendReportScreen(),
     //U S E R 

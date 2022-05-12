@@ -17,7 +17,7 @@ Future<QueryRecordAdmin> fetchQueryRecordAdmin(
 
 //http request GET
   final response = await http
-      .get(Uri.parse('https://a199-45-65-152-57.ngrok.io/get/record/$s'));
+      .get(Uri.parse('https://beb7-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
@@ -44,11 +44,11 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   late int newuserid;
 
   Future<List<GetUsers>>? getData() async {
-    const String url = 'https://a199-45-65-152-57.ngrok.io/get/names';
+    const String url = 'https://beb7-45-65-152-57.ngrok.io/get/names';
     var response = await http.get(
       Uri.parse(url),
       headers: {
-        "content-type": "application/json",
+        "content-type": "application/json", 
         "accept": "application/json",
       },
     );
@@ -79,11 +79,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
             actions: [
               IconButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const GenerateReportsScreen()));
+                     Navigator.pushNamed(context, '/SelectReportType'); 
                   },
                   icon: const Icon(Icons.description_outlined)),
             ]),
