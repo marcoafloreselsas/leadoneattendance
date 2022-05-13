@@ -39,7 +39,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   //Para cuando se marca el inicio de una actividad.
 Future<Future> createEntryRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
   final response = await http.post(
-    Uri.parse('https://beb7-45-65-152-57.ngrok.io/insertrecord/'),
+    Uri.parse('https://f6a1-45-65-152-57.ngrok.io/insertrecord/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -62,7 +62,7 @@ Future<Future> createEntryRecord(String RecordDate, int FinalRecordTypeId, Strin
 //Para cuando se marca la finalización de una actividad.
 Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
   final response = await http.post(
-    Uri.parse('https://c4da-45-65-152-57.ngrok.io/insertrecord/'),
+    Uri.parse('https://f6a1-45-65-152-57.ngrok.io/insertrecord/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

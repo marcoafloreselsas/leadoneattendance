@@ -29,13 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
   Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
+    return false;
   }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      //Función que desactiva el botón "back" del sistema
       onWillPop: _onWillPop,
       child: Scaffold(
+      //Desaparece el botón "back" del scaffold
           resizeToAvoidBottomInset: false,
           body: Center(
               child: Column(
@@ -137,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //si no, pues hay error.
   Future<void> login(email, password) async{
     try{
-        final response = await http.post(Uri.parse('https://beb7-45-65-152-57.ngrok.io/login/'),
+        final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/login/'),
         headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

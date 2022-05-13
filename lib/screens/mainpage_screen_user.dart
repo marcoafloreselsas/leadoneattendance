@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/dialogs/alert_401_error.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,7 +19,7 @@ class MainScreenUser extends StatefulWidget {
 class _MainScreenUserState extends State<MainScreenUser> {
   DateTime now = DateTime.now();
   var isLoaded = false;
-  late Future<List<Record>> futureRecord;
+  late Future<dynamic> futureRecord;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
           actions: [
             IconButton(
                 onPressed: () {
-            Navigator.pushNamed(context, '/QueryRecordScreenUser', arguments: {'UserID': 1}); 
+            Navigator.pushNamed(context, '/QueryRecordsScreenUser', arguments: {'UserID': 1}); 
     
                 },
                 icon: const Icon(Icons.search_outlined)),
@@ -77,8 +77,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
               contentPadding:
                   (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const InsertRecordScreenUser()));
+                Navigator.pushNamed(context, '/InsertRecordScreenUser');
               },
             ),
             const SizedBox(
@@ -96,7 +95,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
             const SizedBox(
               height: 10,
             ),
-            FutureBuilder<List<Record>>(
+            FutureBuilder<dynamic>(
               future: futureRecord,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -106,7 +105,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) => GestureDetector(
-                            onTap: () =>   Navigator.pushNamed(context, '/DisplayRecordScreenUser', arguments: convertirFechaArgumento(snapshot.data![index].RecordDate), ),
+                            onTap: () =>   Navigator.pushNamed(context, '/DisplayRecordScreenUser', arguments: convertirFechaArgumento(snapshot.data![index].RecordDate),),
                             child: Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 2),
@@ -169,10 +168,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const InsertRecordScreenUser()));
+            Navigator.pushNamed(context, '/InsertRecordScreenUser');
           },
         ),
       ),
@@ -245,9 +241,9 @@ class _MainScreenUserState extends State<MainScreenUser> {
     // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
     //resultado: Abril 8, 2022
     return fechaFinal;
-  }
+  }  //HTTP Request
   //HTTP Request
-Future<List<Record>> fetchRecord() async {
+Future<dynamic> fetchRecord() async {
   //LA LINEA COMENTADA ABAJO, ES PARA CARGAR EL USER ID DE LA PANTALLA ANTERIOR
   // final userid = ModalRoute.of(context)!.settings.arguments;
   UserPreferences userPreferences = UserPreferences();
@@ -260,14 +256,22 @@ Future<List<Record>> fetchRecord() async {
   print('esta es una prueba user' + s);
   //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
   final response = await http
-      .get(Uri.parse('https://beb7-45-65-152-57.ngrok.io/get/fiverecords/$s'));
+      .get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/fiverecords/$s'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
 
     return parsed.map<Record>((json) => Record.fromMap(json)).toList();
-  } else {
-    throw Exception('Failed to load records.');
+  } else if (response.statusCode == 401) {
+    print(response.statusCode.toString());
+     return showDialog(
+        barrierDismissible: false,
+                  context: context,
+                  builder: (BuildContext context){
+                    return WillPopScope(onWillPop: _onWillPop,child: const Alert401());
+      }
+    );
+      }
+  throw Exception('Failed to load records.');
   }
-}
 }

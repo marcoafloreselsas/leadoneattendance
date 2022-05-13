@@ -51,7 +51,7 @@ String? changeFinalTime;
   Future<Future> createEditRecord(
       String RecordDate, String RecordTypeId, String EntryTime, ExitTime) async {
     final response = await http.put(
-      Uri.parse('https://beb7-45-65-152-57.ngrok.io/update/record'),
+      Uri.parse('https://f6a1-45-65-152-57.ngrok.io/update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -96,7 +96,7 @@ String? changeFinalTime;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
     final response = await http.get(Uri.parse(
-        'https://beb7-45-65-152-57.ngrok.io/get/record/$userid/$x/$y'));
+        'https://f6a1-45-65-152-57.ngrok.io/get/record/$userid/$x/$y'));
     if (response.statusCode == 200) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.

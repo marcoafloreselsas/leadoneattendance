@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             '/QueryRecordsScreenAdmin' : (BuildContext context) => const QueryRecordsScreenAdmin(),
             '/SelectReportType' : (BuildContext context) => const SelectReportTypeScreen(),
             '/GeneralReports' : (BuildContext context) => const GenerateGeneralReportsScreen(),
-            '/IndividualReports': (BuildContext context) => const GenerateReportsScreen(),
+            '/IndividualReports': (BuildContext context) => const GenerateIndividualReportsScreen(),
             '/ReportViewerScreen' : (BuildContext context) => const ReportViewerScreen(),
             '/SendReportScreen': (BuildContext context) => const SendReportScreen(),
     //U S E R 
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             '/DisplayRecordScreenUser' : (BuildContext context) => const DisplayRecordScreenUser(),
             '/InsertRecordScreenUser': (BuildContext context) => const InsertRecordScreenUser(),
             '/EditRecordScreenUser' : (BuildContext context) => const EditRecordScreenUser(),
-            '/QueryRecordScreenUser' : (BuildContext context) => const QueryRecordsScreenUser(),
+            '/QueryRecordsScreenUser' : (BuildContext context) => const QueryRecordsScreenUser(),
       },
     );
   }

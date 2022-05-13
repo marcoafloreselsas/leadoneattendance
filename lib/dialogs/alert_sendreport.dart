@@ -22,7 +22,7 @@ class AlertSendReport extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/MainScreenAdmin');
               },
               child: const Text('Aceptar'))
         ]);

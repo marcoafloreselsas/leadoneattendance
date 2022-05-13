@@ -12,45 +12,64 @@ class ReportViewerScreen extends StatefulWidget {
 
 class ReportViewerScreenState extends State<ReportViewerScreen> {
   late WebViewController controller;
-
   @override
   void initState() {
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences();
-    Map args = ModalRoute.of(context)!.settings.arguments as Map;
 
-    var activity = args['userID'].toString();
-    var userID = args['activity'].toString();
+    // Future<String?> obtenerToken() async{
+    // UserPreferences userPreferences = UserPreferences();
+    // var userToken = await userPreferences.getUserToken();
+    // return userToken;
+    // }
+    // var tokenInicial = obtenerToken;
+
+    // String convertirToken(String tokenInicial){
+    //   setState(() {
+    //            if (tokenInicial is String) {
+    //             String tokenFinal = tokenInicial.toString();
+    //              return tokenFinal;
+    //            } 
+    //   });
+    // }
+    // String miToken = obtenerToken as String;
+
+    determinarRuta() {
+    Map args = ModalRoute.of(context)!.settings.arguments as Map;
+    // var usertoken = miToken;
+    var activity = args['activity'].toString();
+    var userID = args['userID'].toString();
     var firstDate = args['firstDate'];
     var lastDate = args['lastDate'];
-    var s = userID + "/" + firstDate + "/" + lastDate;
     print('Estoy recibiendo:' + userID.toString() + activity.toString() + firstDate.toString() + lastDate.toString());
- 
-    determinarRuta(){
       if(activity == '1'){
+      var s = userID + "/" + firstDate + "/" + lastDate;
         //Cuando la actividad es: INDIVIDUAL Attendance History
         debugPrint('Determinar ruta: INDIVIDUAL USER MODIFICATIONS');
-        var ruta = 'https://docs.google.com/viewer?url=https://beb7-45-65-152-57.ngrok.io/pdf/userhoursreport/$s';
+        var ruta = 'https://docs.google.com/viewer?url=https://f6a1-45-65-152-57.ngrok.io/pdf/userhoursreport/$s';
         return ruta;
       }
       else if (activity == '2'){
+        var s = userID + "/" + firstDate + "/" + lastDate;
+
         //Cuando la actividad es: INDIVIDUAL User Modifications
         debugPrint('Determinar ruta: INDIVIDUAL USER MODIFICATIONS');
-        var ruta = 'https://docs.google.com/viewer?url=https://beb7-45-65-152-57.ngrok.io/pdf/usermodifications/$s';
+        var ruta = 'https://docs.google.com/viewer?url=https://f6a1-45-65-152-57.ngrok.io/pdf/usermodifications/$s';
         return ruta;
       }
       else if(activity == '3'){
+        var s = firstDate + "/" + lastDate;
         //Cuando la actividad es: GENERAL Attendance History
         debugPrint('Determinar ruta: GENERAL ATTENDANCE HISTORY');
-        var ruta = 'https://docs.google.com/viewer?url=https://beb7-45-65-152-57.ngrok.io/pdf/usershoursreport/$s';
+        var ruta = 'https://docs.google.com/viewer?url=https://f6a1-45-65-152-57.ngrok.io/pdf/usershoursreport/$s';
         return ruta;
       }else{
+        var s = firstDate + "/" + lastDate;
         //Cuando la actividad es: GENERAL User Modifications
         debugPrint('Determinar ruta: GENERAL USER MODIFICATIONS');
-        var ruta = 'https://docs.google.com/viewer?url=https://beb7-45-65-152-57.ngrok.io/pdf/usersmodifications/$s';
+        var ruta = 'https://docs.google.com/viewer?url=https://f6a1-45-65-152-57.ngrok.io/pdf/usersmodifications/$s';
         return ruta;
       }
     }
@@ -60,6 +79,8 @@ class ReportViewerScreenState extends State<ReportViewerScreen> {
         AppBar(title: const Text('reportviewer.title').tr(), centerTitle: true, actions: [
         IconButton(
             onPressed: () {
+                  Map args = ModalRoute.of(context)!.settings.arguments as Map;
+
                 var activity = args['userID'].toString();
                 var userID = args['activity'].toString();
                 var firstDate = args['firstDate'];

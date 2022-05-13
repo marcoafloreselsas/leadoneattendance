@@ -3,21 +3,27 @@ import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/models/models.dart';
+import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+UserPreferences userPreferences = UserPreferences();
+
 Future<QueryRecordAdmin> fetchQueryRecordAdmin(
-    int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+  
+  int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+  var userToken = await userPreferences.getUserToken();
+  var usertoken = userToken;
   //Los siguientes, son los parámetros utilizados para cargar un registro.
   var UserID = finalfinalUserID;
   var RecordTypeID = finalRecordTypeID;
   var RecordDate = finalRecordDate;
-  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
+  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString() + "/" + usertoken.toString();
   // var s = UserID.toString() + RecordDate + RecordTypeID.toString();
 
 //http request GET
   final response = await http
-      .get(Uri.parse('https://beb7-45-65-152-57.ngrok.io/get/record/$s'));
+      .get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
@@ -42,20 +48,33 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   Future<QueryRecordAdmin>? futureQueryRecordAdmin;
   GetUsers? selected;
   late int newuserid;
-
-  Future<List<GetUsers>>? getData() async {
-    const String url = 'https://beb7-45-65-152-57.ngrok.io/get/names';
+  Future<bool> _onWillPop() async {
+    return false; //<-- SEE HERE
+  } 
+  Future<dynamic>? getData() async {
+    var userToken = await userPreferences.getUserToken();
+    var usertoken = userToken.toString();
+    String url = 'https://f6a1-45-65-152-57.ngrok.io/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
         "content-type": "application/json", 
         "accept": "application/json",
       },
-    );
+    ); 
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
       return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
-    } else {
+    } else if (response.statusCode == 401) {
+      print(response.statusCode.toString());
+      return showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
+          });
+    }
+    else {
       throw Exception('Failed to load');
     }
   }

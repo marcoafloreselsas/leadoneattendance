@@ -5,15 +5,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-class GenerateReportsScreen extends StatefulWidget {
-  const GenerateReportsScreen({Key? key}) : super(key: key);
+import 'package:leadoneattendance/dialogs/dialogs.dart';
+class GenerateIndividualReportsScreen extends StatefulWidget {
+  const GenerateIndividualReportsScreen({Key? key}) : super(key: key);
 
   @override
-  State<GenerateReportsScreen> createState() => _GenerateReportsScreenState();
+  State<GenerateIndividualReportsScreen> createState() => _GenerateIndividualReportsScreenState();
 }
 
-class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
+class _GenerateIndividualReportsScreenState extends State<GenerateIndividualReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
   List<GetUsers> users = [];
@@ -35,20 +35,33 @@ class _GenerateReportsScreenState extends State<GenerateReportsScreen> {
     pickedDateTo = DateTime.now();
     fetchAndShow();
   }
-
-    Future<List<GetUsers>>? getData() async {
-    const String url = 'https://beb7-45-65-152-57.ngrok.io/get/names';
+  Future<bool> _onWillPop() async {
+    return false; //<-- SEE HERE
+  }
+  Future<dynamic>? getData() async {
+    var userToken = await userPreferences.getUserToken();
+    var usertoken = userToken.toString();
+    String url = 'https://f6a1-45-65-152-57.ngrok.io/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
-        "content-type": "application/json",
+        "content-type": "application/json", 
         "accept": "application/json",
       },
-    );
+    ); 
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
       return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
-    } else {
+    } else if (response.statusCode == 401) {
+      print(response.statusCode.toString());
+      return showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
+          });
+    }
+    else {
       throw Exception('Failed to load');
     }
   }

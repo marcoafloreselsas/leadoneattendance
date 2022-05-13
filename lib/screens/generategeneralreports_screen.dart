@@ -37,17 +37,7 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
     return Scaffold(
       appBar: AppBar(
           title: const Text('Individual'),
-          centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ReportViewerScreen()));
-                },
-                icon: const Icon(Icons.add))
-          ]),
+          centerTitle: true),
       body: Column(
         children: [
           const SizedBox(

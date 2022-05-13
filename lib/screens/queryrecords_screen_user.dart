@@ -164,14 +164,14 @@ Future<QueryRecord> fetchQueryRecord(String finalRecordDate, int finalRecordType
   var userid = userId;
   var userToken = await userPreferences.getUserToken();
   var usertoken = userToken;
-  // final userid = ModalRoute.of(context)!.settings.arguments;
+  
   //Los siguientes, son los parámetros utilizados para cargar un registro.
   var RecordTypeID = finalRecordTypeID;
   var RecordDate = finalRecordDate;
-  var s = usertoken.toString()+ "/"+ userid.toString() + "/" + RecordDate + "/" + RecordTypeID.toString();
+  var s = userid.toString() + "/" + RecordDate + "/" + RecordTypeID.toString() + "/" + usertoken.toString();
 
 //http request GET
-  final response = await http.get(Uri.parse('https://beb7-45-65-152-57.ngrok.io/get/record/$s'));
+  final response = await http.get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecord.fromJson(jsonDecode(response.body)[0]);
     //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
