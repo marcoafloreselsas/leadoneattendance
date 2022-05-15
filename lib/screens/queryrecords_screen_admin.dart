@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
@@ -8,25 +10,27 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 UserPreferences userPreferences = UserPreferences();
-
 Future<QueryRecordAdmin> fetchQueryRecordAdmin(
-  
-  int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+    int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
   var userToken = await userPreferences.getUserToken();
   var usertoken = userToken;
-  //Los siguientes, son los parámetros utilizados para cargar un registro.
+
   var UserID = finalfinalUserID;
   var RecordTypeID = finalRecordTypeID;
   var RecordDate = finalRecordDate;
-  var s = UserID.toString() + "/" + RecordDate + "/" + RecordTypeID.toString() + "/" + usertoken.toString();
-  // var s = UserID.toString() + RecordDate + RecordTypeID.toString();
+  var s = UserID.toString() +
+      "/" +
+      RecordDate +
+      "/" +
+      RecordTypeID.toString() +
+      "/" +
+      usertoken.toString();
 
 //http request GET
   final response = await http
       .get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
-    //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
   } else {
     throw Exception('Failed to load record.');
   }
@@ -49,8 +53,9 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   GetUsers? selected;
   late int newuserid;
   Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
-  } 
+    return false;
+  }
+
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
@@ -58,23 +63,22 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
     var response = await http.get(
       Uri.parse(url),
       headers: {
-        "content-type": "application/json", 
+        "content-type": "application/json",
         "accept": "application/json",
       },
-    ); 
+    );
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
       return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
     } else if (response.statusCode == 401) {
-      print(response.statusCode.toString());
+      debugPrint(response.statusCode.toString());
       return showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
           });
-    }
-    else {
+    } else {
       throw Exception('Failed to load');
     }
   }
@@ -98,14 +102,13 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
             actions: [
               IconButton(
                   onPressed: () {
-                     Navigator.pushNamed(context, '/SelectReportType'); 
+                    Navigator.pushNamed(context, '/SelectReportType');
                   },
                   icon: const Icon(Icons.description_outlined)),
             ]),
         body: Card(
           child: Column(
             children: [
-              //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
               Row(
                 children: [
                   const Text('queryrecords.selectDate').tr(),
@@ -136,7 +139,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                     },
                     value: selected,
                     hint: const Text(
-                      "Seleccione el empleado.",
+                      "Select Employee.",
                       style: TextStyle(color: Colors.black),
                     ),
                     items: users
@@ -157,11 +160,9 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
-
               const SizedBox(
                 height: 10,
               ),
-              //BOTON DE GUARDAR CAMBIOS
               TextButton(
                   style: TextButton.styleFrom(
                       backgroundColor: AppTheme.primary,
@@ -173,7 +174,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                       CircularProgressIndicator;
                       futureQueryRecordAdmin;
                     });
-
                     var finalUserID = newuserid;
                     var finalfinalUserID = finalUserID;
                     var finalRecordTypeID = 1;
@@ -186,13 +186,10 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                         finalRecordTypeID.toString());
                   },
                   child: const Text('queryrecords.apply').tr()),
-
               const SizedBox(
                 height: 10,
               ),
-
               const Divider(),
-
               Row(
                 children: [
                   const Text('queryrecords.recentRecords',
@@ -204,8 +201,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               const SizedBox(
                 height: 10,
               ),
-              // Este contenedor sirve para cargar los registros recientes.
-//NOTE Esta sección, es el listtile que carga el registro seleccionado.
               FutureBuilder<QueryRecordAdmin>(
                 future: futureQueryRecordAdmin,
                 builder: (context, snapshot) {
@@ -214,9 +209,8 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                       color: Colors.white,
                       child: Column(
                         children: [
-                          //ListTile que muestra la fecha y texto Record Date del registro consultado.
                           ListTile(
-                              title: Text((convertirFecha(snapshot
+                              title: Text((convertDate(snapshot
                                   .data!.recordDate))), //fecha del registro
                               trailing: Wrap(
                                 spacing: 12, // space between two icons
@@ -226,7 +220,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                                     color: AppTheme.green,
                                   ), // icon-1
                                   Text(
-                                    ((convertirHora(snapshot.data!.entryTime))),
+                                    ((convertTime(snapshot.data!.entryTime))),
                                     style: const TextStyle(
                                         fontSize: 18), //hora de entrada
                                   ),
@@ -235,7 +229,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                                     color: AppTheme.red,
                                   ), // icon-2
                                   Text(
-                                    ((convertirHora(snapshot.data!.exitTime))),
+                                    ((convertTime(snapshot.data!.exitTime))),
                                     style: const TextStyle(
                                         fontSize: 18), //hora de salida
                                   )
@@ -250,7 +244,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                       ),
                     );
                   } else {
-                    //NOTE En lo que carga o detecta el registro, aparecerá este Circular Progress Indicator.
+//NOTE While loading or detecting the log, this Circular Progress Indicator will appear.
                     return const CircularProgressIndicator();
                   }
                 },
@@ -260,7 +254,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
         ));
   }
 
-//FUNCIÓN QUE OBTIENE Y MUESTRA LOS DATOS DE LOS USUARIOS EN EL DROPDOWN LIST.
+//FUNCTION THAT FETCHES AND DISPLAYS USER DATA IN THE DROPDOWN LIST.
   Future<void> fetchAndShow() async {
     final users = await getData();
     final usersid = await getData();
@@ -270,7 +264,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
     });
   }
 
-  //FUNCION QUE MUESTRA EL DATE PICKER
+  //FUNCTION THAT DISPLAYS THE DATE PICKER
   _pickDate() async {
     DateTime? date = await showDatePicker(
         context: context,
@@ -284,23 +278,20 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
     }
   }
 
-  //ANCHOR METODOS Y OTRAS COSAS
-  //NOTE: Método para convertir 17:30:00 a 17:30
-  String convertirHora(String hora) {
+  //NOTE: Function for converting 17:30:00 to 17:30
+  String convertTime(String hora) {
     final tiempo = hora.split(':');
     String tiempoFinal = "${tiempo[0]}:${tiempo[1]}";
-    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
-    //resultado= 17:30
+    //result = 17:30
     return tiempoFinal;
   }
 
-//NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
-  String convertirFecha(String fecha) {
+//NOTE: Function to convert 2022-04-08T05:00:00:00.000Z to Apr 8, 2022
+  String convertDate(String fecha) {
     String date = fecha;
     String? mes;
     String? fechaFinal;
     final parsearFecha = DateTime.parse(date);
-    //final formatoFecha = DateFormat('MMMM dd, yyyy').format(parsearFecha);
     switch (parsearFecha.month) {
       case 01:
         mes = 'Jan';
@@ -342,8 +333,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
     }
 
     fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
-    // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
-    //resultado: Abril 8, 2022
+    //result = Apr 8, 2022
     return fechaFinal;
   }
 }

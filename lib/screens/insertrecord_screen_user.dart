@@ -2,12 +2,14 @@
 //changeTime será para validar que el usuario haya dado onTap al Time. si no, tome el valor del date.now de la vista.
 //Falta implementar en el botón.
 
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:leadoneattendance/screens/screens.dart';
 import 'dart:convert';
 import '../dialogs/dialogs.dart';
-
 
 class InsertRecordScreenUser extends StatefulWidget {
   const InsertRecordScreenUser({Key? key}) : super(key: key);
@@ -17,7 +19,9 @@ class InsertRecordScreenUser extends StatefulWidget {
 }
 
 class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
+  // ignore: unused_field
   Future<Future>? _futureInsertRecordEntry;
+  // ignore: unused_field
   Future<Future>? _futureInsertRecordExit;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
@@ -36,52 +40,64 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     'Overtime',
     'Permit',
   ];
-  //Para cuando se marca el inicio de una actividad.
-Future<Future> createEntryRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
-  final response = await http.post(
-    Uri.parse('https://f6a1-45-65-152-57.ngrok.io/insertrecord/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, dynamic>{
-    "UserID": 1,
-    "RecordDate": RecordDate,
-    "RecordTypeID": FinalRecordTypeId,
-    "EntryTime": Time
-    }),
-  );
-  if (response.statusCode == 201) {
-    return showDialog(context: context, builder:(_) => const AlertInsertRecordOk());
-
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create record.');
+  //For when the start of an activity is marked.
+  Future<Future> createEntryRecord(
+      String RecordDate, int FinalRecordTypeId, String Time) async {
+    UserPreferences userPreferences = UserPreferences();
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
+    final response = await http.post(
+      Uri.parse(' /insertrecord/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "UserID": userid,
+        "RecordDate": RecordDate,
+        "RecordTypeID": FinalRecordTypeId,
+        "EntryTime": Time
+      }),
+    );
+    if (response.statusCode == 201) {
+      return showDialog(
+          context: context, builder: (_) => const AlertInsertRecordOk());
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      return showDialog(
+          context: context, builder: (_) => const AlertInsertRecordError());
+    }
   }
-}
-//Para cuando se marca la finalización de una actividad.
-Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String Time) async {
-  final response = await http.post(
-    Uri.parse('https://f6a1-45-65-152-57.ngrok.io/insertrecord/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, dynamic>{
-    "UserID": 1,
-    "RecordDate": RecordDate,
-    "RecordTypeID": FinalRecordTypeId,
-    "ExitTime": Time
-    }),
-  );
 
-  if (response.statusCode == 201) { 
-    return showDialog(context: context, builder:(_) => const AlertInsertRecordOk());
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create record.');
+//For when the end of an activity is marked.
+  Future<Future> createExitRecord(
+      String RecordDate, int FinalRecordTypeId, String Time) async {
+    UserPreferences userPreferences = UserPreferences();
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
+    final response = await http.post(
+      Uri.parse(' /insertrecord/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "UserID": userid,
+        "RecordDate": RecordDate,
+        "RecordTypeID": FinalRecordTypeId,
+        "ExitTime": Time
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return showDialog(
+          context: context, builder: (_) => const AlertInsertRecordOk());
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      return showDialog(
+          context: context, builder: (_) => const AlertInsertRecordError());
+    }
   }
-}
 
   @override
   void initState() {
@@ -94,19 +110,19 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Insertar'),
+        title: const Text('insertrecord.title').tr(),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 15, 49, 114),
       ),
       body: Card(
-        //Calendario para seleccionar una fecha.
+        //Calendar to select a date.
         child: Column(
           children: [
-            //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
+            //LIST TILE WHERE THE DATE PICKER IS SHOWN, AND ITS ICON TO DISPLAY
             Row(
-              children: const [
-                Text('Select Date'),
-                Icon(Icons.keyboard_arrow_down_outlined),
+              children: [
+                const Text('insertrecord.selectDate').tr(),
+                const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
@@ -115,30 +131,28 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
                 "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
                 textAlign: TextAlign.center,
               ),
-              //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
               onTap: _pickDate,
             ),
-            //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
+            //LIST TILE WHERE THE TIME PICKER IS SHOWN, AND ITS ICON TO DISPLAY
             Row(
-              children: const [
-                Text('Select Time'),
-                Icon(Icons.keyboard_arrow_down_outlined),
+              children: [
+                const Text('insertrecord.selectTime').tr(),
+                const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                                        //Para que se vea como 17: 0 8
-                "${time.hour}:${time.minute.toString().padLeft(2,'0')}",
-                
+                //To display as 17: 0 8
+                "${time.hour}:${time.minute.toString().padLeft(2, '0')}",
                 textAlign: TextAlign.center,
               ),
               onTap: _pickTime,
             ),
-            //TIPO DE REGISTRO
+            //RECORD TYPE
             Row(
               children: [
-                const Text('Type Record'),
+                const Text('insertrecord.typeRecord').tr(),
                 const Padding(padding: EdgeInsets.all(25.0)),
                 DropdownButton(
                   value: dropdownvalue,
@@ -161,7 +175,7 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
             ),
             //SWITCH
             Row(children: [
-              const Text('In'),
+              const Text('insertrecord.in').tr(),
               const Padding(padding: EdgeInsets.all(25.0)),
               Switch(
                   value: switchValue,
@@ -172,14 +186,14 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
                   onChanged: (valorSwitch) => setState(() {
                         switchValue = valorSwitch;
                         isonisoff = valorSwitch;
-                      })), //WIDGET DEL SWITCH
+                      })), //SWITCH WIDGET
               const Padding(padding: EdgeInsets.all(25.0)),
-              const Text('Out'),
+              const Text('insertrecord.out').tr(),
             ], mainAxisAlignment: MainAxisAlignment.center),
             const SizedBox(
               height: 20,
             ),
-            //BOTON DE GUARDAR CAMBIOS
+            //SAVE CHANGES BUTTON
             TextButton(
                 style: TextButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 15, 49, 114),
@@ -188,31 +202,30 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
                     ),
                 onPressed: () {
                   setState(() {});
-                  var RecordDate = DateFormat('yyyy-MM-dd').format(pickedDate); //Fecha
-                  var RecordTypeId2 = recordTypeId + 1; 
+                  var RecordDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate); //Fecha
+                  var RecordTypeId2 = recordTypeId + 1;
                   var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
                   var OnOff = isonisoff; //Switch
-                  var Time = finalfinal; //Hora 
+                  var Time = finalfinal; //Hora
 
                   //Si el si
-                  if(OnOff == false){
-                    _futureInsertRecordEntry = createEntryRecord(RecordDate, FinalRecordTypeId, Time);
-                    debugPrint('Es un entry: ' + RecordDate.toString() + ' - ' + FinalRecordTypeId.toString() + '- ' + Time);
-                  } else if(OnOff == true) {
-                    _futureInsertRecordExit = createExitRecord(RecordDate, FinalRecordTypeId, Time);
-                    debugPrint('Es un exit: ' + RecordDate.toString() + ' - ' + FinalRecordTypeId.toString() + '- ' + Time);
-
+                  if (OnOff == false) {
+                    _futureInsertRecordEntry =
+                        createEntryRecord(RecordDate, FinalRecordTypeId, Time);
+                  } else if (OnOff == true) {
+                    _futureInsertRecordExit =
+                        createExitRecord(RecordDate, FinalRecordTypeId, Time);
                   }
-                  
                 },
-                child: const Text('Save and Print')),
+                child: const Text('insertrecord.saveButton').tr()),
           ],
         ),
       ),
     );
   }
 
-//Función que muestra el Date Picker.
+//Function that displays the Date Picker.
   _pickDate() async {
     DateTime? dateRecord = await showDatePicker(
         context: context,
@@ -226,7 +239,7 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
     }
   }
 
-//Función que muestra el Time Picker.
+//Function displayed by the Time Picker.
   _pickTime() async {
     TimeOfDay? timeRecord = await showTimePicker(
       context: context,
@@ -235,9 +248,8 @@ Future<Future> createExitRecord(String RecordDate, int FinalRecordTypeId, String
     if (timeRecord != null) {
       setState(() {
         time = timeRecord;
-        // DateTime newDateTime = DateTime(time.hour,time.minute);
         finaltime = '${time.hour}:${time.minute}';
-        changeTime = '${time.hour}:${time.minute.toString().padLeft(2,'0')}';
+        changeTime = '${time.hour}:${time.minute.toString().padLeft(2, '0')}';
         finalfinal = finaltime;
       });
     }

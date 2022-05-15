@@ -27,7 +27,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
   }
 
   Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
+    return false;
   }
 
   @override
@@ -37,7 +37,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
       child: Scaffold(
         backgroundColor: AppTheme.background,
         appBar: AppBar(
-          title: const Text('mainpage.title').tr(),
+          title: const Text('mainscreen.title').tr(),
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
@@ -50,14 +50,12 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                 onPressed: () async {
                   final SharedPreferences sharedPreferences =
                       await SharedPreferences.getInstance();
-                  //sharedPreferences.remove('UserID'); Para borrar el puro ID
-                  sharedPreferences.clear(); //Para borrar T O D O.
-                  Navigator.of(context).pushNamed('/');
+                  sharedPreferences.clear();
+                  Navigator.of(context).pushNamed('/LoginScreen');
                 },
                 icon: const Icon(Icons.logout))
           ],
         ),
-        /*  BODY  */
         body: Column(
           children: [
             ListTile(
@@ -82,15 +80,14 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
             const SizedBox(
               height: 16,
             ),
-            //Text de Registros Recientes
             Row(
               children: [
-                const Text('mainpage.subtitle', style: TextStyle(fontSize: 24))
+                const Text('mainscreen.subtitle',
+                        style: TextStyle(fontSize: 24))
                     .tr()
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
-            //LOS SIZEDBOX EN SU MAYORĪA, SON ESPACIOS SOLAMENTE.
             const SizedBox(
               height: 10,
             ),
@@ -98,7 +95,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               future: futureRecord,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  //LIST BUILDER QUE CARGA LOS CINCO REGISTROS RECIENTES
                   return ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -107,7 +103,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                             onTap: () => Navigator.pushNamed(
                               context,
                               '/DisplayRecordScreenAdmin',
-                              arguments: convertirFechaArgumento(
+                              arguments: convertDateArgument(
                                   snapshot.data![index].RecordDate),
                             ),
                             child: Container(
@@ -124,7 +120,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    convertirFecha(
+                                    convertDate(
                                         snapshot.data![index].RecordDate),
                                     style: const TextStyle(
                                       fontSize: 16.0,
@@ -136,7 +132,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                                     color: Colors.green,
                                   ),
                                   Text(
-                                    convertirHora(
+                                    convertTime(
                                         snapshot.data![index].EntryTime),
                                     style: const TextStyle(
                                       fontSize: 16.0,
@@ -148,8 +144,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                                     color: Colors.red,
                                   ),
                                   Text(
-                                    convertirHora(
-                                        snapshot.data![index].ExitTime),
+                                    convertTime(snapshot.data![index].ExitTime),
                                     style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
@@ -166,7 +161,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
             ),
           ],
         ),
-        // Botón secundario para añadir un nuevo registro.
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppTheme.primary,
           child: const Icon(
@@ -181,30 +175,27 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     );
   }
 
-//NOTE: Método para convertir 17:30:00 a 17:30
-  String convertirHora(String hora) {
+//NOTE: Function for converting 17:30:00 to 17:30
+  String convertTime(String hora) {
     final tiempo = hora.split(':');
     String tiempoFinal = "${tiempo[0]}:${tiempo[1]}";
-    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
-    //resultado= 17:30
+    //result = 17:30
     return tiempoFinal;
   }
 
-  String convertirFechaArgumento(String fecha) {
+  String convertDateArgument(String fecha) {
     final parsearFecha = DateTime.parse(fecha);
     var fechafinalargumento =
         DateFormat('yyyy-MM-dd').format(parsearFecha); //Fecha
-
     return fechafinalargumento;
   }
 
-//NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
-  String convertirFecha(String fecha) {
+//NOTE:Function to convert 2022-04-08T05:00:00.000Z to Apr 8, 2022
+  String convertDate(String fecha) {
     String date = fecha;
     String? mes;
     String? fechaFinal;
     final parsearFecha = DateTime.parse(date);
-    //final formatoFecha = DateFormat('MMMM dd, yyyy').format(parsearFecha);
     switch (parsearFecha.month) {
       case 01:
         mes = 'Jan';
@@ -244,35 +235,26 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
         break;
       default:
     }
-
     fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
-    // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
-    //resultado: Abril 8, 2022
+    //result: Abril 8, 2022
     return fechaFinal;
   }
- 
+
   //HTTP Request
   Future<dynamic> fetchRecord() async {
-    //LA LINEA COMENTADA ABAJO, ES PARA CARGAR EL USER ID DE LA PANTALLA ANTERIOR
-    // final userid = ModalRoute.of(context)!.settings.arguments;
     UserPreferences userPreferences = UserPreferences();
-    //Consultas el dato almacenado y la asignas a la variable userId
+    // Query the stored data and assign it to the variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-    print('esta es una prueba user' + s);
-    //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
     final response = await http.get(
         Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/fiverecords/$s'));
-
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
-
       return parsed.map<Record>((json) => Record.fromMap(json)).toList();
     } else if (response.statusCode == 401) {
-      print(response.statusCode.toString());
       return showDialog(
           barrierDismissible: false,
           context: context,

@@ -1,10 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -24,15 +23,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text('Change Password'),
+          title: const Text('changepassword.title').tr(),
           centerTitle: true,
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                  Navigator.pushNamed(context, '/LoginScreen');
                 },
                 icon: const Icon(Icons.save_outlined)),
           ],
@@ -50,16 +46,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   height: 10,
                 ),
                 const Text(
-                  'Change Password',
+                  'changepassword.title',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                ).tr(),
                 const SizedBox(
                   height: 2,
                 ),
                 const Text(
-                  'Please, fill in the following fields.',
+                  'changepassword.subtitle',
                   style: TextStyle(fontSize: 16),
-                ),
+                ).tr(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -86,7 +82,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 TextFormField(
                   controller: passwordController,
                   obscureText:
-                      true, // Para que el texto introducido solo sean "••••••••"
+                      true, // So that the text entered is only "--------".
                   decoration: const InputDecoration(
                       labelText: "Password",
                       border: OutlineInputBorder(),
@@ -98,7 +94,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 TextFormField(
                   controller: newPasswordController,
                   obscureText:
-                      true, // Para que el texto introducido solo sean "••••••••"
+                      true, // So that the text entered is only "--------".
                   decoration: const InputDecoration(
                       labelText: "New Password",
                       border: OutlineInputBorder(),
@@ -110,57 +106,54 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 TextButton(
                     style: TextButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 39, 55, 146),
-                        primary: Colors.white, //TEXT COLOR
-                        minimumSize: const Size(120, 50) //TAMANO - WH
+                        primary: Colors.white,
+                        minimumSize: const Size(120, 50) //WH
                         ),
                     onPressed: () {
                       setState(() {
-                        changepassword(emailController.text, passwordController.text, newPasswordController.text);
+                        changepassword(
+                            emailController.text,
+                            passwordController.text,
+                            newPasswordController.text);
                       });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()));
                     },
-                    child: const Text('Save Changes')),
+                    child: const Text('changepassword.button').tr()),
               ],
             ),
           ),
         ));
   }
-    Future<void> changepassword(email, password, newpassword) async{
-    try{
-        final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/password'),
-        headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-      body: jsonEncode(<String, String>
-        {
-          'Email' : email,
-          'Password' : password,
-          'NewPassword' : newpassword
-        }));
-        // var datos = jsonDecode(response.body); // C H E C K    T H I S
-        if(response.body != '0'){
-          //Cuadro de diálogo que muestra que los datos son correctos.
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertChangePasswordOk();
-              });
-          debugPrint('Usuario Correcto, cambios realizados.');
-        } else{
-          //Cuadro de diálogo que indica que los datos son incorrectos.
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertChangePasswordError();
-              });
-          debugPrint('Usuario Incorrecto');
-          
-        }
-    } on TimeoutException{
-      debugPrint('Tiempo de proceso excedido.');
+
+  Future<void> changepassword(email, password, newpassword) async {
+    try {
+      final response = await http.post(Uri.parse(' /password'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'Email': email,
+            'Password': password,
+            'NewPassword': newpassword
+          }));
+      if (response.body != '0') {
+        // Dialog box showing that the data is correct.
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertChangePasswordOk();
+            });
+        debugPrint('Correct user, changes made.');
+      } else {
+        // Dialog box indicating that the data is incorrect.
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertChangePasswordError();
+            });
+        debugPrint('Incorrect User');
+      }
+    } on TimeoutException {
+      debugPrint('Process time exceeded.');
     }
   }
 }

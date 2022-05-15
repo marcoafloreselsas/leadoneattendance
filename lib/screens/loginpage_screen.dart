@@ -1,10 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,40 +17,40 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   String email = '';
   String password = '';
   String token = '';
-
   UserPreferences userPreferences = UserPreferences();
 
   @override
   void initState() {
     super.initState();
   }
+
   Future<bool> _onWillPop() async {
     return false;
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      //Función que desactiva el botón "back" del sistema
+      //Function disabling the system "back" button
       onWillPop: _onWillPop,
       child: Scaffold(
-      //Desaparece el botón "back" del scaffold
+          //Disappears the "back" button of scaffold
           resizeToAvoidBottomInset: false,
           body: Center(
               child: Column(
             children: [
               const SizedBox(height: 100),
               const Text(
-                'Welcome',
+                'loginscreen.title',
                 style: TextStyle(fontSize: 34, fontStyle: FontStyle.normal),
-              ),
+              ).tr(),
               const Text(
-                'Please, Sign in.',
+                'loginscreen.subtitle.',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+              ).tr(),
               const SizedBox(height: 20),
               Image.asset(
                 'assets/leadone_logo.png',
@@ -64,14 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //NOTE Campos de texto de inicio de sesión
+//NOTE: Login text fields
                     Form(
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
                           TextFormField(
                             controller: emailController,
-                            decoration: const InputDecoration( 
+                            decoration: const InputDecoration(
                                 labelText: "Email",
                                 border: OutlineInputBorder(),
                                 suffixIcon: Icon(Icons.email)),
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             controller: passwordController,
                             obscureText:
-                                true, // Para que el texto introducido solo sean "••••••••"
+                                true, // So that the text entered is only "--------".
                             decoration: const InputDecoration(
                                 labelText: "Password",
                                 border: OutlineInputBorder(),
@@ -117,16 +117,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           var password = passwordController.text;
                           login(email, password);
                         },
-                        child: const Text('ACCESS')),
+                        child: const Text('loginscreen.submit').tr()),
                     const SizedBox(
                       height: 20,
                     ),
                     TextButton.icon(
                       onPressed: () {
-                         Navigator.pushNamed(context, '/ChangePassword'); 
+                        Navigator.pushNamed(context, '/ChangePassword');
                       },
                       icon: const Icon(Icons.settings, size: 18),
-                      label: const Text("Change Password"),
+                      label: const Text("loginscreen.changepassword").tr(),
                     ),
                   ],
                 ),
@@ -135,41 +135,43 @@ class _LoginScreenState extends State<LoginScreen> {
           ))),
     );
   }
-//Método del login, recibe los datos del API y dependiendo del tipo de usuario, es el dato que envía,
-//si no, pues hay error.
-  Future<void> login(email, password) async{
-    try{
-        final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/login/'),
-        headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-      body: jsonEncode(<String, String>
-        {
-          'Email' : email,
-          'Password' : password
-        }));
-        var datos = jsonDecode(response.body);
-        if(response.body != '0'){
-          userPreferences.saveUserId(datos['UserID']);
-          userPreferences.saveRole(datos['Role']);
-          userPreferences.saveToken(datos['Token']);
-          if(datos['Role'] == 'Administrator'){       
-          Navigator.pushNamed(context, '/MainScreenAdmin'); 
-           } else {
+
+/* Login method, send email and password, and the server (in case it finds the information sent), 
+returns the user id, the user role (administrator or employee) and a token, 
+and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUser'. */
+  Future<void> login(email, password) async {
+    try {
+      final response = await http.post(Uri.parse(' /login/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+              <String, String>{'Email': email, 'Password': password}));
+      var datos = jsonDecode(response.body);
+/*
+If there is a successful response from the server, it saves the received data on the device,
+through Shared Preferences. 
+*/
+      if (response.body != '0') {
+        userPreferences.saveUserId(datos['UserID']);
+        userPreferences.saveRole(datos['Role']);
+        userPreferences.saveToken(datos['Token']);
+        if (datos['Role'] == 'Administrator') {
+          Navigator.pushNamed(context, '/MainScreenAdmin');
+        } else {
           Navigator.pushNamed(context, '/MainScreenUser');
-          }
-        } else{
-          //Cuadro de diálogo que indica que los datos son incorrectos.
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertLogin();
-              });
-          debugPrint('Usuario Incorrecto');
-          
         }
-    } on TimeoutException{
-      debugPrint('Tiempo de proceso excedido.');
+      } else {
+// Dialog box indicating that the data is incorrect.
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertLogin();
+            });
+        debugPrint('Incorrect User');
+      }
+    } on TimeoutException {
+      debugPrint('Process time exceeded.');
     }
   }
 }

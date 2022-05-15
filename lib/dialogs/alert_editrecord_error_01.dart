@@ -1,4 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AlertEditRecordErrorOne extends StatelessWidget {
   const AlertEditRecordErrorOne({Key? key}) : super(key: key);
@@ -22,11 +26,11 @@ class AlertEditRecordErrorOne extends StatelessWidget {
           ),
         ),
         actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/LoginScreen');
-                    },
-                    child: const Text('Save Changes')),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/LoginScreen');
+              },
+              child: const Text('Save Changes')),
         ]);
   }
 }

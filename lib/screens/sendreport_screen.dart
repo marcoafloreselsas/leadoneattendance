@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
@@ -12,11 +14,12 @@ class SendReportScreen extends StatefulWidget {
   @override
   State<SendReportScreen> createState() => _SendReportScreenState();
 }
-  Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
-  }
-class _SendReportScreenState extends State<SendReportScreen> {
 
+Future<bool> _onWillPop() async {
+  return false;
+}
+
+class _SendReportScreenState extends State<SendReportScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var subjectController = TextEditingController();
@@ -26,33 +29,23 @@ class _SendReportScreenState extends State<SendReportScreen> {
   String subject = '';
   String message = '';
 
-
 //Esta vista envía el reporte generado.
   @override
   Widget build(BuildContext context) {
     UserPreferences userPreferences = UserPreferences();
 
     return Scaffold(
-      //App bar de la pantalla.
         appBar: AppBar(
-            title: const Text('sendreport.title').tr(),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MainScreenAdmin()));
-                  },
-                  icon: const Icon(Icons.send)),
-            ]),
+          title: const Text('sendreport.title').tr(),
+          centerTitle: true,
+        ),
         body: Form(
             key: _key,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center, //Añadido el 3 de mayo de 2022
+                mainAxisAlignment: MainAxisAlignment
+                    .center, //Añadido el 3 de mayo de 2022  R E V I S A R
                 children: [
                   const SizedBox(
                     height: 10,
@@ -110,18 +103,9 @@ class _SendReportScreenState extends State<SendReportScreen> {
                       onPressed: () {
                         if (_key.currentState!.validate()) {
                           _key.currentState!.save();
-                          // Navigator.push(
-                          // context,
-                          // MaterialPageRoute(
-                          //     builder: (context) => const MainScreenAdmin()));
-                          sendReport(emailController.text, subjectController.text, messageController.text);
-                          // Navigator.pushAndRemoveUntil(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (BuildContext context) =>
-                          //             const MainScreenAdmin()),
-                          //     (Route<dynamic> route) =>
-                          //         route is MainScreenAdmin); 
+
+                          sendReport(emailController.text,
+                              subjectController.text, messageController.text);
                         }
                       },
                       child: const Text('sendreport.sendButton').tr())
@@ -130,7 +114,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
             )));
   }
 
-    Future<void> sendReport(email, subject, message) async{
+  Future<void> sendReport(email, subject, message) async {
     UserPreferences userPreferences = UserPreferences();
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
 
@@ -143,90 +127,98 @@ class _SendReportScreenState extends State<SendReportScreen> {
     var usertoken = userToken.toString();
     var firstDate = args['firstDate'];
     var lastDate = args['lastDate'];
-    print('entro a esta parte' + activity + userid);
-    if(finalAct == '1'){
-    final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/send/userhoursreport/'),
+    debugPrint('entro a esta parte' + activity + userid);
+    if (finalAct == '1') {
+      final response = await http.post(
+          Uri.parse('https://f6a1-45-65-152-57.ngrok.io/send/userhoursreport/'),
           headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body:jsonEncode(<String, String>
-            {
-              'Email' : email,
-              'UserID': userid,
-              'Date1': firstDate,
-              'Date2': lastDate,
-              'Subject': subject,
-              'Message': message
-            }));
-        debugPrint('AT: '+email + userid + firstDate + lastDate);
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'Email': email,
+            'UserID': userid,
+            'Date1': firstDate,
+            'Date2': lastDate,
+            'Subject': subject,
+            'Message': message
+          }));
+      debugPrint('AT: ' + email + userid + firstDate + lastDate);
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            return const WillPopScope(onWillPop: _onWillPop, child: AlertSendReport());
-          });
-    }else if(finalAct == '2'){
-          final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/send/usermodifications/'),
-          headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body:jsonEncode(<String, String>
-            {
-              'Email' : email,
-              'UserID': userid,
-              'Date1': firstDate,
-              'Date2': lastDate,
-              'Subject': subject,
-              'Message': message
-            }));
-        debugPrint('MOD: '+email + userid + firstDate + lastDate);
-      showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const WillPopScope(onWillPop: _onWillPop, child: AlertSendReport());
+            return const WillPopScope(
+                onWillPop: _onWillPop, child: AlertSendReport());
           });
     }
-else if(finalAct == '3'){
-          final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/send/usershoursreport/'),
+    if (finalAct == '2') {
+      final response = await http.post(
+          Uri.parse(
+              'https://f6a1-45-65-152-57.ngrok.io/send/usermodifications/'),
           headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body:jsonEncode(<String, String>
-            {
-              'Email' : email,
-              'Date1': firstDate,
-              'Date2': lastDate,
-              'Subject': subject,
-              'Message': message
-            }));
-        debugPrint('MOD: '+email + userid + firstDate + lastDate);
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'Email': email,
+            'UserID': userid,
+            'Date1': firstDate,
+            'Date2': lastDate,
+            'Subject': subject,
+            'Message': message
+          }));
+      debugPrint('MOD: ' + email + userid + firstDate + lastDate);
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            return const WillPopScope(onWillPop: _onWillPop, child: AlertSendReport());
+            return const WillPopScope(
+                onWillPop: _onWillPop, child: AlertSendReport());
           });
     }
-    else if(finalAct == '4'){
-          final response = await http.post(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/send/usersmodifications/'),
+    if (finalAct == '3') {
+      final response = await http.post(
+          Uri.parse(
+              'https://f6a1-45-65-152-57.ngrok.io/send/usershoursreport/'),
           headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body:jsonEncode(<String, String>
-            {
-              'Email' : email,
-              'Date1': firstDate,
-              'Date2': lastDate,
-              'Subject': subject,
-              'Message': message
-            }));
-        debugPrint('MOD: '+email + userid + firstDate + lastDate);
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'Email': email,
+            'Date1': firstDate,
+            'Date2': lastDate,
+            'Subject': subject,
+            'Message': message
+          }));
+      debugPrint('MOD: ' + email + userid + firstDate + lastDate);
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            return const WillPopScope(onWillPop: _onWillPop, child: AlertSendReport());
+            return const WillPopScope(
+                onWillPop: _onWillPop, child: AlertSendReport());
+          });
+    }
+    if (finalAct == '4') {
+      final response = await http.post(
+          Uri.parse(
+              'https://f6a1-45-65-152-57.ngrok.io/send/usersmodifications/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'Email': email,
+            'Date1': firstDate,
+            'Date2': lastDate,
+            'Subject': subject,
+            'Message': message
+          }));
+      debugPrint('MOD: ' + email + userid + firstDate + lastDate);
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return const WillPopScope(
+                onWillPop: _onWillPop, child: AlertSendReport());
           });
     }
   }

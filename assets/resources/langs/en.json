@@ -1,11 +1,17 @@
 {
-    "loginpage":
+    "loginscreen":
     { 
         "title" : "Welcome!",
-        "subtitle" : "Please, Sign In.",
-        "submit" : "Log In"
+        "subtitle" : "Please, Log In.",
+        "submit" : "Access",
+        "changepassword": "Change Password"
     },
-    "mainpage":
+    "changepassword":{
+        "title" : "Change Password",
+        "subtitle" : "Please, Fill in the following fields",
+        "button": "Save Changes"
+    },
+    "mainscreen":
     {
         "title" : "Welcome",
         "subtitle" : "Recent Records"
@@ -19,12 +25,12 @@
         "TRovertime" : "Overtime",
         "TRpermit" : "Permit"
     },
-    "insertrecords":
+    "insertrecord":
     {
         "title" : "Insert Record",
-        "selectDate" : "Select the Date",
-        "selectTime" : "Select the Time",
-        "typeRecord" : "Type of Record",
+        "selectDate" : "Select Date",
+        "selectTime" : "Select Time",
+        "typeRecord" : "Record Type",
         "TRattendance" : "Attendance",
         "TRlunch" : "Lunch",
         "TRovertime" : "Overtime",
@@ -33,12 +39,12 @@
         "out" : "Out",
         "saveButton" : "Save"
     }, 
-    "editrecords":
+    "editrecord":
     {
         "title" : "Edit Record",
-        "selectDate" : "Select Date",
-        "selectTime" : "Select Time",
-        "typeRecord" : "Type of Record",
+        "entryTime" : "Entry Time",
+        "exitTime" : "Exit Time",
+        "typeRecord" : "Record Type",
         "TRattendance" : "Attendance",
         "TRlunch" : "Lunch",
         "TRovertime" : "Overtime",
@@ -53,17 +59,24 @@
         "title" : "Query Records",
         "selectDate" : "Select Date",
         "selectEmployee" : "Select Employee",
-        "recentRecords" : "Recent Records",
+        "recentRecords" : "Record",
         "apply" : "Apply"
 
     },
+    "selectreporttype":{
+        "title": "Report Type",
+        "general": "General Report",
+        "individual":"Individual Report"
+    },
     "generatereports":
     {
-        "title" : "Generate Report",
+        "titleGeneral" : "General Report",
+        "titleIndividual": "Individual Report",
+        "reportType": "Report Type",
         "dateRange" : "Date Range",
         "fromDate" : "From",
         "toDate" : "To",
-        "employeeLabel" : "Employee",
+        "employeeLabel" : "Select the Employee",
         "applyButton" : "Apply"
     },
     "reportviewer":
@@ -76,7 +89,6 @@
         "to" : "To",
         "subject" : "Subject",
         "message" : "Message",
-        "attachment" : "Attachment",
         "sendButton" : "Send"
     },
     "errors":
@@ -97,6 +109,14 @@
         "alert6" : "The report has been downloaded to your device.",
         "alert7" : "Record not available.",
         "alertResponse1" : "MODIFY",
-        "alertResponse2" : "CANCEL"
+        "alertResponse2" : "CANCEL",
+        "alertResponse3":"OK",
+        "alert401":"Session expired. \nPlease log in.",
+        "alertlogin":"Verify your email and password.",
+        "alertchangepasswordok":"Your password has been successfully updated.",
+        "alertchangepassworderror":"The email and/or password are incorrect.",
+        "alertinsertrecordok":"The record has been saved successfully.",
+        "alertinsertrecorderror":"This registry already exists.",
+        "alertsendreport":"The email has been sent successfully."
     }
 }

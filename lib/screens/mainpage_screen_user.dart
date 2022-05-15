@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/dialogs/alert_401_error.dart';
+import 'package:leadoneattendance/dialogs/dialogs.dart';
+import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:leadoneattendance/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -26,46 +26,50 @@ class _MainScreenUserState extends State<MainScreenUser> {
     super.initState();
     futureRecord = fetchRecord();
   }
+
   Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
+    return false;
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      //Deshabilita el botón de regresar del sistema
+      //Disables the 'back' button of the system.
       onWillPop: _onWillPop,
       child: Scaffold(
         backgroundColor: AppTheme.background,
         appBar: AppBar(
-          title: const Text('mainpage.title').tr(),
+          title: const Text('mainscreen.title').tr(),
           centerTitle: true,
-          //Deshabilita el botón de regresar del appbar
+          //Disables the 'back' button of the appbar.
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
                 onPressed: () {
-            Navigator.pushNamed(context, '/QueryRecordsScreenUser', arguments: {'UserID': 1}); 
-    
+                  Navigator.pushNamed(context, '/QueryRecordsScreenUser');
                 },
                 icon: const Icon(Icons.search_outlined)),
             IconButton(
                 onPressed: () async {
-                  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                  //sharedPreferences.remove('UserID'); Para borrar el puro ID
-                  sharedPreferences.clear(); //Para borrar T O D O.
+                  //This instruction clears the instance stored in the device and logs out.
+                  final SharedPreferences sharedPreferences =
+                      await SharedPreferences.getInstance();
+                  sharedPreferences.clear();
                   Navigator.of(context).pushNamed('/LoginScreen');
                 },
                 icon: const Icon(Icons.logout))
           ],
         ),
-    /*  BODY  */
         body: Column(
+          //Note: SizedBoxes are used to place space between widgets.
           children: [
+            /*This ListTile is used to display the current time and date, 
+            when tapped, it leads to the Insert Record view*/
             ListTile(
               tileColor: Colors.white,
               leading: CircleAvatar(
-                  child:
-                      const Icon(Icons.person, color: AppTheme.primary, size: 50),
+                  child: const Icon(Icons.person,
+                      color: AppTheme.primary, size: 50),
                   radius: 60,
                   backgroundColor: Colors.grey[300]),
               title: Text(DateFormat('MMMMEEEEd').format(now),
@@ -83,15 +87,14 @@ class _MainScreenUserState extends State<MainScreenUser> {
             const SizedBox(
               height: 16,
             ),
-            //Text de Registros Recientes
             Row(
               children: [
-                const Text('mainpage.subtitle', style: TextStyle(fontSize: 24))
+                const Text('mainscreen.subtitle',
+                        style: TextStyle(fontSize: 24))
                     .tr()
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
-            //LOS SIZEDBOX EN SU MAYORĪA, SON ESPACIOS SOLAMENTE.
             const SizedBox(
               height: 10,
             ),
@@ -99,13 +102,21 @@ class _MainScreenUserState extends State<MainScreenUser> {
               future: futureRecord,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-    //LIST BUILDER QUE CARGA LOS CINCO REGISTROS RECIENTES
+                  /* The FutureBuilder below loads the five recent records of the logged in user,
+                 displays 'RecordDate', 'EntryTime' and 'ExitTime', use functions that format the data, 
+                 when clicking on any object in the list, takes it to the 'DisplayRecordScreenUser' 
+                 view where it sends the 'RecordDate' as an argument. */
                   return ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) => GestureDetector(
-                            onTap: () =>   Navigator.pushNamed(context, '/DisplayRecordScreenUser', arguments: convertirFechaArgumento(snapshot.data![index].RecordDate),),
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              '/DisplayRecordScreenUser',
+                              arguments: convertDateArgument(
+                                  snapshot.data![index].RecordDate),
+                            ),
                             child: Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 2),
@@ -115,11 +126,12 @@ class _MainScreenUserState extends State<MainScreenUser> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    convertirFecha(
+                                    convertDate(
                                         snapshot.data![index].RecordDate),
                                     style: const TextStyle(
                                       fontSize: 16.0,
@@ -131,7 +143,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                                     color: Colors.green,
                                   ),
                                   Text(
-                                    convertirHora(
+                                    convertTime(
                                         snapshot.data![index].EntryTime),
                                     style: const TextStyle(
                                       fontSize: 16.0,
@@ -143,7 +155,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                                     color: Colors.red,
                                   ),
                                   Text(
-                                    convertirHora(snapshot.data![index].ExitTime),
+                                    convertTime(snapshot.data![index].ExitTime),
                                     style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
@@ -154,13 +166,14 @@ class _MainScreenUserState extends State<MainScreenUser> {
                             ),
                           ));
                 } else {
+                  //While loading the information, display this circular progress indicator.
                   return const Center(child: CircularProgressIndicator());
                 }
               },
             ),
           ],
         ),
-        // Botón secundario para añadir un nuevo registro.
+        // Secondary button to add a new record.
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppTheme.primary,
           child: const Icon(
@@ -174,29 +187,29 @@ class _MainScreenUserState extends State<MainScreenUser> {
       ),
     );
   }
-//NOTE: Método para convertir 17:30:00 a 17:30
-  String convertirHora(String hora) {
+
+//NOTE: Function for formatting 17:30:00 to 17:30
+  String convertTime(String hora) {
     final tiempo = hora.split(':');
     String tiempoFinal = "${tiempo[0]}:${tiempo[1]}";
-    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
     //resultado= 17:30
     return tiempoFinal;
   }
 
-  String convertirFechaArgumento(String fecha){
+//NOTE: Function to format the date received from the server and formatted to e.g. '2022-04-08'.
+  String convertDateArgument(String fecha) {
     final parsearFecha = DateTime.parse(fecha);
-    var fechafinalargumento = DateFormat('yyyy-MM-dd').format(parsearFecha); //Fecha
-
+    var fechafinalargumento =
+        DateFormat('yyyy-MM-dd').format(parsearFecha); //Fecha
     return fechafinalargumento;
   }
 
-//NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
-  String convertirFecha(String fecha) {
+//NOTE: Function to convert 2022-04-08T05:00:00.00.000Z to Apr 8, 2022
+  String convertDate(String fecha) {
     String date = fecha;
     String? mes;
     String? fechaFinal;
     final parsearFecha = DateTime.parse(date);
-    //final formatoFecha = DateFormat('MMMM dd, yyyy').format(parsearFecha);
     switch (parsearFecha.month) {
       case 01:
         mes = 'Jan';
@@ -236,42 +249,38 @@ class _MainScreenUserState extends State<MainScreenUser> {
         break;
       default:
     }
-
     fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
-    // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
-    //resultado: Abril 8, 2022
+    //result: Apr 8, 2022
     return fechaFinal;
-  }  //HTTP Request
-  //HTTP Request
-Future<dynamic> fetchRecord() async {
-  //LA LINEA COMENTADA ABAJO, ES PARA CARGAR EL USER ID DE LA PANTALLA ANTERIOR
-  // final userid = ModalRoute.of(context)!.settings.arguments;
-  UserPreferences userPreferences = UserPreferences();
-        //Consultas el dato almacenado y la asignas a la variable userId
-  var userId = await userPreferences.getUserId();
-  var userid = userId;
-  var userToken = await userPreferences.getUserToken();
-  var usertoken = userToken;
-  var s = userid.toString() + '/' + usertoken.toString();
-  print('esta es una prueba user' + s);
-  //final response = await http.get(Uri.parse('https://e5ac-45-65-152-57.ngrok.io/get/fiverecords/1'));
-  final response = await http
-      .get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/fiverecords/$s'));
+  }
 
-  if (response.statusCode == 200) {
-    final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+//Function that obtains the five recent records of a user from the server.
+  Future<dynamic> fetchRecord() async {
+    UserPreferences userPreferences = UserPreferences();
+    //Consultas el dato almacenado y la asignas a la variable userId
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
+    var userToken = await userPreferences.getUserToken();
+    var usertoken = userToken;
+    var s = userid.toString() + '/' + usertoken.toString();
 
-    return parsed.map<Record>((json) => Record.fromMap(json)).toList();
-  } else if (response.statusCode == 401) {
-    print(response.statusCode.toString());
-     return showDialog(
-        barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context){
-                    return WillPopScope(onWillPop: _onWillPop,child: const Alert401());
-      }
-    );
-      }
-  throw Exception('Failed to load records.');
+    //Server link
+    final response = await http.get(Uri.parse(' /get/fiverecords/$s'));
+
+    if (response.statusCode == 200) {
+      final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+      return parsed.map<Record>((json) => Record.fromMap(json)).toList();
+/*If the connection is successful (Code 200), it gets the information and displays it on the screen,
+if the code is error (401), it means that the user token has expired,
+and the user needs to log in again. */
+    } else if (response.statusCode == 401) {
+      return showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
+          });
+    }
+    throw Exception('Failed to load records.');
   }
 }

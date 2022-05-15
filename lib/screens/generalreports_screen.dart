@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import '../themes/app_themes.dart';
-import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:leadoneattendance/models/models.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class GenerateGeneralReportsScreen extends StatefulWidget {
   const GenerateGeneralReportsScreen({Key? key}) : super(key: key);
 
   @override
-  State<GenerateGeneralReportsScreen> createState() => _GenerateGeneralReportsScreenState();
+  State<GenerateGeneralReportsScreen> createState() =>
+      _GenerateGeneralReportsScreenState();
 }
 
-class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScreen> {
+class _GenerateGeneralReportsScreenState
+    extends State<GenerateGeneralReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
   late int selectedactivity;
 
   String dropdownvalue = 'Attendance History';
-  var items = [
-    'Attendance History',
-    'Modifications History'
-  ];
+  var items = ['Attendance History', 'Modifications History'];
 
   @override
   void initState() {
@@ -33,18 +28,17 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
 
   @override
   Widget build(BuildContext context) {
-    //Declaración de fecha de inicio, fecha de fin, Abril 20 de 2022
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Individual'),
+          title: const Text('generatereports.titleGeneral').tr(),
           centerTitle: true),
       body: Column(
         children: [
           const SizedBox(
             height: 20,
           ),
-                    Row(
-            children: const [Text('Select Report Type')],
+          Row(
+            children: [const Text('generatereports.reportType').tr()],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           Row(
@@ -73,7 +67,7 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
-                    const SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -92,7 +86,6 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
               "${pickedDateFrom.year}, ${pickedDateFrom.month}, ${pickedDateFrom.day}",
               textAlign: TextAlign.center,
             ),
-            //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
             onTap: _pickDateFrom,
           ),
 
@@ -105,14 +98,13 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
               "${pickedDateTo.year}, ${pickedDateTo.month}, ${pickedDateTo.day}",
               textAlign: TextAlign.center,
             ),
-            //  trailing: const Icon(Icons.keyboard_arrow_down_outlined),
             onTap: _pickDateTo,
           ),
 
           const SizedBox(
             height: 20,
           ),
-          //BOTON DE GUARDAR CAMBIOS
+          //SAVE CHANGES BUTTON
           TextButton(
               style: TextButton.styleFrom(
                   backgroundColor: AppTheme.primary,
@@ -123,8 +115,15 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
                 var activity = selectedactivity + 3;
                 var firstDate = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
                 var lastDate = DateFormat('yyyy-MM-dd').format(pickedDateTo);
-                print('te estoy mandando:' + activity.toString() + firstDate.toString() + lastDate.toString());
-                Navigator.pushNamed(context, '/ReportViewerScreen', arguments:  {'activity': activity, 'firstDate':firstDate,'lastDate': lastDate});
+                debugPrint('te estoy mandando:' +
+                    activity.toString() +
+                    firstDate.toString() +
+                    lastDate.toString());
+                Navigator.pushNamed(context, '/ReportViewerScreen', arguments: {
+                  'activity': activity,
+                  'firstDate': firstDate,
+                  'lastDate': lastDate
+                });
               },
               child: const Text('generatereports.applyButton').tr())
         ],
@@ -132,7 +131,7 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
     );
   }
 
-  //FUNCION QUE MUESTRA EL DATE PICKER
+  //FUNCTION THAT DISPLAYS THE DATE PICKER
   _pickDateFrom() async {
     DateTime? date = await showDatePicker(
         context: context,
@@ -146,7 +145,7 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
     }
   }
 
-  //FUNCION QUE MUESTRA EL DATE PICKER
+  //FUNCTION DISPLAYING THE SECOND DATE PICKER
   _pickDateTo() async {
     DateTime? date2 = await showDatePicker(
         context: context,
@@ -159,5 +158,4 @@ class _GenerateGeneralReportsScreenState extends State<GenerateGeneralReportsScr
       });
     }
   }
-
 }

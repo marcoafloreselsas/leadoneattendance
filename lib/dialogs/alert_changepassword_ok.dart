@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AlertChangePasswordOk extends StatelessWidget {
   const AlertChangePasswordOk({Key? key}) : super(key: key);
@@ -16,17 +17,15 @@ class AlertChangePasswordOk extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [
-              Text('Se ha actualizado su contraseña exitosamente.')
-            ],
+            children: [const Text('alerts.alertchangepasswordok').tr()],
           ),
         ),
         actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/LoginScreen');
-                    },
-                    child: const Text('OK')),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/LoginScreen');
+              },
+              child: const Text('OK')),
         ]);
   }
 }

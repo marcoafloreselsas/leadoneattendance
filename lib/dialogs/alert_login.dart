@@ -1,4 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AlertLogin extends StatelessWidget {
   const AlertLogin({Key? key}) : super(key: key);
@@ -16,9 +20,7 @@ class AlertLogin extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [
-              Text('Verifique su correo electrónico y contraseña.')
-            ],
+            children: [const Text('alerts.alertlogin').tr()],
           ),
         ),
         actions: [
@@ -26,7 +28,7 @@ class AlertLogin extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Aceptar'))
+              child: const Text('alerts.alertResponse3').tr())
         ]);
   }
 }

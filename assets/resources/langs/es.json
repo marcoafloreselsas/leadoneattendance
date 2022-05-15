@@ -1,11 +1,17 @@
 {
-    "loginpage":
+    "loginscreen":
     {
         "title" : "¡Bienvenido!",
         "subtitle" : "Por favor, inicie sesión.",
-        "submit" : "Ingresar"
+        "submit" : "Ingresar",
+        "changepassword": "Cambiar Contraseña"
     },
-    "mainpage":
+    "changepassword":{
+        "title" : "Cambiar Contraseña",
+        "subtitle" : "Llene los siguientes campos.",
+        "button": "Guardar Cambios"
+    },
+    "mainscreen":
     {
         "title" : "Bienvenido",
         "subtitle" : "Registros Recientes"
@@ -19,7 +25,7 @@
         "TRovertime" : "Horas Extra",
         "TRpermit" : "Permiso"
     },
-    "insertrecords":
+    "insertrecord":
     {
         "title" : "Insertar Registro",
         "selectDate" : "Seleccione la Fecha",
@@ -33,7 +39,7 @@
         "out" : "Fin",
         "saveButton" : "Guardar"
     }, 
-    "editrecords":
+    "editrecord":
     {
         "title" : "Editar Registro",
         "recordDate" : "Fecha del Registro",
@@ -54,16 +60,23 @@
         "title" : "Consultar Registros",
         "selectDate" : "Seleccione la Fecha",
         "selectEmployee" : "Seleccione al Empleado",
-        "recentRecords" : "Registros Recientes",
+        "recentRecords" : "Registro",
         "apply": "Aplicar"
+    },
+    "selectreporttype":{
+        "title": "Tipo de Reporte",
+        "general": "Reporte General",
+        "individual":"Reporte Individual"
     },
     "generatereports":
     {
-        "title" : "Generar Reporte",
+        "titleGeneral" : "Reporte General",
+        "titleIndividual": "Reporte Individual",
+        "reportType": "Tipo de Reporte",
         "dateRange" : "Rango de Fechas",
         "fromDate" : "De",
         "toDate" : "A",
-        "employeeLabel" : "Empleado",
+        "employeeLabel" : "Seleccione el Empleado",
         "applyButton" : "Aplicar"
     },
     "reportviewer":
@@ -76,7 +89,6 @@
         "to" : "Destinatario",
         "subject" : "Asunto",
         "message" : "Mensaje",
-        "attachment" : "Archivo adjunto",
         "sendButton" : "Enviar"
     },
     "errors":
@@ -97,6 +109,14 @@
         "alert6" : "El reporte ha sido descargado en su dispositivo.",
         "alert7" : "Registro no disponible.",
         "alertResponse1" : "MODIFICAR",
-        "alertResponse2" : "CANCELAR"
+        "alertResponse2" : "CANCELAR",
+        "alertResponse3":"OK",
+        "alert401":"Sesión expirada. \nInicie sesión.",
+        "alertlogin":"Verifique su correo electrónico y contraseña.",
+        "alertchangepasswordok":"Se ha actualizado su contraseña exitosamente.",
+        "alertchangepassworderror":"El correo electronico y/o contraseña son incorrectos.",
+        "alertinsertrecordok":"El registro se ha guardado exitosamente.",
+        "alertinsertrecorderror":"Este registro ya existe.",
+        "alertsendreport":"El correo se ha enviado exitosamente."
     }
 }

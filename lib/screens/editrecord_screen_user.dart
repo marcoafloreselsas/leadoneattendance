@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
@@ -15,6 +17,7 @@ class EditRecordScreenUser extends StatefulWidget {
 
 class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
   Future<FullRecorde>? futureRecord;
+  // ignore: unused_field
   Future<Future>? _futureEditRecord;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay entrytime;
@@ -25,18 +28,15 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
   String finaltimedefault = '';
   String finalfinalentry = '';
   String finalfinalexit = '';
-  String finalfinaldefault = '' ;
+  String finalfinaldefault = '';
   bool switchValue = false;
   bool isonisoff = false;
   int recordTypeId = 0;
   String dropdownvalue = 'Attendance';
-  
+
   // List of items in our dropdown menu
-
-
-String? changeEntryTime;
-String? changeFinalTime;
-// String? firstEntryTime;
+  String? changeEntryTime;
+  String? changeFinalTime;
 
   var items = [
     'Attendance',
@@ -45,18 +45,19 @@ String? changeFinalTime;
     'Permit',
   ];
 
-
-
 //Para cuando se edita el registro.
-  Future<Future> createEditRecord(
-      String RecordDate, String RecordTypeId, String EntryTime, ExitTime) async {
+  Future<Future> createEditRecord(String RecordDate, String RecordTypeId,
+      String EntryTime, ExitTime) async {
+    UserPreferences userPreferences = UserPreferences();
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
     final response = await http.put(
-      Uri.parse('https://f6a1-45-65-152-57.ngrok.io/update/record'),
+      Uri.parse(' /update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "UserID": 1,
+        "UserID": userid,
         "RecordDate": RecordDate,
         "RecordTypeID": RecordTypeId,
         "EntryTime": EntryTime,
@@ -64,8 +65,8 @@ String? changeFinalTime;
       }),
     );
     if (response.statusCode == 201) {
-            return showDialog(context: context, builder:(_) => const AlertEditRecordOk());
-      
+      return showDialog(
+          context: context, builder: (_) => const AlertEditRecordOk());
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
@@ -76,7 +77,7 @@ String? changeFinalTime;
   @override
   void initState() {
     super.initState();
-        WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance!.addPostFrameCallback(
       (_) {
         //aquí
         setState(() {
@@ -87,7 +88,8 @@ String? changeFinalTime;
     entrytime = TimeOfDay.now();
     exittime = TimeOfDay.now();
   }
-//PARA OBTENER LOS DATOS Y CARGARLOS EN LA PANTALLA
+
+//TO GET THE DATA AND LOAD IT ON THE SCREEN
   Future<FullRecorde> fetchFullRecord() async {
     UserPreferences userPreferences = UserPreferences();
     var userId = await userPreferences.getUserId();
@@ -95,11 +97,10 @@ String? changeFinalTime;
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
-    final response = await http.get(Uri.parse(
-        'https://f6a1-45-65-152-57.ngrok.io/get/record/$userid/$x/$y'));
+    final response = await http.get(Uri.parse(' /get/record/$userid/$x/$y'));
     if (response.statusCode == 200) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
-      //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
+      //The [0], is to ignore that the json does not have a RECORD header.
     } else {
       throw Exception('Failed to load record.');
     }
@@ -112,7 +113,7 @@ String? changeFinalTime;
     var y = args['RecordTypeId'].toString();
     return Scaffold(
         appBar: AppBar(
-            title: const Text('editrecords.title').tr(),
+            title: const Text('editrecord.title').tr(),
             centerTitle: true,
             actions: [
               IconButton(
@@ -140,42 +141,44 @@ String? changeFinalTime;
                               ],
                             ));
                   },
-              icon: const Icon(Icons.add_outlined)),
+                  icon: const Icon(Icons.add_outlined)),
             ]),
         body: FutureBuilder<FullRecorde>(
           future: futureRecord,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Card(
-                //Calendario para seleccionar una fecha.
                 child: Column(
                   children: [
                     const SizedBox(
                       height: 20,
                     ),
-                    //LIST TILE DONDE SE MUESTRA EL DATE PICKER, Y SU ICONO PARA DESPLEGAR
                     ListTile(
-                      title: Text((convertirFecha(snapshot.data!.RecordDate)),
+                      title: Text((convertDate(snapshot.data!.RecordDate)),
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 28)),
-                      subtitle: Text(determinarActividad(y.toString()),style: const TextStyle(fontSize: 20),
+                      subtitle: Text(
+                        determineActivity(y.toString()),
+                        style: const TextStyle(fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-  //List Tile que carga la hora de entrada del registro consultado, al presionar, puede asignar una nueva hora.
+                    //List Tile that loads the entry time of the consulted record,
+                    //when pressed, you can assign a new time.
                     Row(
-                      children:const [
-                        Text('Entry Time'), 
+                      children: [
+                        const Text('editrecord.entryTime').tr(),
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     ListTile(
                       title: Text(
-                        changeEntryTime == null?
-                        "${(formatearHora(snapshot.data!.EntryTime))}:${(formatearMinutos(snapshot.data!.EntryTime))}":changeEntryTime!,
+                        changeEntryTime == null
+                            ? "${(formatHour(snapshot.data!.EntryTime))}:${(formatMinutes(snapshot.data!.EntryTime))}"
+                            : changeEntryTime!,
                         style: const TextStyle(fontSize: 24),
                         textAlign: TextAlign.center,
                       ),
@@ -184,27 +187,28 @@ String? changeFinalTime;
                     const SizedBox(
                       height: 20,
                     ),
-  //List Tile que carga la hora de salida del registro consultado, al presionar, puede asignar una nueva hora.
+                    //List Tile that loads the ExitTime of the consulted record, when pressed,
+                    // you can assign a new time.
                     Row(
-                      children: const [
-                        Text('Exit Time'),
+                      children: [
+                        const Text('editrecord.exitTime').tr(),
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
                     ListTile(
                       title: Text(
-                        changeFinalTime == null?
-                        "${(formatearHora(snapshot.data!.ExitTime))}:${(formatearMinutos(snapshot.data!.ExitTime))}":changeFinalTime!,
+                        changeFinalTime == null
+                            ? "${(formatHour(snapshot.data!.ExitTime))}:${(formatMinutes(snapshot.data!.ExitTime))}"
+                            : changeFinalTime!,
                         style: const TextStyle(fontSize: 24),
                         textAlign: TextAlign.center,
                       ),
                       onTap: _pickExitTime,
                     ),
-                    //TIPO DE REGISTRO
                     const SizedBox(
                       height: 20,
                     ),
-                    //BOTON DE GUARDAR CAMBIOS
+                    //SAVE CHANGES BUTTON
                     TextButton(
                         style: TextButton.styleFrom(
                             backgroundColor:
@@ -214,44 +218,46 @@ String? changeFinalTime;
                             ),
                         onPressed: () {
                           setState(() {});
-                          if( changeEntryTime == null && changeFinalTime == null ){
-                            //ALERT DIALOG QUE NO PERMITA ENVIAR
-                            showDialog(context: context, builder:(_) => const AlertEditRecordErrorTwo());
-
-                          } 
-                          else if( changeEntryTime == null ) 
-                          {
-                          var RecordDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(x)); //Fecha
-                          var RecordTypeId = y;
-                          var EntryTime = "${(formatearHora(snapshot.data!.EntryTime))}:${(formatearMinutos(snapshot.data!.EntryTime))}";
-                          var ExitTime = finalfinalexit;
-                          _futureEditRecord = createEditRecord(RecordDate, RecordTypeId , EntryTime, ExitTime);
-                          debugPrint('El registro del día ' + RecordDate + ' Entry: ' + EntryTime + ' Exit: ' + ExitTime);
-                          } 
-                          else if( changeFinalTime == null )
-                          {
-                          var RecordDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(x)); //Fecha
-                          var RecordTypeId = y;
-                          var EntryTime = finalfinalentry;
-                          var ExitTime = "${(formatearHora(snapshot.data!.ExitTime))}:${(formatearMinutos(snapshot.data!.ExitTime))}";
-                          _futureEditRecord = createEditRecord(RecordDate, RecordTypeId , EntryTime, ExitTime);
-                          debugPrint('El registro del día ' + RecordDate + ' Entry: ' + EntryTime + ' Exit: ' + ExitTime);
+                          if (changeEntryTime == null &&
+                              changeFinalTime == null) {
+//Alert Dialog that does not allow to send the information,
+//since the information to be sent is the same that is stored.
+                            showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    const AlertEditRecordErrorTwo());
+                          } else if (changeEntryTime == null) {
+                            var RecordDate = DateFormat('yyyy-MM-dd')
+                                .format(DateTime.parse(x)); //Fecha
+                            var RecordTypeId = y;
+                            var EntryTime =
+                                "${(formatHour(snapshot.data!.EntryTime))}:${(formatMinutes(snapshot.data!.EntryTime))}";
+                            var ExitTime = finalfinalexit;
+                            _futureEditRecord = createEditRecord(
+                                RecordDate, RecordTypeId, EntryTime, ExitTime);
+                          } else if (changeFinalTime == null) {
+                            var RecordDate = DateFormat('yyyy-MM-dd')
+                                .format(DateTime.parse(x)); //Fecha
+                            var RecordTypeId = y;
+                            var EntryTime = finalfinalentry;
+                            var ExitTime =
+                                "${(formatHour(snapshot.data!.ExitTime))}:${(formatMinutes(snapshot.data!.ExitTime))}";
+                            _futureEditRecord = createEditRecord(
+                                RecordDate, RecordTypeId, EntryTime, ExitTime);
                           } else {
-                          var RecordDate = DateFormat('yyyy-MM-dd').format(DateTime.parse(x)); //Fecha
-                          var RecordTypeId = y;
-                          var EntryTime = finalfinalentry;
-                          var ExitTime = finalfinalexit;
-                          _futureEditRecord = createEditRecord(RecordDate, RecordTypeId , EntryTime, ExitTime);
-                          debugPrint('El registro del día ' + RecordDate + ' Entry: ' + EntryTime + ' Exit: ' + ExitTime);
-                          }                        
-                        // _futureEditRecord = createEditRecord(RecordDate, FinalRecordTypeId, Time);
+                            var RecordDate = DateFormat('yyyy-MM-dd')
+                                .format(DateTime.parse(x)); //Fecha
+                            var RecordTypeId = y;
+                            var EntryTime = finalfinalentry;
+                            var ExitTime = finalfinalexit;
+                            _futureEditRecord = createEditRecord(
+                                RecordDate, RecordTypeId, EntryTime, ExitTime);
+                          }
                         },
-                        child: const Text('editrecords.saveButton').tr()),
-                        
+                        child: const Text('editrecord.saveButton').tr()),
                   ],
                 ),
               );
-              
             } else {
               return const CircularProgressIndicator();
             }
@@ -259,53 +265,35 @@ String? changeFinalTime;
         ));
   }
 
-  formatearDia(String dia) {
-    var diap = dia;
-    final parsearFecha = DateTime.parse(diap);
-    var fechaFinal = "${parsearFecha.day}";
-    return fechaFinal;
-  }
-  formatearMes(String mes) {
-    var mesp = mes;
-    final parsearFecha = DateTime.parse(mesp);
-    var fechaFinal = "${parsearFecha.month}";
-    return fechaFinal;
-  }
-  formatearAnio(String anio) {
-    var aniop = anio;
-    final parsearFecha = DateTime.parse(aniop);
-    var fechaFinal = "${parsearFecha.year}";
-    return fechaFinal;
-  }
-  formatearHora(String hora) {
+  formatHour(String hora) {
     final tiempo = hora.split(':');
     String tiempoFinal = tiempo[0];
-    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
-    //resultado= 17:30
+    //result= 17:30
     return tiempoFinal;
   }
-  formatearMinutos(String minutos) {
+
+  formatMinutes(String minutos) {
     final tiempo = minutos.split(':');
     String tiempoFinal = tiempo[1];
-    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
-    //resultado= 17:30
+    //result= 17:30
     return tiempoFinal;
   }
 
-//Según el RecordTypeId que se despliegue en pantalla, es el texto que aparecerá debajo del RecordDate
-  determinarActividad(String s) {
-  String r  = s;
-  switch (r) {
-    case "1":
-    return 'Attendance';
-    case "2": 
-    return 'Lunch';
-    case "3":
-    return 'Overtime';
+//Depending on the RecordTypeId displayed on the screen, this is the text that
+//will appear under the RecordDate
+  determineActivity(String s) {
+    String r = s;
+    switch (r) {
+      case "1":
+        return 'Attendance';
+      case "2":
+        return 'Lunch';
+      case "3":
+        return 'Overtime';
+    }
   }
-}
 
-//Función que muestra el Time Picker para la ENTRADA.
+//Function that displays the Time Picker for ENTRY.
   _pickEntryTime() async {
     TimeOfDay? timeRecord = await showTimePicker(
       context: context,
@@ -314,16 +302,16 @@ String? changeFinalTime;
     if (timeRecord != null) {
       setState(() {
         entrytime = timeRecord;
-        // DateTime newDateTime = DateTime(time.hour,time.minute);
-        finaltimeentry = '${entrytime.hour}:${entrytime.minute.toString().padLeft(2,'0')}';
-        changeEntryTime = '${entrytime.hour}:${entrytime.minute.toString().padLeft(2,'0')}';
+        finaltimeentry =
+            '${entrytime.hour}:${entrytime.minute.toString().padLeft(2, '0')}';
+        changeEntryTime =
+            '${entrytime.hour}:${entrytime.minute.toString().padLeft(2, '0')}';
         finalfinalentry = finaltimeentry;
       });
-    } else{
     }
   }
 
-//Función que muestra el Time Picker para la SALIDA.
+//Function that displays the Time Picker for the EXIT.
   _pickExitTime() async {
     TimeOfDay? timeRecord = await showTimePicker(
       context: context,
@@ -332,21 +320,21 @@ String? changeFinalTime;
     if (timeRecord != null) {
       setState(() {
         exittime = timeRecord;
-        finaltimeexit = '${exittime.hour}:${exittime.minute.toString().padLeft(2,'0')}';
-        // DateTime newDateTime = DateTime(time.hour,time.minute);
-        changeFinalTime = '${exittime.hour}:${exittime.minute.toString().padLeft(2,'0')}';
+        finaltimeexit =
+            '${exittime.hour}:${exittime.minute.toString().padLeft(2, '0')}';
+        changeFinalTime =
+            '${exittime.hour}:${exittime.minute.toString().padLeft(2, '0')}';
         finalfinalexit = finaltimeexit;
       });
     }
   }
-  
-//NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
-  String convertirFecha(String fecha) {
+
+//NOTE: Function to convert 2022-04-08T05:00:00:00.000Z to Apr 8, 2022
+  String convertDate(String fecha) {
     String date = fecha;
     String? mes;
     String? fechaFinal;
     final parsearFecha = DateTime.parse(date);
-    //final formatoFecha = DateFormat('MMMM dd, yyyy').format(parsearFecha);
     switch (parsearFecha.month) {
       case 01:
         mes = 'Jan';
@@ -387,8 +375,7 @@ String? changeFinalTime;
       default:
     }
     fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
-    // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
-    //resultado: Abril 8, 2022
+    //result: Abril 8, 2022
     return fechaFinal;
   }
 }

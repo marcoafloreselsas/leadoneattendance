@@ -17,7 +17,6 @@ class DisplayRecordScreenUser extends StatefulWidget {
 
 class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
   Future<FullRecord>? futureRecord;
-  String s = "";
   @override
   void initState() {
     super.initState();
@@ -39,13 +38,16 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
     var userid = userId;
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
-    var s = usertoken.toString() + '/' +userid.toString() + '/' + recorddate.toString();
+    var s = usertoken.toString() +
+        '/' +
+        userid.toString() +
+        '/' +
+        recorddate.toString();
 
-    final response = await http.get(Uri.parse(
-        'https://f6a1-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
+    final response = await http.get(Uri.parse('/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
-      //El [0], es para ignorar que el json no tiene una cabecera tipo RECORD.
+      //The [0], is to ignore that the json does not have a RECORD header.
     } else {
       throw Exception('Failed to load record.');
     }
@@ -64,10 +66,10 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
           centerTitle: true,
         ),
 
-        //EN ESTA SECCION, COMIENZA LA INFORMACION DEL REGISTRO SELECCIONADO
-        /* Para fines de acomodo, hay cuatro list tile, que son las columnas que muestran cada actividad,
-          Hay un Wrap que permite añadir más de dos íconos y más de dos texto. El spacing, es el espaciado
-          que habrá entre íconos, independientemente de los textos. */
+        //IN THIS SECTION, THE INFORMATION OF THE SELECTED RECORD BEGINS.
+        /* For layout purposes, there are three list tiles, which are the columns that show each activity,
+          There is a wrap that allows you to add more than two icons and more than two text. 
+          The spacing is the spacing that there will be between icons, independently of the texts. */
         body: FutureBuilder<FullRecord>(
           future: futureRecord,
           builder: (context, snapshot) {
@@ -79,7 +81,7 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                     const SizedBox(
                       height: 20,
                     ),
-                    //ListTile que muestra la fecha y texto Record Date del registro consultado.
+                    //ListTile that shows the date and Record Date text of the consulted record.
                     ListTile(
                       title: Text((convertirFecha(snapshot.data!.date)),
                           textAlign: TextAlign.center,
@@ -90,27 +92,27 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                       ),
                     ),
                     const Divider(),
-
-//A partir de aquī, es un list tile que contiene los 4 tipos de actividad, sus íconos, textos obtenidos de backend y estilos.
+//A From here, it is a list tile containing the 3 types of activity, their icons,
+// texts obtained from the backend and styles.
                     ListTile(
                       title: Text("displayrecords.TRattendance".tr()),
                       trailing: Wrap(
-                        spacing: 12, // Espacio entre dos íconos
+                        spacing: 12, // Space between icons.
                         children: <Widget>[
                           const Icon(
                             Icons.arrow_upward_outlined,
                             color: AppTheme.green,
-                          ), // icon-1
+                          ),
                           Text(
-                            convertirHora(snapshot.data!.entryTime1),
+                            convertTime(snapshot.data!.entryTime1),
                             style: const TextStyle(fontSize: 18),
                           ),
                           const Icon(
                             Icons.arrow_downward_outlined,
                             color: AppTheme.red,
-                          ), // icon-2
+                          ),
                           Text(
-                            convertirHora(snapshot.data!.exitTime1),
+                            convertTime(snapshot.data!.exitTime1),
                             style: const TextStyle(fontSize: 18),
                           ),
                         ],
@@ -124,76 +126,78 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                       },
                     ),
                     const Divider(),
-
                     ListTile(
                       title: Text("displayrecords.TRlunch".tr()),
                       trailing: Wrap(
-                        spacing: 12, // Espacio entre dos íconos
+                        spacing: 12, // Space between icons.
                         children: <Widget>[
                           const Icon(
                             Icons.arrow_upward_outlined,
                             color: AppTheme.green,
-                          ), // icon-1
+                          ),
                           Text(
-                            convertirHora(snapshot.data!.entryTime2),
+                            convertTime(snapshot.data!.entryTime2),
                             style: const TextStyle(fontSize: 18),
                           ),
                           const Icon(
                             Icons.arrow_downward_outlined,
                             color: AppTheme.red,
-                          ), // icon-2
+                          ),
                           Text(
-                            convertirHora(snapshot.data!.exitTime2),
+                            convertTime(snapshot.data!.exitTime2),
                             style: const TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
                       onTap: () {
-                        if(convertirHora(snapshot.data!.entryTime2) == "00:00"){
-                          showDialog(context: context, builder:(_) => const AlertEditRecordErrorTwo());
-                        } else{
+                        if (convertTime(snapshot.data!.entryTime2) == "00:00") {
+                          showDialog(
+                              context: context,
+                              builder: (_) => const AlertEditRecordErrorTwo());
+                        } else {
                           Navigator.pushNamed(context, '/EditRecordScreenUser',
-                            arguments: {
-                              'RecordDate': recordDate,
-                              'RecordTypeId': 2
-                            });
+                              arguments: {
+                                'RecordDate': recordDate,
+                                'RecordTypeId': 2
+                              });
                         }
                       },
                     ),
                     const Divider(),
-
                     ListTile(
                       title: Text("displayrecords.TRovertime".tr()),
                       trailing: Wrap(
-                        spacing: 12, // Espacio entre dos íconos
+                        spacing: 12, // Space between icons.
                         children: <Widget>[
                           const Icon(
                             Icons.arrow_upward_outlined,
                             color: AppTheme.green,
-                          ), // icon-1
+                          ),
                           Text(
-                            convertirHora(snapshot.data!.entrytime3),
+                            convertTime(snapshot.data!.entrytime3),
                             style: const TextStyle(fontSize: 18),
                           ),
                           const Icon(
                             Icons.arrow_downward_outlined,
                             color: AppTheme.red,
-                          ), // icon-2
+                          ),
                           Text(
-                            convertirHora(snapshot.data!.exitTime3),
+                            convertTime(snapshot.data!.exitTime3),
                             style: const TextStyle(fontSize: 18),
                           ),
                         ],
                       ),
                       onTap: () {
-                        if(convertirHora(snapshot.data!.entrytime3) == "00:00"){
-                          showDialog(context: context, builder:(_) => const AlertEditRecordErrorTwo());
-                        } else{
+                        if (convertTime(snapshot.data!.entrytime3) == "00:00") {
+                          showDialog(
+                              context: context,
+                              builder: (_) => const AlertEditRecordErrorTwo());
+                        } else {
                           Navigator.pushNamed(context, '/EditRecordScreenUser',
-                            arguments: {
-                              'RecordDate': recordDate,
-                              'RecordTypeId': 3
-                            });
+                              arguments: {
+                                'RecordDate': recordDate,
+                                'RecordTypeId': 3
+                              });
                         }
                       },
                     ),
@@ -215,30 +219,27 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
                 ),
               );
             } else {
+              // By default, show a loading spinner.
               return const CircularProgressIndicator();
             }
-            // By default, show a loading spinner.
           },
         ));
   }
 
-//ANCHOR METODOS Y OTRAS COSAS
-  //NOTE: Método para convertir 17:30:00 a 17:30
-  String convertirHora(String hora) {
+  //NOTE: Function to convert 17:30:00 to 17:30
+  String convertTime(String hora) {
     final tiempo = hora.split(':');
     String tiempoFinal = "${tiempo[0]}:${tiempo[1]}";
-    //debugPrint(tiempoFinal); Imprime en consola las horas obtenidas.
-    //resultado= 17:30
+    //result = 17:30
     return tiempoFinal;
   }
 
-//NOTE: Método para convertir 2022-04-08T05:00:00.000Z a Abril 8, 2022
+//NOTE: Function to convert 2022-04-08T05:00:00:00.000Z to Apr 8, 2022
   String convertirFecha(String fecha) {
     String date = fecha;
     String? mes;
     String? fechaFinal;
     final parsearFecha = DateTime.parse(date);
-    //final formatoFecha = DateFormat('MMMM dd, yyyy').format(parsearFecha);
     switch (parsearFecha.month) {
       case 01:
         mes = 'Jan';
@@ -280,8 +281,7 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
     }
 
     fechaFinal = "$mes ${parsearFecha.day}, ${parsearFecha.year}";
-    // debugPrint(fechaFinal);  Imprime en consola las fechas obtenidas.
-    //resultado: Abril 8, 2022
+    //resultado: Apr 8, 2022
     return fechaFinal;
   }
 }

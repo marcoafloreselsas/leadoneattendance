@@ -1,4 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AlertChangePasswordError extends StatelessWidget {
   const AlertChangePasswordError({Key? key}) : super(key: key);
@@ -16,17 +20,15 @@ class AlertChangePasswordError extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [
-              Text('El correo electronico y/o contraseña son incorrectos.')
-            ],
+            children: [const Text('alerts.alertchangepassworderror').tr()],
           ),
         ),
         actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/LoginScreen');
-                    },
-                    child: const Text('Save Changes')),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/LoginScreen');
+              },
+              child: const Text('alerts.alertResponse3').tr()),
         ]);
   }
 }

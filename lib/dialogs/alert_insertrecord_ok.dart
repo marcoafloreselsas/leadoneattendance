@@ -1,4 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AlertInsertRecordOk extends StatelessWidget {
   const AlertInsertRecordOk({Key? key}) : super(key: key);
@@ -16,15 +20,15 @@ class AlertInsertRecordOk extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [Text('El registro se ha guardado exitosamente.')],
+            children: [const Text('alerts.alertinsertrecordok').tr()],
           ),
         ),
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/MainScreenUser');
               },
-              child: const Text('Aceptar'))
+              child: const Text('alerts.alertResponse3').tr())
         ]);
   }
 }

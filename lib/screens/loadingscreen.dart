@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-/// You can put the logo of your app
+
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +17,20 @@ class LoadingScreen extends StatelessWidget {
     );
   }
 }
-//Función que verifica el tipo de usuario que está entrando a la aplicación (y envía el User ID que está guardado), 
-//si no hay dato, lo manda al LoginScreen()
+
+//Function that verifies the type of user that is entering the application, based on the information stored in the device with Shared Preferences, if there is no information, Login is required.
 Future isLogged(context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // ignore: non_constant_identifier_names
   String? Role = prefs.getString('Role');
-    if (Role == 'Administrator') {
-      /// If the user is an admin
+  if (Role == 'Administrator') {
     Navigator.of(context).pushNamed('/MainScreenAdmin');
-    debugPrint('El usuario es Administrador.');
-    // Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreenAdmin()));
-    } else if (Role == 'Employee') {
-      /// If the user is not an admin
+    debugPrint('The user is Administrator.');
+  } else if (Role == 'Employee') {
     Navigator.of(context).pushNamed('/MainScreenUser');
-    debugPrint('El usuario es Empleado.');
-    } else {
-    Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
-    debugPrint('Requiere iniciar sesión.');
-    }
+    debugPrint('The user is an employee.');
+  } else {
+    Navigator.of(context).pushNamed('/LoginScreen');
+    debugPrint('Login required.');
+  }
 }
