@@ -30,6 +30,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   bool switchValue = false;
   bool isonisoff = false;
   int recordTypeId = 0;
+  String? changeDate;
   String? changeTime;
 
   String dropdownvalue = 'Attendance';
@@ -40,6 +41,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     'Overtime',
     'Permit',
   ];
+
   //For when the start of an activity is marked.
   Future<Future> createEntryRecord(
       String RecordDate, int FinalRecordTypeId, String Time) async {
@@ -128,7 +130,9 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             ),
             ListTile(
               title: Text(
-                "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
+                changeDate == null
+                    ? "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}"
+                    : changeDate!,
                 textAlign: TextAlign.center,
               ),
               onTap: _pickDate,
@@ -143,8 +147,9 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             ),
             ListTile(
               title: Text(
-                //To display as 17: 0 8
-                "${time.hour}:${time.minute.toString().padLeft(2, '0')}",
+                changeTime == null
+                    ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
+                    : changeTime!,
                 textAlign: TextAlign.center,
               ),
               onTap: _pickTime,
@@ -202,12 +207,26 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                     ),
                 onPressed: () {
                   setState(() {});
-                  var RecordDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate); //Fecha
+
+                  // ignore: prefer_typing_uninitialized_variables
+                  var Time;
+                  // ignore: prefer_typing_uninitialized_variables
+                  var RecordDate; //Fecha
                   var RecordTypeId2 = recordTypeId + 1;
                   var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
                   var OnOff = isonisoff; //Switch
-                  var Time = finalfinal; //Hora
+
+                  if (changeTime == null) {
+                    Time = finalfinal; //Hora
+                  } else {
+                    Time = changeTime;
+                  }
+                  if (changeDate == null) {
+                    RecordDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  } else {
+                    var convertDate = DateTime.parse(changeDate!);
+                    RecordDate = DateFormat('yyyy-MM-dd').format(convertDate);
+                  }
 
                   //Si el si
                   if (OnOff == false) {
@@ -235,6 +254,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     if (dateRecord != null) {
       setState(() {
         pickedDate = dateRecord;
+        changeDate = dateRecord as String?;
       });
     }
   }

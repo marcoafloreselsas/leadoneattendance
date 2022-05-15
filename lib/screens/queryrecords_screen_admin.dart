@@ -236,9 +236,10 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                                 ],
                               ),
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DisplayRecordScreenUser()));
+                                Navigator.pushNamed(
+                                    context, '/DisplayRecordScreenAdmin',
+                                    arguments: convertDateArgument(
+                                        snapshot.data!.recordDate));
                               })
                         ],
                       ),
@@ -262,6 +263,13 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
       this.users = users ?? [];
       this.users = usersid ?? [];
     });
+  }
+
+  String convertDateArgument(String fecha) {
+    final parsearFecha = DateTime.parse(fecha);
+    var fechafinalargumento =
+        DateFormat('yyyy-MM-dd').format(parsearFecha); //Fecha
+    return fechafinalargumento;
   }
 
   //FUNCTION THAT DISPLAYS THE DATE PICKER
