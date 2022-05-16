@@ -141,7 +141,7 @@ returns the user id, the user role (administrator or employee) and a token,
 and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUser'. */
   Future<void> login(email, password) async {
     try {
-      final response = await http.post(Uri.parse(' /login/'),
+      final response = await http.post(Uri.parse('https://174e-45-65-152-57.ngrok.io/login/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -152,7 +152,7 @@ and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUs
 If there is a successful response from the server, it saves the received data on the device,
 through Shared Preferences. 
 */
-      if (response.body != '0') {
+      if (response.statusCode == 200) {
         userPreferences.saveUserId(datos['UserID']);
         userPreferences.saveRole(datos['Role']);
         userPreferences.saveToken(datos['Token']);

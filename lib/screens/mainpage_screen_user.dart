@@ -265,7 +265,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
     var s = userid.toString() + '/' + usertoken.toString();
 
     //Server link
-    final response = await http.get(Uri.parse(' /get/fiverecords/$s'));
+    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/fiverecords/$s'));
 
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

@@ -20,7 +20,7 @@ class AlertSendReport extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.sendreport').tr()],
+            children: [const Text('alerts.alertsendreport').tr()],
           ),
         ),
         actions: [

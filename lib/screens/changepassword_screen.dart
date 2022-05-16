@@ -126,7 +126,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   Future<void> changepassword(email, password, newpassword) async {
     try {
-      final response = await http.post(Uri.parse(' /password'),
+      final response = await http.post(Uri.parse('https://174e-45-65-152-57.ngrok.io/password'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -135,7 +135,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             'Password': password,
             'NewPassword': newpassword
           }));
-      if (response.body != '0') {
+      if (response.statusCode == 201) {
         // Dialog box showing that the data is correct.
         showDialog(
             context: context,

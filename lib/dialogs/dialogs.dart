@@ -1,4 +1,6 @@
+export 'package:leadoneattendance/dialogs/alert_401_error.dart';
 export 'package:leadoneattendance/dialogs/alert_login.dart';
+export 'package:leadoneattendance/dialogs/alert_completeinfo.dart';
 export 'package:leadoneattendance/dialogs/alert_changepassword_error.dart';
 export 'package:leadoneattendance/dialogs/alert_changepassword_ok.dart';
 export 'package:leadoneattendance/dialogs/alert_editrecord_error_01.dart';
@@ -10,5 +12,4 @@ export 'package:leadoneattendance/dialogs/alert_insertrecord_error_admin.dart';
 export 'package:leadoneattendance/dialogs/alert_insertrecord_ok.dart';
 export 'package:leadoneattendance/dialogs/alert_insertrecord_ok_admin.dart';
 export 'package:leadoneattendance/dialogs/alert_sendreport.dart';
-
-export 'package:leadoneattendance/dialogs/alert_401_error.dart';
+export 'package:leadoneattendance/dialogs/alert_unavailablerecord.dart';

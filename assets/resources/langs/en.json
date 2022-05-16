@@ -115,8 +115,12 @@
         "alertlogin":"Verify your email and password.",
         "alertchangepasswordok":"Your password has been successfully updated.",
         "alertchangepassworderror":"The email and/or password are incorrect.",
+        "alertdisplayrecorderror":"No information available.",
         "alertinsertrecordok":"The record has been saved successfully.",
         "alertinsertrecorderror":"This registry already exists.",
-        "alertsendreport":"The email has been sent successfully."
+        "alerteditrecordok":"The record has been successfully modified.",
+        "alertsendreport":"The email has been sent successfully.",
+        "alertcompleteinfo" : "Please fill in all fields.",
+        "alertunavailablerecord":"Record not available."
     }
 }

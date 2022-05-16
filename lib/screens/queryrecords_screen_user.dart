@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/dialogs/alert_unavailablerecord.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -17,12 +18,12 @@ class QueryRecordsScreenUser extends StatefulWidget {
 }
 
 class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
-  Future<QueryRecord>? futureQueryRecord;
+  Future<dynamic>? futureQueryRecord;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2022, 2); //As of what date does the calendar work
   final lastDate = DateTime.now(); //To what date does the calendar work
-  Future<QueryRecordAdmin>? futureQueryRecordAdmin;
+  Future<dynamic>? futureQueryRecordAdmin;
 
   @override
   void initState() {
@@ -39,6 +40,9 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
           actions: const []),
       body: Column(
         children: [
+                    const SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               const Text('queryrecords.selectDate').tr(),
@@ -76,6 +80,13 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
                 debugPrint(finalRecordDate + finalRecordTypeID.toString());
               },
               child: const Text('queryrecords.apply').tr()),
+                        const SizedBox(
+            height: 20,
+          ),
+              const Divider(),
+                        const SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               const Text('queryrecords.recentRecords',
@@ -90,7 +101,7 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
           ),
 
 //This section is the listtile that loads the selected record.
-          FutureBuilder<QueryRecord>(
+          FutureBuilder<dynamic>(
             future: futureQueryRecord,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -149,7 +160,7 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
     );
   }
 
-  Future<QueryRecord> fetchQueryRecord(
+  Future<dynamic> fetchQueryRecord(
       String finalRecordDate, int finalRecordTypeID) async {
     UserPreferences userPreferences = UserPreferences();
     var userId = await userPreferences.getUserId();
@@ -170,10 +181,14 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
 
 //http request GET
     final response = await http
-        .get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/record/$s'));
+        .get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/record/$s'));
     if (response.statusCode == 200) {
       return QueryRecord.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
+    } if(response.statusCode == 401){
+      showDialog(context: context, builder: (BuildContext context){
+        return const AlertUnavailableRecord();
+      });
     } else {
       throw Exception('Failed to load record.');
     }

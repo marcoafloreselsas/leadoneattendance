@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
@@ -52,7 +51,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.put(
-      Uri.parse(' /update/record'),
+      Uri.parse('https://174e-45-65-152-57.ngrok.io/update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -91,13 +90,13 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
 
 //TO GET THE DATA AND LOAD IT ON THE SCREEN
   Future<FullRecorde> fetchFullRecord() async {
-    UserPreferences userPreferences = UserPreferences();
-    var userId = await userPreferences.getUserId();
-    var userid = userId;
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
-    final response = await http.get(Uri.parse(' /get/record/$userid/$x/$y'));
+    var userid = await userPreferences.getUserId();
+    var userToken = await userPreferences.getUserToken();
+    var z = userToken;
+    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/record/$userid/$x/$y/$z'));
     if (response.statusCode == 200) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
@@ -108,6 +107,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
 
   @override
   Widget build(BuildContext context) {
+    
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();

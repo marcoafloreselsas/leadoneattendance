@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -6,6 +7,7 @@ import 'package:leadoneattendance/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
+String userToken = "";
 
 class GenerateIndividualReportsScreen extends StatefulWidget {
   const GenerateIndividualReportsScreen({Key? key}) : super(key: key);
@@ -33,8 +35,14 @@ class _GenerateIndividualReportsScreenState
     pickedDateFrom = DateTime.now();
     pickedDateTo = DateTime.now();
     fetchAndShow();
-  }
+    readData();
 
+  }
+    void readData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() => userToken = prefs.getString('Token')!);
+    
+  }
   Future<bool> _onWillPop() async {
     return false;
   }
@@ -42,7 +50,7 @@ class _GenerateIndividualReportsScreenState
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
-    String url = 'https://f6a1-45-65-152-57.ngrok.io/get/names/$usertoken';
+    String url = 'https://174e-45-65-152-57.ngrok.io/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -200,7 +208,8 @@ class _GenerateIndividualReportsScreenState
                   'userID': userID,
                   'activity': activity,
                   'firstDate': firstDate,
-                  'lastDate': lastDate
+                  'lastDate': lastDate,
+                  'userToken': userToken
                 });
               },
               child: const Text('generatereports.applyButton').tr())

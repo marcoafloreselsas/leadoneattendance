@@ -115,8 +115,12 @@
         "alertlogin":"Verifique su correo electrónico y contraseña.",
         "alertchangepasswordok":"Se ha actualizado su contraseña exitosamente.",
         "alertchangepassworderror":"El correo electronico y/o contraseña son incorrectos.",
+        "alertdisplayrecorderror":"No hay información disponible.",
         "alertinsertrecordok":"El registro se ha guardado exitosamente.",
         "alertinsertrecorderror":"Este registro ya existe.",
-        "alertsendreport":"El correo se ha enviado exitosamente."
+        "alerteditrecordok":"El registro ha sido modificado exitosamente",
+        "alertsendreport":"El correo se ha enviado exitosamente.",
+        "alertcompleteinfo" : "Por favor, llene todos los campos.",
+        "alertunavailablerecord":"Registro no disponible."
     }
 }

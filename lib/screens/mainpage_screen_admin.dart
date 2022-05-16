@@ -8,6 +8,7 @@ import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+int userid = 0;
 class MainScreenAdmin extends StatefulWidget {
   const MainScreenAdmin({Key? key}) : super(key: key);
 
@@ -24,14 +25,26 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
   void initState() {
     super.initState();
     futureRecord = fetchRecord();
+    readData();
+  }
+
+  void readData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt('UserID') == null) {
+      setState(() => userid = 0);
+    } else {
+      setState(() => userid = prefs.getInt('UserID')!);
+    }
   }
 
   Future<bool> _onWillPop() async {
     return false;
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -92,6 +105,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               height: 10,
             ),
             FutureBuilder<dynamic>(
+              
               future: futureRecord,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -103,8 +117,8 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                             onTap: () => Navigator.pushNamed(
                               context,
                               '/DisplayRecordScreenAdmin',
-                              arguments: convertDateArgument(
-                                  snapshot.data![index].RecordDate),
+                              arguments: {'RecordDate': convertDateArgument(
+                                  snapshot.data![index].RecordDate), 'UserID': userid},
                             ),
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -250,7 +264,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
     final response = await http.get(
-        Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/fiverecords/$s'));
+        Uri.parse('https://174e-45-65-152-57.ngrok.io/get/fiverecords/$s'));
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
       return parsed.map<Record>((json) => Record.fromMap(json)).toList();

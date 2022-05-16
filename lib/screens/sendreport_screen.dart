@@ -32,7 +32,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
 //Esta vista envía el reporte generado.
   @override
   Widget build(BuildContext context) {
-    UserPreferences userPreferences = UserPreferences();
 
     return Scaffold(
         appBar: AppBar(
@@ -117,20 +116,18 @@ class _SendReportScreenState extends State<SendReportScreen> {
   Future<void> sendReport(email, subject, message) async {
     UserPreferences userPreferences = UserPreferences();
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
-
-    // Map args = ModalRoute.of(context)!.settings.arguments as Map;
-    var activity = args['activity'];
-    var finalAct = activity.toString();
-    var userId = await userPreferences.getUserId();
+    var activity = args['activity'].toString();
+    var finalAct = activity;
+    var userId = args['userID'];
     var userid = userId.toString();
-    var userToken = await userPreferences.getUserToken();
+    var userToken = args['userToken'];
     var usertoken = userToken.toString();
     var firstDate = args['firstDate'];
     var lastDate = args['lastDate'];
-    debugPrint('entro a esta parte' + activity + userid);
+    debugPrint('entro a esta parte' + finalAct + userid);
     if (finalAct == '1') {
       final response = await http.post(
-          Uri.parse('https://f6a1-45-65-152-57.ngrok.io/send/userhoursreport/'),
+          Uri.parse('https://174e-45-65-152-57.ngrok.io/send/userhoursreport/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -140,9 +137,10 @@ class _SendReportScreenState extends State<SendReportScreen> {
             'Date1': firstDate,
             'Date2': lastDate,
             'Subject': subject,
-            'Message': message
+            'Message': message,
+            'Token':usertoken
           }));
-      debugPrint('AT: ' + email + userid + firstDate + lastDate);
+      debugPrint('AT: ' + email + " "+ userid+ " " + firstDate + " "+ lastDate + " "+ usertoken);
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -154,7 +152,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '2') {
       final response = await http.post(
           Uri.parse(
-              'https://f6a1-45-65-152-57.ngrok.io/send/usermodifications/'),
+              'https://174e-45-65-152-57.ngrok.io/send/usermodifications/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -164,9 +162,10 @@ class _SendReportScreenState extends State<SendReportScreen> {
             'Date1': firstDate,
             'Date2': lastDate,
             'Subject': subject,
-            'Message': message
+            'Message': message,
+            'Token':usertoken
           }));
-      debugPrint('MOD: ' + email + userid + firstDate + lastDate);
+      debugPrint('MOD: ' + email+ " " + userid +  " "+firstDate + " "+ lastDate+ " "+ usertoken);
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -178,7 +177,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '3') {
       final response = await http.post(
           Uri.parse(
-              'https://f6a1-45-65-152-57.ngrok.io/send/usershoursreport/'),
+              'https://174e-45-65-152-57.ngrok.io/send/usershoursreport/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -187,9 +186,10 @@ class _SendReportScreenState extends State<SendReportScreen> {
             'Date1': firstDate,
             'Date2': lastDate,
             'Subject': subject,
-            'Message': message
+            'Message': message,
+            'Token':usertoken
           }));
-      debugPrint('MOD: ' + email + userid + firstDate + lastDate);
+      debugPrint('AT GRAL: ' + email + " "+userid+ " " + firstDate+ " " + lastDate+ " "+ usertoken);
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -201,7 +201,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '4') {
       final response = await http.post(
           Uri.parse(
-              'https://f6a1-45-65-152-57.ngrok.io/send/usersmodifications/'),
+              'https://174e-45-65-152-57.ngrok.io/send/usersmodifications/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -210,9 +210,10 @@ class _SendReportScreenState extends State<SendReportScreen> {
             'Date1': firstDate,
             'Date2': lastDate,
             'Subject': subject,
-            'Message': message
+            'Message': message,
+            'Token':usertoken
           }));
-      debugPrint('MOD: ' + email + userid + firstDate + lastDate);
+      debugPrint('MOD GRAL: ' + email + " "+ userid+ " " + firstDate+ " " + lastDate+ " "+ usertoken);
       showDialog(
           barrierDismissible: false,
           context: context,

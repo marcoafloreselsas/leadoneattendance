@@ -20,8 +20,8 @@ class AlertEditRecordErrorTwo extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [
-              Text('Los valores son iguales. No hay necesidad de actualizar.')
+            children:  [
+              const Text('alerts.alertdisplayrecorderror').tr()
             ],
           ),
         ),
@@ -30,7 +30,7 @@ class AlertEditRecordErrorTwo extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Aceptar'))
+              child: const Text('OK'))
         ]);
   }
 }

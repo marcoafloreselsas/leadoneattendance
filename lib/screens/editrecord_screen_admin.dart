@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, await_only_futures
 
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
@@ -52,7 +52,7 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.put(
-      Uri.parse(' /update/record'),
+      Uri.parse('https://174e-45-65-152-57.ngrok.io/update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -91,13 +91,14 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
 
 //TO GET THE DATA AND LOAD IT ON THE SCREEN
   Future<FullRecorde> fetchFullRecord() async {
-    UserPreferences userPreferences = UserPreferences();
-    var userId = await userPreferences.getUserId();
-    var userid = userId;
+    UserPreferences userPreferences = await UserPreferences();
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
+    var userid = args['UserID'];
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
-    final response = await http.get(Uri.parse(' /get/record/$userid/$x/$y'));
+    var uToken = await userPreferences.getUserToken();
+    var z = uToken.toString();
+    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/record/$userid/$x/$y/$z'));
     if (response.statusCode == 200) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
@@ -109,8 +110,9 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
   @override
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
-    var x = args['RecordDate']; //RecordDate
-    var y = args['RecordTypeId'].toString();
+    var recorddate = args['RecordDate'];
+    var recordtypeid = args['RecordTypeId'].toString();
+    var userid = args['UserID'];
     return Scaffold(
         appBar: AppBar(
             title: const Text('editrecord.title').tr(),
@@ -158,7 +160,7 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 28)),
                       subtitle: Text(
-                        determineActivity(y.toString()),
+                        determineActivity(recordtypeid.toString()),
                         style: const TextStyle(fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
@@ -228,8 +230,8 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
                                     const AlertEditRecordErrorTwo());
                           } else if (changeEntryTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
-                                .format(DateTime.parse(x)); //Fecha
-                            var RecordTypeId = y;
+                                .format(DateTime.parse(recorddate)); //Fecha
+                            var RecordTypeId = recordtypeid;
                             var EntryTime =
                                 "${(formatHour(snapshot.data!.EntryTime))}:${(formatMinutes(snapshot.data!.EntryTime))}";
                             var ExitTime = finalfinalexit;
@@ -237,8 +239,8 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
                           } else if (changeFinalTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
-                                .format(DateTime.parse(x)); //Fecha
-                            var RecordTypeId = y;
+                                .format(DateTime.parse(recorddate)); //Fecha
+                            var RecordTypeId = recordtypeid;
                             var EntryTime = finalfinalentry;
                             var ExitTime =
                                 "${(formatHour(snapshot.data!.ExitTime))}:${(formatMinutes(snapshot.data!.ExitTime))}";
@@ -246,8 +248,8 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
                           } else {
                             var RecordDate = DateFormat('yyyy-MM-dd')
-                                .format(DateTime.parse(x)); //Fecha
-                            var RecordTypeId = y;
+                                .format(DateTime.parse(recorddate)); //Fecha
+                            var RecordTypeId = recordtypeid;
                             var EntryTime = finalfinalentry;
                             var ExitTime = finalfinalexit;
                             _futureEditRecord = createEditRecord(

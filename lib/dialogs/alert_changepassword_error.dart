@@ -26,7 +26,7 @@ class AlertChangePasswordError extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/LoginScreen');
+                Navigator.pop(context);
               },
               child: const Text('alerts.alertResponse3').tr()),
         ]);

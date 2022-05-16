@@ -28,9 +28,9 @@ class AlertEditRecordErrorOne extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/LoginScreen');
+                Navigator.pop(context);
               },
-              child: const Text('Save Changes')),
+              child: const Text('OK')),
         ]);
   }
 }

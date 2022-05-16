@@ -17,7 +17,7 @@ class DisplayRecordScreenAdmin extends StatefulWidget {
 
 class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
   Future<FullRecord>? futureRecord;
-
+ 
   @override
   void initState() {
     super.initState();
@@ -32,20 +32,16 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
   }
 
   Future<FullRecord> fetchFullRecord() async {
-    UserPreferences userPreferences = UserPreferences();
-    var args = ModalRoute.of(context)!.settings.arguments;
-    var recorddate = args;
-    var userId = await userPreferences.getUserId();
-    var userid = userId;
+    // ignore: await_only_futures
+    UserPreferences userPreferences = await UserPreferences();
+    Map args = ModalRoute.of(context)!.settings.arguments as Map;
+    var recorddate = args['RecordDate'];
+    var userid = args['UserID'];
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
-    var s = usertoken.toString() +
-        '/' +
-        userid.toString() +
-        '/' +
-        recorddate.toString();
-
-    final response = await http.get(Uri.parse('/get/fulluserrecord/$s'));
+    var s = userid.toString() + '/' + recorddate.toString() + '/' + usertoken.toString();
+    debugPrint('Registro a cargar: '+userid.toString()+' '+recorddate.toString()+' '+usertoken.toString());
+    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
@@ -56,8 +52,11 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)!.settings.arguments;
-    var recordDate = args;
+    Map args = ModalRoute.of(context)!.settings.arguments as Map;
+    var recorddate = args['RecordDate'];
+    var userid = args['UserID'];
+    // Query the stored data and assign it to the variable userId
+
     return Scaffold(
         backgroundColor: AppTheme.background,
         appBar:
@@ -119,10 +118,11 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                         ],
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, '/EditRecordScreenUser',
+                        Navigator.pushNamed(context, '/EditRecordScreenAdmin',
                             arguments: {
-                              'RecordDate': recordDate,
-                              'RecordTypeId': 1
+                              'RecordDate': recorddate,
+                              'RecordTypeId': 1,
+                              'UserID': userid
                             });
                       },
                     ),
@@ -156,10 +156,12 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                               context: context,
                               builder: (_) => const AlertEditRecordErrorTwo());
                         } else {
-                          Navigator.pushNamed(context, '/EditRecordScreenUser',
+                          Navigator.pushNamed(context, '/EditRecordScreenAdmin',
                               arguments: {
-                                'RecordDate': recordDate,
-                                'RecordTypeId': 2
+                                'RecordDate': recorddate,
+                                'RecordTypeId': 2,
+                                'UserID': userid
+
                               });
                         }
                       },
@@ -194,10 +196,11 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                               context: context,
                               builder: (_) => const AlertEditRecordErrorTwo());
                         } else {
-                          Navigator.pushNamed(context, '/EditRecordScreenUser',
+                          Navigator.pushNamed(context, '/EditRecordScreenAdmin',
                               arguments: {
-                                'RecordDate': recordDate,
-                                'RecordTypeId': 3
+                                'RecordDate': recorddate,
+                                'RecordTypeId': 3,
+                                'UserID': userid
                               });
                         }
                       },

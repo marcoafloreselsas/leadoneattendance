@@ -43,7 +43,7 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse(' /insertrecord/'),
+      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -73,7 +73,7 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse(' /insertrecord/'),
+      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -10,31 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 UserPreferences userPreferences = UserPreferences();
-Future<QueryRecordAdmin> fetchQueryRecordAdmin(
-    int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
-  var userToken = await userPreferences.getUserToken();
-  var usertoken = userToken;
 
-  var UserID = finalfinalUserID;
-  var RecordTypeID = finalRecordTypeID;
-  var RecordDate = finalRecordDate;
-  var s = UserID.toString() +
-      "/" +
-      RecordDate +
-      "/" +
-      RecordTypeID.toString() +
-      "/" +
-      usertoken.toString();
-
-//http request GET
-  final response = await http
-      .get(Uri.parse('https://f6a1-45-65-152-57.ngrok.io/get/record/$s'));
-  if (response.statusCode == 200) {
-    return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
-  } else {
-    throw Exception('Failed to load record.');
-  }
-}
 
 class QueryRecordsScreenAdmin extends StatefulWidget {
   const QueryRecordsScreenAdmin({Key? key}) : super(key: key);
@@ -49,7 +25,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   late TimeOfDay time;
   // Initial Selected Value
   List<GetUsers> users = [];
-  Future<QueryRecordAdmin>? futureQueryRecordAdmin;
+  Future<dynamic>? futureQueryRecordAdmin;
   GetUsers? selected;
   late int newuserid;
   Future<bool> _onWillPop() async {
@@ -59,7 +35,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
-    String url = 'https://f6a1-45-65-152-57.ngrok.io/get/names/$usertoken';
+    String url = 'https://174e-45-65-152-57.ngrok.io/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -139,7 +115,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                     },
                     value: selected,
                     hint: const Text(
-                      "Select Employee.",
+                      "Select Employee",
                       style: TextStyle(color: Colors.black),
                     ),
                     items: users
@@ -201,7 +177,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
               const SizedBox(
                 height: 10,
               ),
-              FutureBuilder<QueryRecordAdmin>(
+              FutureBuilder<dynamic>(
                 future: futureQueryRecordAdmin,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -238,8 +214,8 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, '/DisplayRecordScreenAdmin',
-                                    arguments: convertDateArgument(
-                                        snapshot.data!.recordDate));
+                                    arguments: {'RecordDate': convertDateArgument(
+                                        snapshot.data!.recordDate), 'UserID':newuserid});
                               })
                         ],
                       ),
@@ -253,7 +229,39 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
             ],
           ),
         ));
+        
   }
+Future<dynamic> fetchQueryRecordAdmin(
+    int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
+  var userToken = await userPreferences.getUserToken();
+  var usertoken = userToken;
+
+  var UserID = finalfinalUserID;
+  var RecordTypeID = finalRecordTypeID;
+  var RecordDate = finalRecordDate;
+  var s = UserID.toString() +
+      "/" +
+      RecordDate +
+      "/" +
+      RecordTypeID.toString() +
+      "/" +
+      usertoken.toString();
+
+//http request GET
+  final response = await http
+      .get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/record/$s'));
+  if (response.statusCode == 200) {
+    return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
+  } 
+  if(response.statusCode == 401){
+      showDialog(context: context, builder: (BuildContext context){
+        return const AlertUnavailableRecord();
+      });
+    } 
+  else {
+    throw Exception('Failed to load record.');
+  }
+}
 
 //FUNCTION THAT FETCHES AND DISPLAYS USER DATA IN THE DROPDOWN LIST.
   Future<void> fetchAndShow() async {

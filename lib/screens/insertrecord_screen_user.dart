@@ -32,6 +32,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
   int recordTypeId = 0;
   String? changeDate;
   String? changeTime;
+  DateTime finalChangeDate = DateTime.parse('0000-00-00');
 
   String dropdownvalue = 'Attendance';
   // List of items in our dropdown menu
@@ -49,7 +50,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse(' /insertrecord/'),
+      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -78,7 +79,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse(' /insertrecord/'),
+      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -131,8 +132,8 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             ListTile(
               title: Text(
                 changeDate == null
-                    ? "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}"
-                    : changeDate!,
+                ? "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}":
+                    changeDate!,
                 textAlign: TextAlign.center,
               ),
               onTap: _pickDate,
@@ -216,19 +217,13 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                   var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
                   var OnOff = isonisoff; //Switch
 
-                  if (changeTime == null) {
-                    Time = finalfinal; //Hora
-                  } else {
-                    Time = changeTime;
-                  }
-                  if (changeDate == null) {
-                    RecordDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                  } else {
-                    var convertDate = DateTime.parse(changeDate!);
-                    RecordDate = DateFormat('yyyy-MM-dd').format(convertDate);
-                  }
 
-                  //Si el si
+                  if (changeDate == null || changeTime == null) {
+                    showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
+                  } else {
+                    RecordDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
+                    Time = finalfinal; //Hora
+                                      //Si el si
                   if (OnOff == false) {
                     _futureInsertRecordEntry =
                         createEntryRecord(RecordDate, FinalRecordTypeId, Time);
@@ -236,6 +231,9 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                     _futureInsertRecordExit =
                         createExitRecord(RecordDate, FinalRecordTypeId, Time);
                   }
+                  }
+
+
                 },
                 child: const Text('insertrecord.saveButton').tr()),
           ],
@@ -254,7 +252,9 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     if (dateRecord != null) {
       setState(() {
         pickedDate = dateRecord;
-        changeDate = dateRecord as String?;
+        finalChangeDate = dateRecord;
+        changeDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
+
       });
     }
   }

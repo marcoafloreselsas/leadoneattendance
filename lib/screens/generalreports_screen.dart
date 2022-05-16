@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+String usertoken = "";
 
 class GenerateGeneralReportsScreen extends StatefulWidget {
   const GenerateGeneralReportsScreen({Key? key}) : super(key: key);
@@ -24,8 +27,13 @@ class _GenerateGeneralReportsScreenState
     super.initState();
     pickedDateFrom = DateTime.now();
     pickedDateTo = DateTime.now();
+    readData();
   }
-
+    void readData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() => usertoken = prefs.getString('Token')!);
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +94,7 @@ class _GenerateGeneralReportsScreenState
               "${pickedDateFrom.year}, ${pickedDateFrom.month}, ${pickedDateFrom.day}",
               textAlign: TextAlign.center,
             ),
-            onTap: _pickDateFrom,
+            onTap: _pickDateFrom, 
           ),
 
           Row(
@@ -122,7 +130,8 @@ class _GenerateGeneralReportsScreenState
                 Navigator.pushNamed(context, '/ReportViewerScreen', arguments: {
                   'activity': activity,
                   'firstDate': firstDate,
-                  'lastDate': lastDate
+                  'lastDate': lastDate,
+                  'userToken': usertoken
                 });
               },
               child: const Text('generatereports.applyButton').tr())
