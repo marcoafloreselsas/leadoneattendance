@@ -27,7 +27,9 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   List<GetUsers> users = [];
   Future<dynamic>? futureQueryRecordAdmin;
   GetUsers? selected;
-  late int newuserid;
+  int newuserid = 0;
+  String? changeDate;
+
   Future<bool> _onWillPop() async {
     return false;
   }
@@ -35,7 +37,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
-    String url = 'https://174e-45-65-152-57.ngrok.io/get/names/$usertoken';
+    String url = 'https://1491-45-65-152-57.ngrok.io/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -85,23 +87,37 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
         body: Card(
           child: Column(
             children: [
+          const SizedBox(
+            height:20,
+          ),
               Row(
                 children: [
-                  const Text('queryrecords.selectDate').tr(),
-                  const Icon(Icons.keyboard_arrow_down_outlined),
+                  Text(('queryrecords.selectDate').tr(), 
+                  style: const TextStyle(
+                        fontSize: 18.0,
+                    )),                  
+                const Icon(Icons.keyboard_arrow_down_outlined),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
               ListTile(
                 title: Text(
-                  "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
+                  changeDate == null
+                  ? "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}" :changeDate!,
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 onTap: _pickDate,
               ),
+              const SizedBox(
+            height:20,
+          ),
               Row(
                 children: [
-                  const Text('queryrecords.selectEmployee').tr(),
+                  Text(('queryrecords.selectEmployee').tr(),               
+                  style: const TextStyle(fontSize: 18)),
+                  const Icon(Icons.keyboard_arrow_down_outlined),
+
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -128,6 +144,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                               });
                             },
                             child: Text(item.name),
+                            
                             value: item,
                           ),
                         )
@@ -155,13 +172,22 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                     var finalRecordTypeID = 1;
                     var finalRecordDate =
                         DateFormat('yyyy-MM-dd').format(pickedDate);
+                    if(finalUserID == 0 ){
+                      showDialog(context: context, builder: (BuildContext context){ return const AlertSelectEmployee();});
+                    }if(changeDate == null){
+                      showDialog(context: context, builder: (BuildContext context){ return const AlertSelectDate();});
+                    }
+                    else{
                     futureQueryRecordAdmin = fetchQueryRecordAdmin(
                         finalfinalUserID, finalRecordDate, finalRecordTypeID);
                     debugPrint(finalfinalUserID.toString() +
                         finalRecordDate +
                         finalRecordTypeID.toString());
+                    }
                   },
-                  child: const Text('queryrecords.apply').tr()),
+                  child: Text(('queryrecords.apply').tr(),                      style: const TextStyle(
+                            fontSize: 18.0,
+                ))),
               const SizedBox(
                 height: 10,
               ),
@@ -222,7 +248,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                     );
                   } else {
 //NOTE While loading or detecting the log, this Circular Progress Indicator will appear.
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               )
@@ -249,7 +275,7 @@ Future<dynamic> fetchQueryRecordAdmin(
 
 //http request GET
   final response = await http
-      .get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/record/$s'));
+      .get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/record/$s'));
   if (response.statusCode == 200) {
     return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
   } 
@@ -290,6 +316,7 @@ Future<dynamic> fetchQueryRecordAdmin(
     if (date != null) {
       setState(() {
         pickedDate = date;
+        changeDate = DateFormat('yyyy-MM-dd').format(pickedDate);
       });
     }
   }

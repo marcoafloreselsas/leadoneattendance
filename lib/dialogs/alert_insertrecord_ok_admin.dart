@@ -20,7 +20,7 @@ class AlertInsertRecordOkAdmin extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.alertinsertrecordok').tr()],
+            children: [Text(('alerts.alertinsertrecordok').tr(), textAlign: TextAlign.center,)],
           ),
         ),
         actions: [

@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String email = '';
@@ -32,7 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
+
     return WillPopScope(
       //Function disabling the system "back" button
       onWillPop: _onWillPop,
@@ -97,7 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 labelText: "Password",
                                 border: OutlineInputBorder(),
                                 suffixIcon: Icon(Icons.password)),
-                          ),
+                            validator: (value) {
+                                if (value== null || value.isEmpty) {
+                                  return 'Field is required.';
+                                }
+                                return null;
+                                }),
                         ],
                       ),
                     ),
@@ -113,11 +119,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                         onPressed: () {
                           setState(() {});
+
+                          if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
                           var email = emailController.text;
                           var password = passwordController.text;
                           login(email, password);
+                          }
+
                         },
-                        child: const Text('loginscreen.submit').tr()),
+                        child: Text(('loginscreen.submit').tr(), style: const TextStyle(
+                    fontSize: 18.0,
+                ))),
                     const SizedBox(
                       height: 20,
                     ),
@@ -126,7 +139,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushNamed(context, '/ChangePassword');
                       },
                       icon: const Icon(Icons.settings, size: 18),
-                      label: const Text("loginscreen.changepassword").tr(),
+                      label: Text(("loginscreen.changepassword").tr(),style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                     ),
                   ],
                 ),
@@ -141,15 +156,17 @@ returns the user id, the user role (administrator or employee) and a token,
 and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUser'. */
   Future<void> login(email, password) async {
     try {
-      final response = await http.post(Uri.parse('https://174e-45-65-152-57.ngrok.io/login/'),
+      final response = await http.post(Uri.parse('https://1491-45-65-152-57.ngrok.io/login/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(
               <String, String>{'Email': email, 'Password': password}));
+              
       var datos = jsonDecode(response.body);
+
 /*
-If there is a successful response from the server, it saves the received data on the device,
+If there is a successful response from the server, it saves the re5ceived data on the device,
 through Shared Preferences. 
 */
       if (response.statusCode == 200) {

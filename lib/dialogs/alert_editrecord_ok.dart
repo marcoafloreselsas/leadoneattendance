@@ -20,7 +20,7 @@ class AlertEditRecordOk extends StatelessWidget {
         content: SingleChildScrollView(
           child: ListBody(
             children: [
-              const Text('alerts.alerteditrecordok').tr()
+              Text(('alerts.alerteditrecordok').tr(),textAlign: TextAlign.center,)
             ],
           ),
         ),

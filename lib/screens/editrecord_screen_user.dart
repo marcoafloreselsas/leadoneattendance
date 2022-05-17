@@ -51,7 +51,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.put(
-      Uri.parse('https://174e-45-65-152-57.ngrok.io/update/record'),
+      Uri.parse('https://1491-45-65-152-57.ngrok.io/update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -96,7 +96,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
     var userid = await userPreferences.getUserId();
     var userToken = await userPreferences.getUserToken();
     var z = userToken;
-    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/record/$userid/$x/$y/$z'));
+    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/record/$userid/$x/$y/$z'));
     if (response.statusCode == 200) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
@@ -115,34 +115,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
         appBar: AppBar(
             title: const Text('editrecord.title').tr(),
             centerTitle: true,
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: const Text('alerts.alert0').tr(),
-                              content: const Text('alerts.alert2').tr(),
-                              actions: [
-                                //Botón "Cancelar".
-                                TextButton(
-                                  child:
-                                      const Text('alerts.alertResponse2').tr(),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                //Botón "Modificar"
-                                TextButton(
-                                  child:
-                                      const Text('alerts.alertResponse1').tr(),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ));
-                  },
-                  icon: const Icon(Icons.add_outlined)),
-            ]),
+            actions: const []),
         body: FutureBuilder<FullRecorde>(
           future: futureRecord,
           builder: (context, snapshot) {
@@ -259,7 +232,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                 ),
               );
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ));

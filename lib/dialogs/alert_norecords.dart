@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class AlertInsertRecordErrorAdmin extends StatelessWidget {
-  const AlertInsertRecordErrorAdmin({Key? key}) : super(key: key);
+class AlertNoRecords extends StatelessWidget {
+  const AlertNoRecords({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,9 @@ class AlertInsertRecordErrorAdmin extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [Text(('alerts.alertinsertrecorderror').tr(),textAlign: TextAlign.center,)],
+            children:  [
+              Text(('alerts.alertnorecords').tr(), textAlign: TextAlign.center,)
+            ],
           ),
         ),
         actions: [
@@ -28,7 +30,7 @@ class AlertInsertRecordErrorAdmin extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('alerts.alertResponse3').tr())
+              child: const Text('OK'))
         ]);
   }
 }

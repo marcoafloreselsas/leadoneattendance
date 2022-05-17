@@ -21,7 +21,7 @@ class AlertCompleteInfo extends StatelessWidget {
         content: SingleChildScrollView(
           child: ListBody(
             children:  [
-              const Text('alerts.alertcompleteinfo').tr()
+              Text(('alerts.alertcompleteinfo').tr(),textAlign: TextAlign.center,)
             ],
           ),
         ),

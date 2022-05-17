@@ -20,7 +20,7 @@ class AlertLogin extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.alertlogin').tr()],
+            children: [Text(('alerts.alertlogin').tr(),textAlign: TextAlign.center,)],
           ),
         ),
         actions: [

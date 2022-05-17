@@ -41,7 +41,7 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
     var usertoken = userToken;
     var s = userid.toString() + '/' + recorddate.toString() + '/' + usertoken.toString();
     debugPrint('Registro a cargar: '+userid.toString()+' '+recorddate.toString()+' '+usertoken.toString());
-    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
+    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
@@ -224,7 +224,7 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
               );
             } else {
               // By default, show a loading spinner.
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ));

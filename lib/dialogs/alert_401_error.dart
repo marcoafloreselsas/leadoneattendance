@@ -18,7 +18,7 @@ class Alert401 extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.alert401').tr()],
+            children: [Text(('alerts.alert401').tr(),textAlign: TextAlign.center)],
           ),
         ),
         actions: [

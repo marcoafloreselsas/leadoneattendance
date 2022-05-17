@@ -23,8 +23,12 @@ class _GenerateIndividualReportsScreenState
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
   List<GetUsers> users = [];
   GetUsers? selected;
-  late int newuserid;
-  late int selectedactivity;
+  int newuserid = 0;
+  int selectedactivity = 0;
+  String? changeDateFrom;
+  String? changeDateTo;
+
+
 
   String dropdownvalue = 'Attendance History';
   var items = ['Attendance History', 'Modifications History'];
@@ -50,7 +54,7 @@ class _GenerateIndividualReportsScreenState
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
-    String url = 'https://174e-45-65-152-57.ngrok.io/get/names/$usertoken';
+    String url = 'https://1491-45-65-152-57.ngrok.io/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -70,7 +74,7 @@ class _GenerateIndividualReportsScreenState
             return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
           });
     } else {
-      throw Exception('Failed to load');
+      throw Exception('Failed to load.');
     }
   }
 
@@ -87,7 +91,11 @@ class _GenerateIndividualReportsScreenState
             height: 20,
           ),
           Row(
-            children: [const Text('generatereports.reportType').tr()],
+            children: [Text(('generatereports.reportType').tr(),                 
+            style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold
+                ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           Row(
@@ -101,8 +109,11 @@ class _GenerateIndividualReportsScreenState
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(items),
-                  );
+                    child: Text((items),                     
+                    style: const TextStyle(
+                            fontSize: 18.0,)
+                    
+                  ));
                 }).toList(),
                 // After selecting the desired option,it will
                 // change button value to selected value
@@ -110,6 +121,7 @@ class _GenerateIndividualReportsScreenState
                   setState(() {
                     dropdownvalue = newValue!;
                     selectedactivity = items.indexOf(newValue);
+                    
                   });
                 },
               ),
@@ -120,30 +132,48 @@ class _GenerateIndividualReportsScreenState
             height: 10,
           ),
           Row(
-            children: [const Text('generatereports.dateRange').tr()],
+            children: [Text(('generatereports.dateRange').tr(),
+              style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold
+                ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
-            children: [const Text('generatereports.fromDate').tr()],
+            children: [Text(('generatereports.fromDate').tr(),                 
+            style: const TextStyle(
+                    fontSize: 18.0,
+                ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           ListTile(
             title: Text(
-              "${pickedDateFrom.year}, ${pickedDateFrom.month}, ${pickedDateFrom.day}",
+              changeDateFrom == null
+              ? "${pickedDateFrom.year}-${pickedDateFrom.month}-${pickedDateFrom.day}":changeDateFrom!,
+              style: const TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,),
               textAlign: TextAlign.center,
             ),
-            onTap: _pickDateFrom,
+            onTap: _pickDateFrom, 
           ),
           Row(
-            children: [const Text('generatereports.toDate').tr()],
+            children: [Text(('generatereports.toDate').tr(),
+                        style: const TextStyle(
+                    fontSize: 18.0,
+            ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           ListTile(
             title: Text(
-              "${pickedDateTo.year}, ${pickedDateTo.month}, ${pickedDateTo.day}",
+              changeDateTo == null
+              ? "${pickedDateTo.year}-${pickedDateTo.month}-${pickedDateTo.day}":changeDateTo!,
+              style: const TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,),
               textAlign: TextAlign.center,
             ),
             onTap: _pickDateTo,
@@ -199,6 +229,9 @@ class _GenerateIndividualReportsScreenState
                 var userID = newuserid;
                 var firstDate = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
                 var lastDate = DateFormat('yyyy-MM-dd').format(pickedDateTo);
+                if (changeDateFrom == null || changeDateTo == null || activity == 0 || userID == 0) {
+                  showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
+                }else{
                 debugPrint('te estoy mandando:' +
                     userID.toString() +
                     activity.toString() +
@@ -211,8 +244,12 @@ class _GenerateIndividualReportsScreenState
                   'lastDate': lastDate,
                   'userToken': userToken
                 });
+                }
               },
-              child: const Text('generatereports.applyButton').tr())
+              child: Text(('generatereports.applyButton').tr(),               
+              style: const TextStyle(
+                    fontSize: 18.0,
+            )))
         ],
       ),
     );
@@ -238,6 +275,7 @@ class _GenerateIndividualReportsScreenState
     if (date != null) {
       setState(() {
         pickedDateFrom = date;
+        changeDateFrom = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
       });
     }
   }
@@ -252,6 +290,7 @@ class _GenerateIndividualReportsScreenState
     if (date2 != null) {
       setState(() {
         pickedDateTo = date2;
+        changeDateTo = DateFormat('yyyy-MM-dd').format(pickedDateTo);
       });
     }
   }

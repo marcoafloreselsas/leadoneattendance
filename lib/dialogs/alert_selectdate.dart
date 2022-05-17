@@ -1,11 +1,8 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class AlertInsertRecordErrorAdmin extends StatelessWidget {
-  const AlertInsertRecordErrorAdmin({Key? key}) : super(key: key);
+class AlertSelectDate extends StatelessWidget {
+  const AlertSelectDate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +17,15 @@ class AlertInsertRecordErrorAdmin extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [Text(('alerts.alertinsertrecorderror').tr(),textAlign: TextAlign.center,)],
+            children: [Text(('alerts.alertselectdate').tr(),textAlign: TextAlign.center)],
           ),
         ),
         actions: [
           TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
+              onPressed: (){
+                Navigator.pop(context);
               },
-              child: const Text('alerts.alertResponse3').tr())
+              child: const Text('OK'))
         ]);
   }
 }

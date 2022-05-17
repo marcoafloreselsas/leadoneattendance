@@ -51,6 +51,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   ),
                   TextFormField(
                     controller: emailController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: ('sendreport.to').tr(),
                       border: const OutlineInputBorder(),
@@ -71,23 +72,35 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   ),
                   TextFormField(
                     controller: subjectController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: ('sendreport.subject').tr(),
                       border: const OutlineInputBorder(),
                     ),
-                  ),
+                      validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required.';
+                      }
+                      return null;
+                      }),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
                     controller: messageController,
-                    maxLines: 5,
+                    maxLines: 3,
                     keyboardType: TextInputType.multiline,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: ('sendreport.message').tr(),
                       border: const OutlineInputBorder(),
                     ),
-                  ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required.';
+                      }
+                      return null;
+                      }),
                   const SizedBox(
                     height: 20,
                   ),
@@ -127,7 +140,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     debugPrint('entro a esta parte' + finalAct + userid);
     if (finalAct == '1') {
       final response = await http.post(
-          Uri.parse('https://174e-45-65-152-57.ngrok.io/send/userhoursreport/'),
+          Uri.parse('https://1491-45-65-152-57.ngrok.io/send/userhoursreport/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -152,7 +165,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '2') {
       final response = await http.post(
           Uri.parse(
-              'https://174e-45-65-152-57.ngrok.io/send/usermodifications/'),
+              'https://1491-45-65-152-57.ngrok.io/send/usermodifications/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -177,7 +190,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '3') {
       final response = await http.post(
           Uri.parse(
-              'https://174e-45-65-152-57.ngrok.io/send/usershoursreport/'),
+              'https://1491-45-65-152-57.ngrok.io/send/usershoursreport/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -201,7 +214,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '4') {
       final response = await http.post(
           Uri.parse(
-              'https://174e-45-65-152-57.ngrok.io/send/usersmodifications/'),
+              'https://1491-45-65-152-57.ngrok.io/send/usersmodifications/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

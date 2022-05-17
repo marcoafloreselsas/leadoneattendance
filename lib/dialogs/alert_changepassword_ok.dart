@@ -17,7 +17,7 @@ class AlertChangePasswordOk extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.alertchangepasswordok').tr()],
+            children: [Text(('alerts.alertchangepasswordok').tr(),textAlign: TextAlign.center)],
           ),
         ),
         actions: [

@@ -3,7 +3,7 @@
     { 
         "title" : "Welcome!",
         "subtitle" : "Please, Log In.",
-        "submit" : "Access",
+        "submit" : "ACCESS",
         "changepassword": "Change Password"
     },
     "changepassword":{
@@ -119,8 +119,11 @@
         "alertinsertrecordok":"The record has been saved successfully.",
         "alertinsertrecorderror":"This registry already exists.",
         "alerteditrecordok":"The record has been successfully modified.",
-        "alertsendreport":"The email has been sent successfully.",
-        "alertcompleteinfo" : "Please fill in all fields.",
-        "alertunavailablerecord":"Record not available."
+        "alertsendreport":"The email has been sent successfully",
+        "alertcompleteinfo" : "Please fill in all fields",
+        "alertunavailablerecord":"Record not available",
+        "alertnorecords":"No records available",
+        "alertSelectEmployee":"Select an Employee",
+        "alertselectdate":"Select a Date"
     }
 }

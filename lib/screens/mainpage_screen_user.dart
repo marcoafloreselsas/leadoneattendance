@@ -265,7 +265,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
     var s = userid.toString() + '/' + usertoken.toString();
 
     //Server link
-    final response = await http.get(Uri.parse('https://174e-45-65-152-57.ngrok.io/get/fiverecords/$s'));
+    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/fiverecords/$s'));
 
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
@@ -273,13 +273,18 @@ class _MainScreenUserState extends State<MainScreenUser> {
 /*If the connection is successful (Code 200), it gets the information and displays it on the screen,
 if the code is error (401), it means that the user token has expired,
 and the user needs to log in again. */
-    } else if (response.statusCode == 401) {
+    } if (response.statusCode == 401) {
       return showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
           });
+    }
+    if(response.statusCode == 400){
+      return showDialog(context: context, builder: (BuildContext context){
+        return const AlertNoRecords();
+      });
     }
     throw Exception('Failed to load records.');
   }

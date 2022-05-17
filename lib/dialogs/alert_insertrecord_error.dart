@@ -20,7 +20,7 @@ class AlertInsertRecordError extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.alertinsertrecorderror').tr()],
+            children: [Text(('alerts.alertinsertrecorderror').tr(),textAlign: TextAlign.center,)],
           ),
         ),
         actions: [

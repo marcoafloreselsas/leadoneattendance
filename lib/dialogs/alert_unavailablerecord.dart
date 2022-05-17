@@ -21,7 +21,7 @@ class AlertUnavailableRecord extends StatelessWidget {
         content: SingleChildScrollView(
           child: ListBody(
             children:  [
-              const Text('alerts.alertunavailablerecord').tr()
+              Text(('alerts.alertunavailablerecord').tr(),textAlign: TextAlign.center,)
             ],
           ),
         ),

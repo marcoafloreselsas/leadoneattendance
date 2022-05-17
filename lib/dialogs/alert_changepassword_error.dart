@@ -20,7 +20,9 @@ class AlertChangePasswordError extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: [const Text('alerts.alertchangepassworderror').tr()],
+            children: [ Text(
+            'alerts.alertchangepassworderror'.tr(),
+            textAlign: TextAlign.center,)],
           ),
         ),
         actions: [

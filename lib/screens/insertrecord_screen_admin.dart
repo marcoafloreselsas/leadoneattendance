@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:leadoneattendance/screens/screens.dart';
@@ -26,7 +26,9 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
   bool switchValue = false;
   bool isonisoff = false;
   int recordTypeId = 0;
+  String? changeDate;
   String? changeTime;
+  DateTime finalChangeDate = DateTime.parse('0000-00-00');
 
   String dropdownvalue = 'Attendance';
   // List of items in our dropdown menu
@@ -43,7 +45,7 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
+      Uri.parse('https://1491-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -73,7 +75,7 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
+      Uri.parse('https://1491-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -116,41 +118,68 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
         //Calendar to select a date.
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             //LIST TILE WHERE THE DATE PICKER IS SHOWN, AND ITS ICON TO DISPLAY
             Row(
               children: [
-                const Text('insertrecord.selectDate').tr(),
+                Text(('insertrecord.selectDate').tr(),       
+                style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}",
+                changeDate == null
+                ? "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day}":
+                    changeDate!,
                 textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,)
               ),
               onTap: _pickDate,
             ),
             //LIST TILE WHERE THE TIME PICKER IS SHOWN, AND ITS ICON TO DISPLAY
+                        const SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
-                const Text('insertrecord.selectTime').tr(),
+                Text(('insertrecord.selectTime').tr(),                 
+                style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                //To display as 17: 0 8
-                "${time.hour}:${time.minute.toString().padLeft(2, '0')}",
+                changeTime == null
+                    ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
+                    : changeTime!,
                 textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,)
               ),
               onTap: _pickTime,
+            ),
+                        const SizedBox(
+              height: 20,
             ),
             //RECORD TYPE
             Row(
               children: [
-                const Text('insertrecord.typeRecord').tr(),
+                Text(('insertrecord.typeRecord').tr(),                 
+                style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                 const Padding(padding: EdgeInsets.all(25.0)),
                 DropdownButton(
                   value: dropdownvalue,
@@ -158,7 +187,10 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,
-                      child: Text(items),
+                      child: Text((items),                 
+                      style: const TextStyle(
+                            fontSize: 18.0,
+                )),
                     );
                   }).toList(),
                   onChanged: (String? tipoActividad) {
@@ -171,9 +203,15 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
+            const SizedBox(
+              height: 20,
+            ),
             //SWITCH
             Row(children: [
-              const Text('insertrecord.in').tr(),
+              Text(('insertrecord.in').tr(),                 
+              style: const TextStyle(
+                    fontSize: 18.0,
+                )),
               const Padding(padding: EdgeInsets.all(25.0)),
               Switch(
                   value: switchValue,
@@ -186,7 +224,10 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                         isonisoff = valorSwitch;
                       })), //SWITCH WIDGET
               const Padding(padding: EdgeInsets.all(25.0)),
-              const Text('insertrecord.out').tr(),
+              Text(('insertrecord.out').tr(),                 
+              style: const TextStyle(
+                    fontSize: 18.0,
+                )),
             ], mainAxisAlignment: MainAxisAlignment.center),
             const SizedBox(
               height: 20,
@@ -200,20 +241,25 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                     ),
                 onPressed: () {
                   setState(() {});
-                  var RecordDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate); //Fecha
+                  var Time; //Hora
+                  var RecordDate;
                   var RecordTypeId2 = recordTypeId + 1;
                   var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
                   var OnOff = isonisoff; //Switch
-                  var Time = finalfinal; //Hora
 
-                  //Si el si
+                  if (changeDate == null || changeTime == null || RecordTypeId2 == 0) {
+                    showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
+                  } else {
+                    RecordDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
+                    Time = finalfinal; //Hora
+                                      //Si el si
                   if (OnOff == false) {
                     _futureInsertRecordEntry =
                         createEntryRecord(RecordDate, FinalRecordTypeId, Time);
                   } else if (OnOff == true) {
                     _futureInsertRecordExit =
                         createExitRecord(RecordDate, FinalRecordTypeId, Time);
+                  }
                   }
                 },
                 child: const Text('insertrecord.saveButton').tr()),
@@ -233,6 +279,8 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
     if (dateRecord != null) {
       setState(() {
         pickedDate = dateRecord;
+        finalChangeDate = dateRecord;
+        changeDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
       });
     }
   }

@@ -20,7 +20,7 @@ class AlertEditRecordQuestion extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [Text('¿Está seguro de modificar el registro?')],
+            children: const [Text(('¿Está seguro de modificar el registro?'), textAlign: TextAlign.center,)],
           ),
         ),
         actions: [

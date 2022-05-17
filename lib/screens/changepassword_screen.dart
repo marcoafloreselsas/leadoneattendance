@@ -13,13 +13,14 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var newPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -28,97 +29,120 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/LoginScreen');
-                },
+                      changepassword(
+                            emailController.text,
+                            passwordController.text,
+                            newPasswordController.text);                },
                 icon: const Icon(Icons.save_outlined)),
           ],
         ),
         body: Card(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                Image.asset(
-                  'assets/leadone_logo.png',
-                  width: 300,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'changepassword.title',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ).tr(),
-                const SizedBox(
-                  height: 2,
-                ),
-                const Text(
-                  'changepassword.subtitle',
-                  style: TextStyle(fontSize: 16),
-                ).tr(),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.email)),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Field is required.';
-                    }
-                    String pattern = r'\w+@\w+\.\w+';
-                    if (!RegExp(pattern).hasMatch(value)) {
-                      return 'Invalid Email address format.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: passwordController,
-                  obscureText:
-                      true, // So that the text entered is only "--------".
-                  decoration: const InputDecoration(
-                      labelText: "Password",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.password)),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: newPasswordController,
-                  obscureText:
-                      true, // So that the text entered is only "--------".
-                  decoration: const InputDecoration(
-                      labelText: "New Password",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.password)),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 39, 55, 146),
-                        primary: Colors.white,
-                        minimumSize: const Size(120, 50) //WH
-                        ),
-                    onPressed: () {
-                      setState(() {
-                        changepassword(
-                            emailController.text,
-                            passwordController.text,
-                            newPasswordController.text);
-                      });
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/leadone_logo.png',
+                    width: 300,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    'changepassword.title',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ).tr(),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  const Text(
+                    'changepassword.subtitle',
+                    style: TextStyle(fontSize: 16),
+                  ).tr(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: emailController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(
+                        labelText: "Email",
+                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.email)),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required.';
+                      }
+                      String pattern = r'\w+@\w+\.\w+';
+                      if (!RegExp(pattern).hasMatch(value)) {
+                        return 'Invalid Email address format.';
+                      }
+                      return null;
                     },
-                    child: const Text('changepassword.button').tr()),
-              ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: passwordController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    obscureText:
+                        true, // So that the text entered is only "--------".
+                    decoration: const InputDecoration(
+                        labelText: "Password",
+                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.password)),
+                                      validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: newPasswordController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    obscureText:
+                        true, // So that the text entered is only "--------".
+                    decoration: const InputDecoration(
+                        labelText: "New Password",
+                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.password)),
+                                      validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Field is required.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 39, 55, 146),
+                          primary: Colors.white,
+                          minimumSize: const Size(120, 50) //WH
+                          ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                        changepassword(
+                              emailController.text,
+                              passwordController.text,
+                              newPasswordController.text);
+                        }
+                        },
+                      child: Text(('changepassword.button').tr(),style: const TextStyle(
+                      fontSize: 18.0,
+                  ))),
+                ],
+              ),
             ),
           ),
         ));
@@ -126,7 +150,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   Future<void> changepassword(email, password, newpassword) async {
     try {
-      final response = await http.post(Uri.parse('https://174e-45-65-152-57.ngrok.io/password'),
+      final response = await http.post(Uri.parse('https://1491-45-65-152-57.ngrok.io/password'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

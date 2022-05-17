@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../dialogs/dialogs.dart';
 import '../themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -17,7 +18,9 @@ class _GenerateGeneralReportsScreenState
     extends State<GenerateGeneralReportsScreen> {
   DateTime pickedDateFrom = DateTime.parse('0000-00-00');
   DateTime pickedDateTo = DateTime.parse('0000-00-00');
-  late int selectedactivity;
+  int selectedactivity = 0;
+  String? changeDateFrom;
+  String? changeDateTo;
 
   String dropdownvalue = 'Attendance History';
   var items = ['Attendance History', 'Modifications History'];
@@ -46,7 +49,11 @@ class _GenerateGeneralReportsScreenState
             height: 20,
           ),
           Row(
-            children: [const Text('generatereports.reportType').tr()],
+            children: [Text(('generatereports.reportType').tr(),                 
+            style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold
+                ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           Row(
@@ -60,8 +67,11 @@ class _GenerateGeneralReportsScreenState
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(items),
-                  );
+                    child: Text((items),                     
+                    style: const TextStyle(
+                            fontSize: 18.0,)
+                    
+                  ));
                 }).toList(),
                 // After selecting the desired option,it will
                 // change button value to selected value
@@ -69,6 +79,7 @@ class _GenerateGeneralReportsScreenState
                   setState(() {
                     dropdownvalue = newValue!;
                     selectedactivity = items.indexOf(newValue);
+                    
                   });
                 },
               ),
@@ -79,31 +90,48 @@ class _GenerateGeneralReportsScreenState
             height: 10,
           ),
           Row(
-            children: [const Text('generatereports.dateRange').tr()],
+            children: [Text(('generatereports.dateRange').tr(),
+              style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold
+                ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
-            children: [const Text('generatereports.fromDate').tr()],
+            children: [Text(('generatereports.fromDate').tr(),                 
+            style: const TextStyle(
+                    fontSize: 18.0,
+                ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           ListTile(
             title: Text(
-              "${pickedDateFrom.year}, ${pickedDateFrom.month}, ${pickedDateFrom.day}",
+              changeDateFrom == null
+              ? "${pickedDateFrom.year}-${pickedDateFrom.month}-${pickedDateFrom.day}":changeDateFrom!,
+              style: const TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,),
               textAlign: TextAlign.center,
             ),
             onTap: _pickDateFrom, 
           ),
-
           Row(
-            children: [const Text('generatereports.toDate').tr()],
+            children: [Text(('generatereports.toDate').tr(),
+                        style: const TextStyle(
+                    fontSize: 18.0,
+            ))],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
           ListTile(
             title: Text(
-              "${pickedDateTo.year}, ${pickedDateTo.month}, ${pickedDateTo.day}",
+              changeDateTo == null
+              ?"${pickedDateTo.year}-${pickedDateTo.month}-${pickedDateTo.day}":changeDateTo!,
+              style: const TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,),
               textAlign: TextAlign.center,
             ),
             onTap: _pickDateTo,
@@ -123,6 +151,9 @@ class _GenerateGeneralReportsScreenState
                 var activity = selectedactivity + 3;
                 var firstDate = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
                 var lastDate = DateFormat('yyyy-MM-dd').format(pickedDateTo);
+                if (changeDateFrom == null || changeDateTo == null || activity == 0) {
+                  showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
+                }else{
                 debugPrint('te estoy mandando:' +
                     activity.toString() +
                     firstDate.toString() +
@@ -133,8 +164,12 @@ class _GenerateGeneralReportsScreenState
                   'lastDate': lastDate,
                   'userToken': usertoken
                 });
+                }
               },
-              child: const Text('generatereports.applyButton').tr())
+              child: Text(('generatereports.applyButton').tr(),                         
+              style: const TextStyle(
+                    fontSize: 18.0,
+            )))
         ],
       ),
     );
@@ -150,6 +185,7 @@ class _GenerateGeneralReportsScreenState
     if (date != null) {
       setState(() {
         pickedDateFrom = date;
+        changeDateFrom = DateFormat('yyyy-MM-dd').format(pickedDateFrom);
       });
     }
   }
@@ -164,6 +200,7 @@ class _GenerateGeneralReportsScreenState
     if (date2 != null) {
       setState(() {
         pickedDateTo = date2;
+        changeDateTo = DateFormat('yyyy-MM-dd').format(pickedDateTo);
       });
     }
   }

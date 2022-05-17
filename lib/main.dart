@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
             '/ChangePassword': (BuildContext context) => const ChangePasswordScreen(),
     //A D M I N
             '/MainScreenAdmin': (BuildContext context) => const MainScreenAdmin(),
-            '/AddUserScreen' : (BuildContext context) => const AddUserScreen(),
             '/DisplayRecordScreenAdmin' : (BuildContext context) => const DisplayRecordScreenAdmin(),
             '/InsertRecordScreenAdmin' : (BuildContext context) => const InsertRecordScreenAdmin(),
             '/EditRecordScreenAdmin' : (BuildContext context) => const EditRecordScreenAdmin(),

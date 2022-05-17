@@ -50,7 +50,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
+      Uri.parse('https://1491-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -79,7 +79,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse('https://174e-45-65-152-57.ngrok.io/insertrecord/'),
+      Uri.parse('https://1491-45-65-152-57.ngrok.io/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -121,10 +121,16 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
         //Calendar to select a date.
         child: Column(
           children: [
+                        const SizedBox(
+              height: 20,
+            ),
             //LIST TILE WHERE THE DATE PICKER IS SHOWN, AND ITS ICON TO DISPLAY
             Row(
               children: [
-                const Text('insertrecord.selectDate').tr(),
+                Text(('insertrecord.selectDate').tr(),       
+                style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
@@ -132,16 +138,25 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             ListTile(
               title: Text(
                 changeDate == null
-                ? "${pickedDate.year}, ${pickedDate.month}, ${pickedDate.day}":
+                ? "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day}":
                     changeDate!,
                 textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,)
               ),
               onTap: _pickDate,
             ),
             //LIST TILE WHERE THE TIME PICKER IS SHOWN, AND ITS ICON TO DISPLAY
+                        const SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
-                const Text('insertrecord.selectTime').tr(),
+                Text(('insertrecord.selectTime').tr(),                 
+                style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
@@ -152,13 +167,22 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                     ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
                     : changeTime!,
                 textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,)
               ),
               onTap: _pickTime,
+            ),
+                        const SizedBox(
+              height: 20,
             ),
             //RECORD TYPE
             Row(
               children: [
-                const Text('insertrecord.typeRecord').tr(),
+                Text(('insertrecord.typeRecord').tr(),                 
+                style: const TextStyle(
+                    fontSize: 18.0,
+                )),
                 const Padding(padding: EdgeInsets.all(25.0)),
                 DropdownButton(
                   value: dropdownvalue,
@@ -166,7 +190,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,
-                      child: Text(items),
+                      child: Text((items),                 
+                      style: const TextStyle(
+                            fontSize: 18.0,
+                )),
                     );
                   }).toList(),
                   onChanged: (String? tipoActividad) {
@@ -179,9 +206,15 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
+            const SizedBox(
+              height: 20,
+            ),
             //SWITCH
             Row(children: [
-              const Text('insertrecord.in').tr(),
+              Text(('insertrecord.in').tr(),                 
+              style: const TextStyle(
+                    fontSize: 18.0,
+                )),
               const Padding(padding: EdgeInsets.all(25.0)),
               Switch(
                   value: switchValue,
@@ -194,7 +227,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                         isonisoff = valorSwitch;
                       })), //SWITCH WIDGET
               const Padding(padding: EdgeInsets.all(25.0)),
-              const Text('insertrecord.out').tr(),
+              Text(('insertrecord.out').tr(),                 
+              style: const TextStyle(
+                    fontSize: 18.0,
+                )),
             ], mainAxisAlignment: MainAxisAlignment.center),
             const SizedBox(
               height: 20,
@@ -218,7 +254,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                   var OnOff = isonisoff; //Switch
 
 
-                  if (changeDate == null || changeTime == null) {
+                  if (changeDate == null || changeTime == null || RecordTypeId2 == 0) {
                     showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
                   } else {
                     RecordDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);

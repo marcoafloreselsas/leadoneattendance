@@ -6,14 +6,13 @@ export 'package:leadoneattendance/screens/changepassword_screen.dart'; //       
 
 //PANTALLAS DE ADMINISTRADOR
 export 'package:leadoneattendance/screens/mainpage_screen_admin.dart'; //           MAIN SCREEN PARA EL ADMIN
-export 'package:leadoneattendance/screens/adduser_screen.dart'; //                  AÑADIR USUARIO
 export 'package:leadoneattendance/screens/displayrecord_screen_admin.dart'; //      VISUALIZAR REGISTRO
 export 'package:leadoneattendance/screens/insertrecord_screen_admin.dart'; //       AÑADIR REGISTRO
 export 'package:leadoneattendance/screens/editrecord_screen_admin.dart'; //         EDITAR REGISTRO
 export 'package:leadoneattendance/screens/queryrecords_screen_admin.dart'; //       CONSULTAR REGISTRO (VER ADMIN)
 export 'package:leadoneattendance/screens/selectreporttype.dart'; //                SELECCIONAR EL TIPO DE REPORTE A GENERAR
-export 'package:leadoneattendance/screens/generalreports_screen.dart'; //GENERAR REPORTES GENERALES
-export 'package:leadoneattendance/screens/individualreports_screen.dart'; //GENERAR REPORTES INDIVIDUALES
+export 'package:leadoneattendance/screens/generalreports_screen.dart'; //           GENERAR REPORTES GENERALES
+export 'package:leadoneattendance/screens/individualreports_screen.dart'; //        GENERAR REPORTES INDIVIDUALES
 export 'package:leadoneattendance/screens/reportviewer_screen.dart'; //             VISUALIZAR REPORTE
 export 'package:leadoneattendance/screens/sendreport_screen.dart'; //               ENVIAR REPORTE
 

@@ -3,7 +3,7 @@
     {
         "title" : "¡Bienvenido!",
         "subtitle" : "Por favor, inicie sesión.",
-        "submit" : "Ingresar",
+        "submit" : "INGRESAR",
         "changepassword": "Cambiar Contraseña"
     },
     "changepassword":{
@@ -119,8 +119,11 @@
         "alertinsertrecordok":"El registro se ha guardado exitosamente.",
         "alertinsertrecorderror":"Este registro ya existe.",
         "alerteditrecordok":"El registro ha sido modificado exitosamente",
-        "alertsendreport":"El correo se ha enviado exitosamente.",
-        "alertcompleteinfo" : "Por favor, llene todos los campos.",
-        "alertunavailablerecord":"Registro no disponible."
+        "alertsendreport":"El correo se ha enviado exitosamente",
+        "alertcompleteinfo" : "Por favor, llene todos los campos",
+        "alertunavailablerecord":"Registro no disponible",
+        "alertnorecords":"No hay registros disponibles",
+        "alertSelectEmployee":"Seleccione un empleado",
+        "alertselectdate":"Seleccione una Fecha"
     }
 }
