@@ -51,6 +51,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
         backgroundColor: AppTheme.background,
         appBar: AppBar(
           title: const Text('mainscreen.title').tr(),
+          // backgroundColor: Color.fromARGB(255, 15, 114, 36),
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
@@ -74,7 +75,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
             ListTile(
               tileColor: Colors.white,
               leading: CircleAvatar(
-                  child: const Icon(Icons.person,
+                  child: const Icon(Icons.supervisor_account_sharp,
                       color: AppTheme.primary, size: 50),
                   radius: 60,
                   backgroundColor: Colors.grey[300]),
