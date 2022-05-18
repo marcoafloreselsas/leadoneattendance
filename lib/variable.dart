@@ -1,0 +1,1 @@
+String globalURL = "http://192.168.1.199:3050";

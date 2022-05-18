@@ -9,6 +9,8 @@ import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:leadoneattendance/variable.dart';
+
 UserPreferences userPreferences = UserPreferences();
 
 
@@ -37,7 +39,7 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
-    String url = 'https://1491-45-65-152-57.ngrok.io/get/names/$usertoken';
+    String url = '$globalURL/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {
@@ -165,25 +167,27 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                   onPressed: () {
                     setState(() {
                       CircularProgressIndicator;
-                      futureQueryRecordAdmin;
-                    });
-                    var finalUserID = newuserid;
+                      // futureQueryRecordAdmin;
+                                          var finalUserID = newuserid;
                     var finalfinalUserID = finalUserID;
                     var finalRecordTypeID = 1;
-                    var finalRecordDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
+
                     if(finalUserID == 0 ){
                       showDialog(context: context, builder: (BuildContext context){ return const AlertSelectEmployee();});
                     }if(changeDate == null){
                       showDialog(context: context, builder: (BuildContext context){ return const AlertSelectDate();});
                     }
-                    else{
+                    if (finalUserID !=0 || changeDate != null){
+                      var finalRecordDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
                     futureQueryRecordAdmin = fetchQueryRecordAdmin(
                         finalfinalUserID, finalRecordDate, finalRecordTypeID);
                     debugPrint(finalfinalUserID.toString() +
                         finalRecordDate +
                         finalRecordTypeID.toString());
                     }
+                    });
+
                   },
                   child: Text(('queryrecords.apply').tr(),                      style: const TextStyle(
                             fontSize: 18.0,
@@ -238,11 +242,14 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                                 ],
                               ),
                               onTap: () {
+
                                 Navigator.pushNamed(
                                     context, '/DisplayRecordScreenAdmin',
                                     arguments: {'RecordDate': convertDateArgument(
                                         snapshot.data!.recordDate), 'UserID':newuserid});
-                              })
+                                }
+
+                              )
                         ],
                       ),
                     );
@@ -275,11 +282,11 @@ Future<dynamic> fetchQueryRecordAdmin(
 
 //http request GET
   final response = await http
-      .get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/record/$s'));
-  if (response.statusCode == 200) {
+      .get(Uri.parse('$globalURL/get/record/$s'));
+  if (response.statusCode == 201) {
     return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
   } 
-  if(response.statusCode == 401){
+  if(response.statusCode == 400){
       showDialog(context: context, builder: (BuildContext context){
         return const AlertUnavailableRecord();
       });

@@ -5,6 +5,7 @@ import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:leadoneattendance/variable.dart';
 import '../dialogs/dialogs.dart';
 import '../themes/app_themes.dart';
 import 'package:http/http.dart' as http;
@@ -68,7 +69,7 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
           //SAVE CHANGES BUTTON
           TextButton(
               style: TextButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 15, 49, 114),
+                  backgroundColor: AppTheme.primary,
                   primary: Colors.white, //TEXT COLOR
                   minimumSize: const Size(120, 50) //TAMANO - WH
                   ),
@@ -189,11 +190,11 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
 
 //http request GET
     final response = await http
-        .get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/record/$s'));
-    if (response.statusCode == 200) {
+        .get(Uri.parse('$globalURL/get/record/$s'));
+    if (response.statusCode == 201) {
       return QueryRecord.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
-    } if(response.statusCode == 401){
+    } if(response.statusCode == 400){
       showDialog(context: context, builder: (BuildContext context){
         return const AlertUnavailableRecord();
       });

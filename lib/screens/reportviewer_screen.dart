@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:leadoneattendance/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -45,7 +46,7 @@ class ReportViewerScreenState extends State<ReportViewerScreen> {
         debugPrint('Determinar ruta: INDIVIDUAL ATTENDANCE');
         // debugPrint('REPORT 1:' + userID + activity + firstDate + lastDate + usertoken);
         var ruta =
-            'https://docs.google.com/viewer?url=https://1491-45-65-152-57.ngrok.io/pdf/userhoursreport/$s';
+            'https://docs.google.com/viewer?url=$globalURL/pdf/userhoursreport/$s';
         debugPrint(ruta);
         return ruta;
         
@@ -57,7 +58,7 @@ class ReportViewerScreenState extends State<ReportViewerScreen> {
         debugPrint('REPORT 2:' + userID + activity + firstDate + lastDate + usertoken);
 
         var ruta =
-            'https://docs.google.com/viewer?url=https://1491-45-65-152-57.ngrok.io/pdf/usermodifications/$s';
+            'https://docs.google.com/viewer?url=$globalURL/pdf/usermodifications/$s';
         debugPrint(ruta);
         return ruta;
       } if (activity == '3') {
@@ -67,7 +68,7 @@ class ReportViewerScreenState extends State<ReportViewerScreen> {
         debugPrint('REPORT 3:' + userID + activity + firstDate + lastDate + usertoken);
 
         var ruta =
-            'https://docs.google.com/viewer?url=https://1491-45-65-152-57.ngrok.io/pdf/usershoursreport/$s';
+            'https://docs.google.com/viewer?url=$globalURL/pdf/usershoursreport/$s';
                     debugPrint(ruta);
 
         return ruta;
@@ -78,7 +79,7 @@ class ReportViewerScreenState extends State<ReportViewerScreen> {
         debugPrint('REPORT 4:' + userID + activity + firstDate + lastDate + usertoken);
 
         var ruta =
-            'https://docs.google.com/viewer?url=https://1491-45-65-152-57.ngrok.io/pdf/usersmodifications/$s';
+            'https://docs.google.com/viewer?url=$globalURL/pdf/usersmodifications/$s';
                 debugPrint(ruta);
 
         return ruta;

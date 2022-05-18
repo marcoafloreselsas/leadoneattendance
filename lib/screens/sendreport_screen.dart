@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:leadoneattendance/variable.dart';
+
 class SendReportScreen extends StatefulWidget {
   const SendReportScreen({Key? key}) : super(key: key);
 
@@ -140,7 +142,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     debugPrint('entro a esta parte' + finalAct + userid);
     if (finalAct == '1') {
       final response = await http.post(
-          Uri.parse('https://1491-45-65-152-57.ngrok.io/send/userhoursreport/'),
+          Uri.parse('$globalURL/send/userhoursreport/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -165,7 +167,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '2') {
       final response = await http.post(
           Uri.parse(
-              'https://1491-45-65-152-57.ngrok.io/send/usermodifications/'),
+              '$globalURL/send/usermodifications/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -190,7 +192,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '3') {
       final response = await http.post(
           Uri.parse(
-              'https://1491-45-65-152-57.ngrok.io/send/usershoursreport/'),
+              '$globalURL/send/usershoursreport/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -214,7 +216,7 @@ class _SendReportScreenState extends State<SendReportScreen> {
     if (finalAct == '4') {
       final response = await http.post(
           Uri.parse(
-              'https://1491-45-65-152-57.ngrok.io/send/usersmodifications/'),
+              '$globalURL/send/usersmodifications/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

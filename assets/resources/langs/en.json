@@ -124,6 +124,7 @@
         "alertunavailablerecord":"Record not available",
         "alertnorecords":"No records available",
         "alertSelectEmployee":"Select an Employee",
-        "alertselectdate":"Select a Date"
+        "alertselectdate":"Select a Date",
+        "alertservererror":"Verify your Internet connection\n or Try again later"
     }
 }

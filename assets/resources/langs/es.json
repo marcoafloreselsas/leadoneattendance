@@ -124,6 +124,7 @@
         "alertunavailablerecord":"Registro no disponible",
         "alertnorecords":"No hay registros disponibles",
         "alertSelectEmployee":"Seleccione un empleado",
-        "alertselectdate":"Seleccione una Fecha"
+        "alertselectdate":"Seleccione una Fecha",
+        "alertservererror":"Verifique su conexión de Internet\n o Inténtelo más tarde"
     }
 }

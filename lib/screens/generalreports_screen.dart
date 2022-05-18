@@ -24,7 +24,11 @@ class _GenerateGeneralReportsScreenState
 
   String dropdownvalue = 'Attendance History';
   var items = ['Attendance History', 'Modifications History'];
-
+    void readData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() => usertoken = prefs.getString('Token')!);
+    
+  }
   @override
   void initState() {
     super.initState();
@@ -32,11 +36,7 @@ class _GenerateGeneralReportsScreenState
     pickedDateTo = DateTime.now();
     readData();
   }
-    void readData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() => usertoken = prefs.getString('Token')!);
-    
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

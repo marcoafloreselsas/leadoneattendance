@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:leadoneattendance/variable.dart';
+
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
 
@@ -125,7 +127,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                   TextButton(
                       style: TextButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 39, 55, 146),
+                          backgroundColor: const Color.fromARGB(255, 56, 170, 245),
                           primary: Colors.white,
                           minimumSize: const Size(120, 50) //WH
                           ),
@@ -150,7 +152,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   Future<void> changepassword(email, password, newpassword) async {
     try {
-      final response = await http.post(Uri.parse('https://1491-45-65-152-57.ngrok.io/password'),
+      final response = await http.post(Uri.parse('$globalURL/password'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

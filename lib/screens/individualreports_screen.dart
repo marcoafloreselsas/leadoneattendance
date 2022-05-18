@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
@@ -32,7 +33,11 @@ class _GenerateIndividualReportsScreenState
 
   String dropdownvalue = 'Attendance History';
   var items = ['Attendance History', 'Modifications History'];
-
+    void readData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() => userToken = prefs.getString('Token')!);
+    
+  }
   @override
   void initState() {
     super.initState();
@@ -42,11 +47,7 @@ class _GenerateIndividualReportsScreenState
     readData();
 
   }
-    void readData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() => userToken = prefs.getString('Token')!);
-    
-  }
+
   Future<bool> _onWillPop() async {
     return false;
   }
@@ -54,7 +55,7 @@ class _GenerateIndividualReportsScreenState
   Future<dynamic>? getData() async {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken.toString();
-    String url = 'https://1491-45-65-152-57.ngrok.io/get/names/$usertoken';
+    String url = '$globalURL/get/names/$usertoken';
     var response = await http.get(
       Uri.parse(url),
       headers: {

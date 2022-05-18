@@ -3,12 +3,16 @@ import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/services/supported_locales.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
 
   //Verifica que la Localización y el Framework-Fuente están inicializados correctamente.
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   //Carga de la localización
   runApp(EasyLocalization(

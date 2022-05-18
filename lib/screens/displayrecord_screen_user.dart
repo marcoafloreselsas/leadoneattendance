@@ -7,6 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:leadoneattendance/variable.dart';
+
 class DisplayRecordScreenUser extends StatefulWidget {
   const DisplayRecordScreenUser({Key? key}) : super(key: key);
 
@@ -40,7 +42,7 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
     var usertoken = userToken;
     var s =  userid.toString() + '/' + recorddate.toString() + '/' + usertoken.toString();
 
-    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/fulluserrecord/$s'));
+    final response = await http.get(Uri.parse('$globalURL/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.

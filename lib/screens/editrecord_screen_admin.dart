@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:leadoneattendance/variable.dart';
+
 class EditRecordScreenAdmin extends StatefulWidget {
   const EditRecordScreenAdmin({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class EditRecordScreenAdmin extends StatefulWidget {
 }
 
 class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
-  Future<FullRecorde>? futureRecord;
+  Future<dynamic>? futureRecord;
   // ignore: unused_field
   Future<Future>? _futureEditRecord;
   DateTime pickedDate = DateTime.parse('0000-00-00');
@@ -52,7 +54,7 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.put(
-      Uri.parse('https://1491-45-65-152-57.ngrok.io/update/record'),
+      Uri.parse('$globalURL/update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -90,7 +92,7 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
   }
 
 //TO GET THE DATA AND LOAD IT ON THE SCREEN
-  Future<FullRecorde> fetchFullRecord() async {
+  Future<dynamic> fetchFullRecord() async {
     UserPreferences userPreferences = await UserPreferences();
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var userid = args['UserID'];
@@ -98,12 +100,17 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
     var y = args['RecordTypeId'].toString();
     var uToken = await userPreferences.getUserToken();
     var z = uToken.toString();
-    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/record/$userid/$x/$y/$z'));
-    if (response.statusCode == 200) {
+    final response = await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
+    if (response.statusCode == 201) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
-    } else {
-      throw Exception('Failed to load record.');
+    } else{
+            return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              debugPrint('Wrong Connection!');
+              return const AlertServerError();
+            });
     }
   }
 
@@ -118,7 +125,7 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
             title: const Text('editrecord.title').tr(),
             centerTitle: true,
             actions: const []),
-        body: FutureBuilder<FullRecorde>(
+        body: FutureBuilder<dynamic>(
           future: futureRecord,
           builder: (context, snapshot) {
             if (snapshot.hasData) {

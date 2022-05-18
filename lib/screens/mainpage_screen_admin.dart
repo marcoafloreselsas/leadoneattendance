@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:leadoneattendance/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
@@ -81,9 +82,14 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                   backgroundColor: Colors.grey[300]),
               title: Text(DateFormat('MMMMEEEEd').format(now),
                   style: const TextStyle(fontSize: 24)),
-              subtitle: Text(
-                DateFormat('Hm').format(now),
-                style: const TextStyle(fontSize: 18),
+              subtitle: Row(
+                children: [
+                  Text(
+                    DateFormat('Hm').format(now),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  const Text((' • ADMIN'), style: TextStyle(fontSize: 18))
+                ],
               ),
               contentPadding:
                   (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
@@ -106,7 +112,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               height: 10,
             ),
             FutureBuilder<dynamic>(
-              
               future: futureRecord,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -265,18 +270,31 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
     final response = await http.get(
-        Uri.parse('https://1491-45-65-152-57.ngrok.io/get/fiverecords/$s'));
+        Uri.parse('$globalURL/get/fiverecords/$s'));
+    try{
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
       return parsed.map<Record>((json) => Record.fromMap(json)).toList();
-    } else if (response.statusCode == 401) {
+    } if(response.statusCode == 400){
+      return showDialog(context: context, builder: (BuildContext context){
+        return const AlertNoRecords();
+      });
+    }
+    if (response.statusCode == 401) {
       return showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
           });
-    }
-    throw Exception('Failed to load records.');
+    }} 
+     catch(e){
+          return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              debugPrint('Wrong Connection!');
+              return const AlertServerError();
+            });
+  }
   }
 }

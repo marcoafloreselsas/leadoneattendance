@@ -1,10 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:leadoneattendance/variable.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
+import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'dart:async';
 import 'dart:convert';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -112,8 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                         style: TextButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 39, 55, 146),
+                            backgroundColor: AppTheme.primary,
                             primary: Colors.white, //TEXT COLOR
                             minimumSize: const Size(120, 50) //TAMANO - WH
                             ),
@@ -156,7 +158,7 @@ returns the user id, the user role (administrator or employee) and a token,
 and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUser'. */
   Future<void> login(email, password) async {
     try {
-      final response = await http.post(Uri.parse('https://1491-45-65-152-57.ngrok.io/login/'),
+      final response = await http.post(Uri.parse('$globalURL/login/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -164,7 +166,6 @@ and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUs
               <String, String>{'Email': email, 'Password': password}));
               
       var datos = jsonDecode(response.body);
-
 /*
 If there is a successful response from the server, it saves the re5ceived data on the device,
 through Shared Preferences. 
@@ -187,8 +188,13 @@ through Shared Preferences.
             });
         debugPrint('Incorrect User');
       }
-    } on TimeoutException {
-      debugPrint('Process time exceeded.');
+    } catch(e){
+      return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              debugPrint('Wrong Connection!');
+              return const AlertServerError();
+            });
     }
   }
 }

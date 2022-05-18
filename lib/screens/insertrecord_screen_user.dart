@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:leadoneattendance/variable.dart';
 import 'dart:convert';
 import '../dialogs/dialogs.dart';
 
@@ -50,7 +52,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse('https://1491-45-65-152-57.ngrok.io/insertrecord/'),
+      Uri.parse('$globalURL/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -79,7 +81,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.post(
-      Uri.parse('https://1491-45-65-152-57.ngrok.io/insertrecord/'),
+      Uri.parse('$globalURL/insertrecord/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -115,7 +117,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
       appBar: AppBar(
         title: const Text('insertrecord.title').tr(),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 15, 49, 114),
+        backgroundColor: const Color.fromARGB(255, 56, 170, 245),
       ),
       body: Card(
         //Calendar to select a date.
@@ -215,18 +217,25 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
               style: const TextStyle(
                     fontSize: 18.0,
                 )),
-              const Padding(padding: EdgeInsets.all(25.0)),
-              Switch(
-                  value: switchValue,
-                  activeColor: Colors.red,
-                  activeTrackColor: Colors.red[200],
-                  inactiveThumbColor: const Color.fromARGB(255, 16, 94, 19),
-                  inactiveTrackColor: Colors.green[200],
-                  onChanged: (valorSwitch) => setState(() {
-                        switchValue = valorSwitch;
-                        isonisoff = valorSwitch;
-                      })), //SWITCH WIDGET
-              const Padding(padding: EdgeInsets.all(25.0)),
+              const Padding(padding: EdgeInsets.all(10.0)),
+              SizedBox(
+                width: 100,
+                height: 80,
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Switch(
+                      value: switchValue,
+                      activeColor: Colors.red,
+                      activeTrackColor: Colors.red[200],
+                      inactiveThumbColor: const Color.fromARGB(255, 16, 94, 19),
+                      inactiveTrackColor: Colors.green[200],
+                      onChanged: (valorSwitch) => setState(() {
+                            switchValue = valorSwitch;
+                            isonisoff = valorSwitch;
+                          })),
+                ),
+              ), //SWITCH WIDGET
+              const Padding(padding: EdgeInsets.all(10.0)),
               Text(('insertrecord.out').tr(),                 
               style: const TextStyle(
                     fontSize: 18.0,
@@ -238,7 +247,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             //SAVE CHANGES BUTTON
             TextButton(
                 style: TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 15, 49, 114),
+                  backgroundColor: AppTheme.primary,
                     primary: Colors.white, //TEXT COLOR
                     minimumSize: const Size(120, 50) //TAMANO - WH
                     ),

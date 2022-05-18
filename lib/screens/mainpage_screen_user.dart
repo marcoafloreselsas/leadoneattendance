@@ -4,6 +4,7 @@ import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:leadoneattendance/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -74,9 +75,14 @@ class _MainScreenUserState extends State<MainScreenUser> {
                   backgroundColor: Colors.grey[300]),
               title: Text(DateFormat('MMMMEEEEd').format(now),
                   style: const TextStyle(fontSize: 24)),
-              subtitle: Text(
-                DateFormat('Hm').format(now),
-                style: const TextStyle(fontSize: 18),
+              subtitle: Row(
+                children: [
+                  Text(
+                    DateFormat('Hm').format(now),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  const Text((' • USER'), style: TextStyle(fontSize: 18))
+                ],
               ),
               contentPadding:
                   (const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0)),
@@ -264,9 +270,9 @@ class _MainScreenUserState extends State<MainScreenUser> {
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
 
+    try{
     //Server link
-    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/fiverecords/$s'));
-
+    final response = await http.get(Uri.parse('$globalURL/get/fiverecords/$s'));
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
       return parsed.map<Record>((json) => Record.fromMap(json)).toList();
@@ -285,6 +291,13 @@ and the user needs to log in again. */
       return showDialog(context: context, builder: (BuildContext context){
         return const AlertNoRecords();
       });
+    }}catch(e){
+            return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              debugPrint('Wrong Connection!');
+              return const AlertServerError();
+            });
     }
     throw Exception('Failed to load records.');
   }

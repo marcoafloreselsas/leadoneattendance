@@ -7,6 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:leadoneattendance/variable.dart';
+
 class EditRecordScreenUser extends StatefulWidget {
   const EditRecordScreenUser({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class EditRecordScreenUser extends StatefulWidget {
 }
 
 class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
-  Future<FullRecorde>? futureRecord;
+  Future<dynamic>? futureRecord;
   // ignore: unused_field
   Future<Future>? _futureEditRecord;
   DateTime pickedDate = DateTime.parse('0000-00-00');
@@ -51,7 +53,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
     var userId = await userPreferences.getUserId();
     var userid = userId;
     final response = await http.put(
-      Uri.parse('https://1491-45-65-152-57.ngrok.io/update/record'),
+      Uri.parse('$globalURL/update/record'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -89,19 +91,24 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
   }
 
 //TO GET THE DATA AND LOAD IT ON THE SCREEN
-  Future<FullRecorde> fetchFullRecord() async {
+  Future<dynamic> fetchFullRecord() async {
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
     var userid = await userPreferences.getUserId();
     var userToken = await userPreferences.getUserToken();
     var z = userToken;
-    final response = await http.get(Uri.parse('https://1491-45-65-152-57.ngrok.io/get/record/$userid/$x/$y/$z'));
-    if (response.statusCode == 200) {
+    final response = await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
+    if (response.statusCode == 201) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
-    } else {
-      throw Exception('Failed to load record.');
+    } else{
+            return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              debugPrint('Wrong Connection!');
+              return const AlertServerError();
+            });
     }
   }
 
@@ -116,7 +123,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
             title: const Text('editrecord.title').tr(),
             centerTitle: true,
             actions: const []),
-        body: FutureBuilder<FullRecorde>(
+        body: FutureBuilder<dynamic>(
           future: futureRecord,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -185,7 +192,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                     TextButton(
                         style: TextButton.styleFrom(
                             backgroundColor:
-                                const Color.fromARGB(255, 15, 49, 114),
+                                const Color.fromARGB(255, 56, 170, 245),
                             primary: Colors.white, //TEXT COLOR
                             minimumSize: const Size(120, 50) //TAMANO - WH
                             ),
