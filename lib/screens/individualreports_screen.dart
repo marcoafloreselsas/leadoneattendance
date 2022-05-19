@@ -33,7 +33,7 @@ class _GenerateIndividualReportsScreenState
 
   String dropdownvalue = 'Attendance History';
   var items = ['Attendance History', 'Modifications History'];
-    void readData() async {
+    readData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() => userToken = prefs.getString('Token')!);
     
@@ -237,7 +237,8 @@ class _GenerateIndividualReportsScreenState
                     userID.toString() +
                     activity.toString() +
                     firstDate.toString() +
-                    lastDate.toString());
+                    lastDate.toString() +
+                    userToken);
                 Navigator.pushNamed(context, '/ReportViewerScreen', arguments: {
                   'userID': userID,
                   'activity': activity,
@@ -272,7 +273,7 @@ class _GenerateIndividualReportsScreenState
         context: context,
         initialDate: pickedDateFrom,
         firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
+        lastDate: DateTime.now());
     if (date != null) {
       setState(() {
         pickedDateFrom = date;
@@ -287,7 +288,7 @@ class _GenerateIndividualReportsScreenState
         context: context,
         initialDate: pickedDateTo,
         firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
+        lastDate: DateTime.now());
     if (date2 != null) {
       setState(() {
         pickedDateTo = date2;

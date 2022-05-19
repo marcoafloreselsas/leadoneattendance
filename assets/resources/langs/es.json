@@ -42,9 +42,8 @@
     "editrecord":
     {
         "title" : "Editar Registro",
-        "recordDate" : "Fecha del Registro",
-        "selectDate" : "Seleccione la Fecha",
-        "selectTime" : "Seleccione la Hora",
+        "entryTime" : "Hora de Entrada",
+        "exitTime" : "Hora de Salida",
         "typeRecord" : "Tipo de Registro",
         "TRattendance" : "Asistencia",
         "TRlunch" : "Comida",
@@ -52,7 +51,7 @@
         "TRpermit" : "Permiso",
         "in" : "Inicio",
         "out" : "Fin",
-        "saveButton" : "Guardar Cambios",
+        "saveButton" : "Guardar",
         "discardChanges" : "Descartar Cambios"
     },
     "queryrecords":

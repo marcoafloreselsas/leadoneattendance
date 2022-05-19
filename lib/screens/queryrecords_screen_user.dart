@@ -209,7 +209,7 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
         context: context,
         initialDate: pickedDate,
         firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
+        lastDate: DateTime.now());
     if (date != null) {
       setState(() {
         pickedDate = date;

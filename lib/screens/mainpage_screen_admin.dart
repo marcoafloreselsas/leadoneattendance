@@ -8,6 +8,7 @@ import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 
 int userid = 0;
 class MainScreenAdmin extends StatefulWidget {
@@ -21,14 +22,22 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
   DateTime now = DateTime.now();
   var isLoaded = false;
   late Future<dynamic> futureRecord;
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) => _update());
     futureRecord = fetchRecord();
     readData();
+    
   }
-
+    void _update() {
+    setState(() {
+      now = DateTime.now(); //Para actualizar la hora en el ListTile
+    });
+  }
+//Para obtener el UserID, y enviarlo como argumento en el Record Seleccionado.
   void readData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getInt('UserID') == null) {
@@ -38,14 +47,13 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     }
   }
 
+//Deshabilita el botón back de la pantalla principal.
   Future<bool> _onWillPop() async {
     return false;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -54,6 +62,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           title: const Text('mainscreen.title').tr(),
           // backgroundColor: Color.fromARGB(255, 15, 114, 36),
           centerTitle: true,
+          //Deshabilita el botón back del appbar.
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
@@ -108,6 +117,73 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                      CircularProgressIndicator;
+                      futureRecord = fetchRecord();
+                      });
+                    },
+                    child: Wrap(
+                      children: const <Widget>[
+                        Icon(
+                          Icons.calendar_today,
+                          color: Colors.white,
+                          size: 24.0,
+                        ),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppTheme.primary
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        CircularProgressIndicator;
+                        futureRecord =fetchRecordLunch();
+                      });
+                    },
+                    child: Wrap(
+                      children: const <Widget>[
+                        Icon(
+                          Icons.restaurant,
+                          color: Colors.white,
+                          size: 24.0,
+                        ),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppTheme.primary
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        CircularProgressIndicator;
+                        futureRecord = fetchRecordOvertime();
+                      });
+                    },
+                    child: Wrap(
+                      children: const <Widget>[
+                        Icon(
+                          Icons.more_time,
+                          color: Colors.white,
+                          size: 24.0,
+                        ),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppTheme.primary
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -123,8 +199,11 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                             onTap: () => Navigator.pushNamed(
                               context,
                               '/DisplayRecordScreenAdmin',
-                              arguments: {'RecordDate': convertDateArgument(
-                                  snapshot.data![index].RecordDate), 'UserID': userid},
+                              arguments: {
+                                'RecordDate': convertDateArgument(
+                                    snapshot.data![index].RecordDate),
+                                'UserID': userid
+                              },
                             ),
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -269,32 +348,116 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-    final response = await http.get(
-        Uri.parse('$globalURL/get/fiverecords/$s'));
-    try{
-    if (response.statusCode == 200) {
-      final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
-      return parsed.map<Record>((json) => Record.fromMap(json)).toList();
-    } if(response.statusCode == 400){
-      return showDialog(context: context, builder: (BuildContext context){
-        return const AlertNoRecords();
-      });
-    }
-    if (response.statusCode == 401) {
-      return showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
-          });
-    }} 
-     catch(e){
-          return showDialog(
+    final response = await http.get(Uri.parse('$globalURL/get/fiverecords/$s'));
+    try {
+      if (response.statusCode == 200) {
+        final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+        return parsed.map<Record>((json) => Record.fromMap(json)).toList();
+      }
+      if (response.statusCode == 400) {
+        return showDialog(
             context: context,
             builder: (BuildContext context) {
-              debugPrint('Wrong Connection!');
-              return const AlertServerError();
+              return const AlertNoRecords();
             });
+      }
+      if (response.statusCode == 401) {
+        return showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return WillPopScope(
+                  onWillPop: _onWillPop, child: const Alert401());
+            });
+      }
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
+    }
   }
+  //HTTP Request
+  Future<dynamic> fetchRecordLunch() async {
+    UserPreferences userPreferences = UserPreferences();
+    // Query the stored data and assign it to the variable userId
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
+    var userToken = await userPreferences.getUserToken();
+    var usertoken = userToken;
+    var s = userid.toString() + '/' + usertoken.toString();
+    final response = await http.get(Uri.parse('$globalURL/get/fiverecordslunch/$s'));
+    try {
+      if (response.statusCode == 200) {
+        final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+        return parsed.map<Record>((json) => Record.fromMap(json)).toList();
+      }
+      if (response.statusCode == 400) {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertNoRecords();
+            });
+      }
+      if (response.statusCode == 401) {
+        return showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return WillPopScope(
+                  onWillPop: _onWillPop, child: const Alert401());
+            });
+      }
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
+    }
+  }
+
+  //HTTP Request
+  Future<dynamic> fetchRecordOvertime() async {
+    UserPreferences userPreferences = UserPreferences();
+    // Query the stored data and assign it to the variable userId
+    var userId = await userPreferences.getUserId();
+    var userid = userId;
+    var userToken = await userPreferences.getUserToken();
+    var usertoken = userToken;
+    var s = userid.toString() + '/' + usertoken.toString();
+    final response = await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
+    try {
+      if (response.statusCode == 200) {
+        final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+        return parsed.map<Record>((json) => Record.fromMap(json)).toList();
+      }
+      if (response.statusCode == 400) {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertNoRecords();
+            });
+      }
+      if (response.statusCode == 401) {
+        return showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return WillPopScope(
+                  onWillPop: _onWillPop, child: const Alert401());
+            });
+      }
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
+    }
   }
 }

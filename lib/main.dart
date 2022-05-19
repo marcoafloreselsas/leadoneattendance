@@ -6,7 +6,6 @@ import 'package:leadoneattendance/services/supported_locales.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
-
   //Verifica que la Localización y el Framework-Fuente están inicializados correctamente.
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();

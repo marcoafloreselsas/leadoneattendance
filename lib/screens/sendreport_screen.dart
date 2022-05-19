@@ -34,98 +34,105 @@ class _SendReportScreenState extends State<SendReportScreen> {
 //Esta vista envía el reporte generado.
   @override
   Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).viewInsets.bottom; //Empuja el contenido hacia arriba cuando aparece el teclado.
 
     return Scaffold(
         appBar: AppBar(
           title: const Text('sendreport.title').tr(),
           centerTitle: true,
         ),
-        body: Form(
-            key: _key,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment
-                    .center, //Añadido el 3 de mayo de 2022  R E V I S A R
-                children: [
-                  const SizedBox(
-                    height: 10,
+        body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(), //Se oculta el teclado cuando detecta algun gesto en cualquier lugar de la pantalla
+          child: SingleChildScrollView(
+                reverse: true,
+                padding: EdgeInsets.only(bottom: bottom),
+            child: Form(
+                key: _key,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center, //Añadido el 3 de mayo de 2022  R E V I S A R
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: emailController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          labelText: ('sendreport.to').tr(),
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Field is required.';
+                          }
+                          String pattern = r'\w+@\w+\.\w+';
+                          if (!RegExp(pattern).hasMatch(value)) {
+                            return 'Invalid Email address format.';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: subjectController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          labelText: ('sendreport.subject').tr(),
+                          border: const OutlineInputBorder(),
+                        ),
+                          validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Field is required.';
+                          }
+                          return null;
+                          }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        controller: messageController,
+                        maxLines: 3,
+                        keyboardType: TextInputType.multiline,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          labelText: ('sendreport.message').tr(),
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Field is required.';
+                          }
+                          return null;
+                          }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+          
+                      //Botón de guardar cambios.
+                      TextButton(
+                          style: TextButton.styleFrom(
+                              backgroundColor: AppTheme.primary,
+                              primary: Colors.white, //Color del Texto
+                              minimumSize: const Size(120, 50) //Tamaño - WH
+                              ),
+                          onPressed: () {
+                            if (_key.currentState!.validate()) {
+                              _key.currentState!.save();
+          
+                              sendReport(emailController.text,
+                                  subjectController.text, messageController.text);
+                            }
+                          },
+                          child: const Text('sendreport.sendButton').tr())
+                    ],
                   ),
-                  TextFormField(
-                    controller: emailController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: ('sendreport.to').tr(),
-                      border: const OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Field is required.';
-                      }
-                      String pattern = r'\w+@\w+\.\w+';
-                      if (!RegExp(pattern).hasMatch(value)) {
-                        return 'Invalid Email address format.';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    controller: subjectController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: ('sendreport.subject').tr(),
-                      border: const OutlineInputBorder(),
-                    ),
-                      validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Field is required.';
-                      }
-                      return null;
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    controller: messageController,
-                    maxLines: 3,
-                    keyboardType: TextInputType.multiline,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: ('sendreport.message').tr(),
-                      border: const OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Field is required.';
-                      }
-                      return null;
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  //Botón de guardar cambios.
-                  TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: AppTheme.primary,
-                          primary: Colors.white, //Color del Texto
-                          minimumSize: const Size(120, 50) //Tamaño - WH
-                          ),
-                      onPressed: () {
-                        if (_key.currentState!.validate()) {
-                          _key.currentState!.save();
-
-                          sendReport(emailController.text,
-                              subjectController.text, messageController.text);
-                        }
-                      },
-                      child: const Text('sendreport.sendButton').tr())
-                ],
-              ),
-            )));
+                )),
+          ),
+        ));
   }
 
   Future<void> sendReport(email, subject, message) async {

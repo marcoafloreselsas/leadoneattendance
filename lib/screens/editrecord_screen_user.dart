@@ -63,7 +63,11 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
         "RecordTypeID": RecordTypeId,
         "EntryTime": EntryTime,
         "ExitTime": ExitTime
-      }),
+        
+      }
+      
+      ),
+
     );
     if (response.statusCode == 201) {
       return showDialog(
@@ -206,7 +210,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                                 context: context,
                                 builder: (_) =>
                                     const AlertEditRecordErrorTwo());
-                          } else if (changeEntryTime == null) {
+                          } if (changeEntryTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(x)); //Fecha
                             var RecordTypeId = y;
@@ -215,7 +219,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                             var ExitTime = finalfinalexit;
                             _futureEditRecord = createEditRecord(
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
-                          } else if (changeFinalTime == null) {
+                          } if (changeFinalTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(x)); //Fecha
                             var RecordTypeId = y;
@@ -224,6 +228,8 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                                 "${(formatHour(snapshot.data!.ExitTime))}:${(formatMinutes(snapshot.data!.ExitTime))}";
                             _futureEditRecord = createEditRecord(
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
+                                    debugPrint(RecordDate.toString() +" " + RecordTypeId +" " + EntryTime.toString() + " " + ExitTime);
+
                           } else {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(x)); //Fecha

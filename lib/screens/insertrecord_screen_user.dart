@@ -293,7 +293,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
         context: context,
         initialDate: pickedDate,
         firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
+        lastDate: DateTime.now());
     if (dateRecord != null) {
       setState(() {
         pickedDate = dateRecord;

@@ -8,7 +8,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'dart:async';
 import 'dart:convert';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -29,127 +28,136 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
   }
-
   Future<bool> _onWillPop() async {
     return false;
   }
-
   @override
   Widget build(BuildContext context) {  
-
-    return WillPopScope(
-      //Function disabling the system "back" button
-      onWillPop: _onWillPop,
-      child: Scaffold(
-          //Disappears the "back" button of scaffold
-          resizeToAvoidBottomInset: false,
-          body: Center(
-              child: Column(
-            children: [
-              const SizedBox(height: 100),
-              const Text(
-                'loginscreen.title',
-                style: TextStyle(fontSize: 34, fontStyle: FontStyle.normal),
-              ).tr(),
-              const Text(
-                'loginscreen.subtitle.',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ).tr(),
-              const SizedBox(height: 20),
-              Image.asset(
-                'assets/leadone_logo.png',
-                width: 300,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-//NOTE: Login text fields
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: emailController,
-                            decoration: const InputDecoration(
-                                labelText: "Email",
-                                border: OutlineInputBorder(),
-                                suffixIcon: Icon(Icons.email)),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Field is required.';
+    final bottom = MediaQuery.of(context).viewInsets.bottom; //Empuja el contenido hacia arriba cuando aparece el teclado.
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(), //Se oculta el teclado cuando detecta algun gesto en cualquier lugar de la pantalla
+      child: WillPopScope(
+        //Function disabling the system "back" button
+        onWillPop:() async{
+          _onWillPop();
+          return false;
+        },
+        child: Scaffold(
+            //Disappears the "back" button of scaffold
+            resizeToAvoidBottomInset: false, //No rediseña los widgets cuando aparece el teclado
+            body: SingleChildScrollView( //SCROLL
+              reverse: true,
+              padding: EdgeInsets.only(bottom: bottom),
+              child: Center(
+                  child: Column(
+                children: [
+                  const SizedBox(height: 100),
+                  const Text(
+                    'loginscreen.title',
+                    style: TextStyle(fontSize: 34, fontStyle: FontStyle.normal),
+                  ).tr(),
+                  const Text(
+                    'loginscreen.subtitle.',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ).tr(),
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    'assets/leadone_logo.png',
+                    width: 300,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      //NOTE: Login text fields
+                        Form(
+                          
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                controller: emailController,
+                                decoration: const InputDecoration(
+                                    labelText: "Email",
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: Icon(Icons.email)),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Field is required.';
+                                  }
+                                  String pattern = r'\w+@\w+\.\w+';
+                                  if (!RegExp(pattern).hasMatch(value)) {
+                                    return 'Invalid Email address format.';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              TextFormField(
+                                controller: passwordController,
+                                obscureText:
+                                    true, // So that the text entered is only "--------".
+                                decoration: const InputDecoration(
+                                    labelText: "Password",
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: Icon(Icons.password)),
+                                validator: (value) {
+                                    if (value== null || value.isEmpty) {
+                                      return 'Field is required.';
+                                    }
+                                    return null;
+                                    }),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor: AppTheme.primary,
+                                primary: Colors.white, //TEXT COLOR
+                                minimumSize: const Size(120, 50) //TAMANO - WH
+                                ),
+                            onPressed: () {
+                              setState(() {});
+                      
+                              if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              var email = emailController.text;
+                              var password = passwordController.text;
+                              login(email, password);
                               }
-                              String pattern = r'\w+@\w+\.\w+';
-                              if (!RegExp(pattern).hasMatch(value)) {
-                                return 'Invalid Email address format.';
-                              }
-                              return null;
+                      
                             },
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: passwordController,
-                            obscureText:
-                                true, // So that the text entered is only "--------".
-                            decoration: const InputDecoration(
-                                labelText: "Password",
-                                border: OutlineInputBorder(),
-                                suffixIcon: Icon(Icons.password)),
-                            validator: (value) {
-                                if (value== null || value.isEmpty) {
-                                  return 'Field is required.';
-                                }
-                                return null;
-                                }),
-                        ],
-                      ),
+                            child: Text(('loginscreen.submit').tr(), style: const TextStyle(
+                        fontSize: 18.0,
+                    ))),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextButton.icon(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/ChangePassword');
+                          },
+                          icon: const Icon(Icons.settings, size: 18),
+                          label: Text(("loginscreen.changepassword").tr(),style: const TextStyle(
+                        fontSize: 18.0,
+                    )),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: AppTheme.primary,
-                            primary: Colors.white, //TEXT COLOR
-                            minimumSize: const Size(120, 50) //TAMANO - WH
-                            ),
-                        onPressed: () {
-                          setState(() {});
-
-                          if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          var email = emailController.text;
-                          var password = passwordController.text;
-                          login(email, password);
-                          }
-
-                        },
-                        child: Text(('loginscreen.submit').tr(), style: const TextStyle(
-                    fontSize: 18.0,
-                ))),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextButton.icon(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ChangePassword');
-                      },
-                      icon: const Icon(Icons.settings, size: 18),
-                      label: Text(("loginscreen.changepassword").tr(),style: const TextStyle(
-                    fontSize: 18.0,
-                )),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ))),
+                  )
+                ],
+              )),
+            )),
+      ),
     );
   }
 

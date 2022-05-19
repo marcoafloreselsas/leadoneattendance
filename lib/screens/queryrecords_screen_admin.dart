@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
@@ -319,7 +318,7 @@ Future<dynamic> fetchQueryRecordAdmin(
         context: context,
         initialDate: pickedDate,
         firstDate: DateTime(DateTime.now().year - 1),
-        lastDate: DateTime(DateTime.now().year + 5));
+        lastDate: DateTime.now());
     if (date != null) {
       setState(() {
         pickedDate = date;
