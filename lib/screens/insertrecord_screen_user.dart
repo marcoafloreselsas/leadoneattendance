@@ -35,9 +35,7 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
     'Attendance',
     'Lunch',
     'Overtime',
-    'Permit',
   ];
-
   //For when the start of an activity is marked.
   Future<Future> createEntryRecord(
       String RecordDate, int FinalRecordTypeId, String Time) async {

@@ -38,7 +38,6 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
     'Attendance',
     'Lunch',
     'Overtime',
-    'Permit',
   ];
   //For when the start of an activity is marked.
   Future<Future> createEntryRecord(
@@ -126,62 +125,62 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
             //LIST TILE WHERE THE DATE PICKER IS SHOWN, AND ITS ICON TO DISPLAY
             Row(
               children: [
-                Text(('insertrecord.selectDate').tr(),       
-                style: const TextStyle(
-                    fontSize: 18.0,
-                )),
+                Text(('insertrecord.selectDate').tr(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                changeDate == null
-                ? "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day}":
-                    changeDate!,
-                textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,)
-              ),
+                  changeDate == null
+                      ? "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day}"
+                      : changeDate!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  )),
               onTap: _pickDate,
             ),
             //LIST TILE WHERE THE TIME PICKER IS SHOWN, AND ITS ICON TO DISPLAY
-                        const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                Text(('insertrecord.selectTime').tr(),                 
-                style: const TextStyle(
-                    fontSize: 18.0,
-                )),
+                Text(('insertrecord.selectTime').tr(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                changeTime == null
-                    ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
-                    : changeTime!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,)
-              ),
+                  changeTime == null
+                      ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
+                      : changeTime!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  )),
               onTap: _pickTime,
             ),
-                        const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             //RECORD TYPE
             Row(
               children: [
-                Text(('insertrecord.typeRecord').tr(),                 
-                style: const TextStyle(
-                    fontSize: 18.0,
-                )),
+                Text(('insertrecord.typeRecord').tr(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    )),
                 const Padding(padding: EdgeInsets.all(25.0)),
                 DropdownButton(
                   value: dropdownvalue,
@@ -189,10 +188,10 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,
-                      child: Text((items),                 
-                      style: const TextStyle(
+                      child: Text((items),
+                          style: const TextStyle(
                             fontSize: 18.0,
-                )),
+                          )),
                     );
                   }).toList(),
                   onChanged: (String? tipoActividad) {
@@ -210,10 +209,10 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
             ),
             //SWITCH
             Row(children: [
-              Text(('insertrecord.in').tr(),                 
-              style: const TextStyle(
+              Text(('insertrecord.in').tr(),
+                  style: const TextStyle(
                     fontSize: 18.0,
-                )),
+                  )),
               const Padding(padding: EdgeInsets.all(10.0)),
               SizedBox(
                 width: 100,
@@ -233,10 +232,10 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                 ),
               ),
               const Padding(padding: EdgeInsets.all(10.0)),
-              Text(('insertrecord.out').tr(),                 
-              style: const TextStyle(
+              Text(('insertrecord.out').tr(),
+                  style: const TextStyle(
                     fontSize: 18.0,
-                )),
+                  )),
             ], mainAxisAlignment: MainAxisAlignment.center),
             const SizedBox(
               height: 20,
@@ -244,7 +243,7 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
             //SAVE CHANGES BUTTON
             TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: AppTheme.primary,
+                    backgroundColor: AppTheme.primary,
                     primary: Colors.white, //TEXT COLOR
                     minimumSize: const Size(120, 50) //TAMANO - WH
                     ),
@@ -256,19 +255,26 @@ class _InsertRecordScreenAdminState extends State<InsertRecordScreenAdmin> {
                   var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
                   var OnOff = isonisoff; //Switch
 
-                  if (changeDate == null || changeTime == null || RecordTypeId2 == 0) {
-                    showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
+                  if (changeDate == null ||
+                      changeTime == null ||
+                      RecordTypeId2 == 0) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertCompleteInfo();
+                        });
                   } else {
-                    RecordDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
+                    RecordDate =
+                        DateFormat('yyyy-MM-dd').format(finalChangeDate);
                     Time = finalfinal; //Hora
-                                      //Si el si
-                  if (OnOff == false) {
-                    _futureInsertRecordEntry =
-                        createEntryRecord(RecordDate, FinalRecordTypeId, Time);
-                  } else if (OnOff == true) {
-                    _futureInsertRecordExit =
-                        createExitRecord(RecordDate, FinalRecordTypeId, Time);
-                  }
+                    //Si el si
+                    if (OnOff == false) {
+                      _futureInsertRecordEntry = createEntryRecord(
+                          RecordDate, FinalRecordTypeId, Time);
+                    } else if (OnOff == true) {
+                      _futureInsertRecordExit =
+                          createExitRecord(RecordDate, FinalRecordTypeId, Time);
+                    }
                   }
                 },
                 child: const Text('insertrecord.saveButton').tr()),
