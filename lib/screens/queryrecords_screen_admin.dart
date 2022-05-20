@@ -12,7 +12,6 @@ import 'package:leadoneattendance/variable.dart';
 
 UserPreferences userPreferences = UserPreferences();
 
-
 class QueryRecordsScreenAdmin extends StatefulWidget {
   const QueryRecordsScreenAdmin({Key? key}) : super(key: key);
 
@@ -36,29 +35,37 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
   }
 
   Future<dynamic>? getData() async {
-    var userToken = await userPreferences.getUserToken();
-    var usertoken = userToken.toString();
-    String url = '$globalURL/get/names/$usertoken';
-    var response = await http.get(
-      Uri.parse(url),
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-      },
-    );
-    if (response.statusCode == 200) {
-      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-      return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
-    } else if (response.statusCode == 401) {
-      debugPrint(response.statusCode.toString());
+    try {
+      var userToken = await userPreferences.getUserToken();
+      var usertoken = userToken.toString();
+      String url = '$globalURL/get/names/$usertoken';
+      var response = await http.get(
+        Uri.parse(url),
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+        },
+      );
+      if (response.statusCode == 200) {
+        final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+        return parsed.map<GetUsers>((json) => GetUsers.fromJson(json)).toList();
+      } else if (response.statusCode == 401) {
+        debugPrint(response.statusCode.toString());
+        return showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return WillPopScope(
+                  onWillPop: _onWillPop, child: const Alert401());
+            });
+      }
+    } catch (e) {
       return showDialog(
-          barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
-            return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
           });
-    } else {
-      throw Exception('Failed to load');
     }
   }
 
@@ -88,37 +95,38 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
         body: Card(
           child: Column(
             children: [
-          const SizedBox(
-            height:20,
-          ),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
-                  Text(('queryrecords.selectDate').tr(), 
-                  style: const TextStyle(
+                  Text(('queryrecords.selectDate').tr(),
+                      style: const TextStyle(
                         fontSize: 18.0,
-                    )),                  
-                const Icon(Icons.keyboard_arrow_down_outlined),
+                      )),
+                  const Icon(Icons.keyboard_arrow_down_outlined),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
               ListTile(
                 title: Text(
                   changeDate == null
-                  ? "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}" :changeDate!,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ? "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}"
+                      : changeDate!,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 onTap: _pickDate,
               ),
               const SizedBox(
-            height:20,
-          ),
+                height: 20,
+              ),
               Row(
                 children: [
-                  Text(('queryrecords.selectEmployee').tr(),               
-                  style: const TextStyle(fontSize: 18)),
+                  Text(('queryrecords.selectEmployee').tr(),
+                      style: const TextStyle(fontSize: 18)),
                   const Icon(Icons.keyboard_arrow_down_outlined),
-
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -145,7 +153,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                               });
                             },
                             child: Text(item.name),
-                            
                             value: item,
                           ),
                         )
@@ -167,30 +174,41 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                     setState(() {
                       CircularProgressIndicator;
                       // futureQueryRecordAdmin;
-                                          var finalUserID = newuserid;
-                    var finalfinalUserID = finalUserID;
-                    var finalRecordTypeID = 1;
+                      var finalUserID = newuserid;
+                      var finalfinalUserID = finalUserID;
+                      var finalRecordTypeID = 1;
 
-                    if(finalUserID == 0 ){
-                      showDialog(context: context, builder: (BuildContext context){ return const AlertSelectEmployee();});
-                    }if(changeDate == null){
-                      showDialog(context: context, builder: (BuildContext context){ return const AlertSelectDate();});
-                    }
-                    if (finalUserID !=0 || changeDate != null){
-                      var finalRecordDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    futureQueryRecordAdmin = fetchQueryRecordAdmin(
-                        finalfinalUserID, finalRecordDate, finalRecordTypeID);
-                    debugPrint(finalfinalUserID.toString() +
-                        finalRecordDate +
-                        finalRecordTypeID.toString());
-                    }
+                      if (finalUserID == 0) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AlertSelectEmployee();
+                            });
+                      }
+                      if (changeDate == null) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AlertSelectDate();
+                            });
+                      }
+                      if (finalUserID != 0 || changeDate != null) {
+                        var finalRecordDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        futureQueryRecordAdmin = fetchQueryRecordAdmin(
+                            finalfinalUserID,
+                            finalRecordDate,
+                            finalRecordTypeID);
+                        debugPrint(finalfinalUserID.toString() +
+                            finalRecordDate +
+                            finalRecordTypeID.toString());
+                      }
                     });
-
                   },
-                  child: Text(('queryrecords.apply').tr(),                      style: const TextStyle(
-                            fontSize: 18.0,
-                ))),
+                  child: Text(('queryrecords.apply').tr(),
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                      ))),
               const SizedBox(
                 height: 10,
               ),
@@ -241,14 +259,14 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                                 ],
                               ),
                               onTap: () {
-
                                 Navigator.pushNamed(
                                     context, '/DisplayRecordScreenAdmin',
-                                    arguments: {'RecordDate': convertDateArgument(
-                                        snapshot.data!.recordDate), 'UserID':newuserid});
-                                }
-
-                              )
+                                    arguments: {
+                                      'RecordDate': convertDateArgument(
+                                          snapshot.data!.recordDate),
+                                      'UserID': newuserid
+                                    });
+                              })
                         ],
                       ),
                     );
@@ -261,39 +279,46 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
             ],
           ),
         ));
-        
   }
-Future<dynamic> fetchQueryRecordAdmin(
-    int finalfinalUserID, String finalRecordDate, int finalRecordTypeID) async {
-  var userToken = await userPreferences.getUserToken();
-  var usertoken = userToken;
 
-  var UserID = finalfinalUserID;
-  var RecordTypeID = finalRecordTypeID;
-  var RecordDate = finalRecordDate;
-  var s = UserID.toString() +
-      "/" +
-      RecordDate +
-      "/" +
-      RecordTypeID.toString() +
-      "/" +
-      usertoken.toString();
+  Future<dynamic> fetchQueryRecordAdmin(int finalfinalUserID,
+      String finalRecordDate, int finalRecordTypeID) async {
+    try {
+      var userToken = await userPreferences.getUserToken();
+      var usertoken = userToken;
+
+      var UserID = finalfinalUserID;
+      var RecordTypeID = finalRecordTypeID;
+      var RecordDate = finalRecordDate;
+      var s = UserID.toString() +
+          "/" +
+          RecordDate +
+          "/" +
+          RecordTypeID.toString() +
+          "/" +
+          usertoken.toString();
 
 //http request GET
-  final response = await http
-      .get(Uri.parse('$globalURL/get/record/$s'));
-  if (response.statusCode == 201) {
-    return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
-  } 
-  if(response.statusCode == 400){
-      showDialog(context: context, builder: (BuildContext context){
-        return const AlertUnavailableRecord();
-      });
-    } 
-  else {
-    throw Exception('Failed to load record.');
+      final response = await http.get(Uri.parse('$globalURL/get/record/$s'));
+      if (response.statusCode == 201) {
+        return QueryRecordAdmin.fromJson(jsonDecode(response.body)[0]);
+      }
+      if (response.statusCode == 400) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertUnavailableRecord();
+            });
+      }
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
+    }
   }
-}
 
 //FUNCTION THAT FETCHES AND DISPLAYS USER DATA IN THE DROPDOWN LIST.
   Future<void> fetchAndShow() async {

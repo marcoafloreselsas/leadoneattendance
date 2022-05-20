@@ -6,7 +6,6 @@ import 'package:leadoneattendance/models/models.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:leadoneattendance/variable.dart';
 
 class EditRecordScreenUser extends StatefulWidget {
@@ -63,11 +62,7 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
         "RecordTypeID": RecordTypeId,
         "EntryTime": EntryTime,
         "ExitTime": ExitTime
-        
-      }
-      
-      ),
-
+      }),
     );
     if (response.statusCode == 201) {
       return showDialog(
@@ -75,7 +70,8 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Failed to create record.');
+      return showDialog(
+          context: context, builder: (_) => const AlertEditRecordErrorOne());
     }
   }
 
@@ -102,23 +98,23 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
     var userid = await userPreferences.getUserId();
     var userToken = await userPreferences.getUserToken();
     var z = userToken;
-    final response = await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
     if (response.statusCode == 201) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
-    } else{
-            return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              debugPrint('Wrong Connection!');
-              return const AlertServerError();
-            });
+    } else {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var x = args['RecordDate']; //RecordDate
     var y = args['RecordTypeId'].toString();
@@ -210,7 +206,8 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                                 context: context,
                                 builder: (_) =>
                                     const AlertEditRecordErrorTwo());
-                          } if (changeEntryTime == null) {
+                          }
+                          if (changeEntryTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(x)); //Fecha
                             var RecordTypeId = y;
@@ -219,7 +216,8 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                             var ExitTime = finalfinalexit;
                             _futureEditRecord = createEditRecord(
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
-                          } if (changeFinalTime == null) {
+                          }
+                          if (changeFinalTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(x)); //Fecha
                             var RecordTypeId = y;
@@ -228,8 +226,6 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
                                 "${(formatHour(snapshot.data!.ExitTime))}:${(formatMinutes(snapshot.data!.ExitTime))}";
                             _futureEditRecord = createEditRecord(
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
-                                    debugPrint(RecordDate.toString() +" " + RecordTypeId +" " + EntryTime.toString() + " " + ExitTime);
-
                           } else {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(x)); //Fecha

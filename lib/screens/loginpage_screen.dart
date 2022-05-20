@@ -28,24 +28,31 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
   }
+
   Future<bool> _onWillPop() async {
     return false;
   }
+
   @override
-  Widget build(BuildContext context) {  
-    final bottom = MediaQuery.of(context).viewInsets.bottom; //Empuja el contenido hacia arriba cuando aparece el teclado.
+  Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context)
+        .viewInsets
+        .bottom; //Empuja el contenido hacia arriba cuando aparece el teclado.
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(), //Se oculta el teclado cuando detecta algun gesto en cualquier lugar de la pantalla
+      onTap: () => FocusManager.instance.primaryFocus
+          ?.unfocus(), //Se oculta el teclado cuando detecta algun gesto en cualquier lugar de la pantalla
       child: WillPopScope(
         //Function disabling the system "back" button
-        onWillPop:() async{
+        onWillPop: () async {
           _onWillPop();
           return false;
         },
         child: Scaffold(
             //Disappears the "back" button of scaffold
-            resizeToAvoidBottomInset: false, //No rediseña los widgets cuando aparece el teclado
-            body: SingleChildScrollView( //SCROLL
+            resizeToAvoidBottomInset:
+                false, //No rediseña los widgets cuando aparece el teclado
+            body: SingleChildScrollView(
+              //SCROLL
               reverse: true,
               padding: EdgeInsets.only(bottom: bottom),
               child: Center(
@@ -73,9 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      //NOTE: Login text fields
+                        //NOTE: Login text fields
                         Form(
-                          
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
@@ -100,19 +106,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: 15,
                               ),
                               TextFormField(
-                                controller: passwordController,
-                                obscureText:
-                                    true, // So that the text entered is only "--------".
-                                decoration: const InputDecoration(
-                                    labelText: "Password",
-                                    border: OutlineInputBorder(),
-                                    suffixIcon: Icon(Icons.password)),
-                                validator: (value) {
-                                    if (value== null || value.isEmpty) {
+                                  controller: passwordController,
+                                  obscureText:
+                                      true, // So that the text entered is only "--------".
+                                  decoration: const InputDecoration(
+                                      labelText: "Password",
+                                      border: OutlineInputBorder(),
+                                      suffixIcon: Icon(Icons.password)),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'Field is required.';
                                     }
                                     return null;
-                                    }),
+                                  }),
                             ],
                           ),
                         ),
@@ -127,18 +133,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                             onPressed: () {
                               setState(() {});
-                      
+
                               if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              var email = emailController.text;
-                              var password = passwordController.text;
-                              login(email, password);
+                                _formKey.currentState!.save();
+                                var email = emailController.text;
+                                var password = passwordController.text;
+                                login(email, password);
                               }
-                      
                             },
-                            child: Text(('loginscreen.submit').tr(), style: const TextStyle(
-                        fontSize: 18.0,
-                    ))),
+                            child: Text(('loginscreen.submit').tr(),
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                ))),
                         const SizedBox(
                           height: 20,
                         ),
@@ -147,9 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushNamed(context, '/ChangePassword');
                           },
                           icon: const Icon(Icons.settings, size: 18),
-                          label: Text(("loginscreen.changepassword").tr(),style: const TextStyle(
-                        fontSize: 18.0,
-                    )),
+                          label: Text(("loginscreen.changepassword").tr(),
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                              )),
                         ),
                       ],
                     ),
@@ -172,7 +179,7 @@ and depending on the user role, it can go to 'MainScreenAdmin', or 'MainScreenUs
           },
           body: jsonEncode(
               <String, String>{'Email': email, 'Password': password}));
-              
+
       var datos = jsonDecode(response.body);
 /*
 If there is a successful response from the server, it saves the re5ceived data on the device,
@@ -196,13 +203,13 @@ through Shared Preferences.
             });
         debugPrint('Incorrect User');
       }
-    } catch(e){
+    } catch (e) {
       return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              debugPrint('Wrong Connection!');
-              return const AlertServerError();
-            });
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerErrorLogin();
+          });
     }
   }
 }

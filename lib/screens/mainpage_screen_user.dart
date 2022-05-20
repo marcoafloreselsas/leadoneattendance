@@ -1,3 +1,4 @@
+// ignore_for_file: unused_field, unused_import
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:leadoneattendance/models/models.dart';
@@ -28,9 +29,11 @@ class _MainScreenUserState extends State<MainScreenUser> {
   void initState() {
     super.initState();
     futureRecord = fetchRecord();
-    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) => _update());
+    _timer =
+        Timer.periodic(const Duration(milliseconds: 500), (timer) => _update());
   }
-    void _update() {
+
+  void _update() {
     setState(() {
       now = DateTime.now(); //Para actualizar la hora en el ListTile
     });
@@ -61,10 +64,8 @@ class _MainScreenUserState extends State<MainScreenUser> {
             IconButton(
                 onPressed: () async {
                   //This instruction clears the instance stored in the device and logs out.
-                  final SharedPreferences sharedPreferences =
-                      await SharedPreferences.getInstance();
-                  sharedPreferences.clear();
-                  Navigator.of(context).pushNamed('/LoginScreen');
+                  return showDialog(
+                      context: context, builder: (_) => const AlertLogout());
                 },
                 icon: const Icon(Icons.logout))
           ],
@@ -116,8 +117,8 @@ class _MainScreenUserState extends State<MainScreenUser> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                      CircularProgressIndicator;
-                      futureRecord = fetchRecord();
+                        CircularProgressIndicator;
+                        futureRecord = fetchRecord();
                       });
                     },
                     child: Wrap(
@@ -129,15 +130,13 @@ class _MainScreenUserState extends State<MainScreenUser> {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppTheme.primary
-                    ),
+                    style: ElevatedButton.styleFrom(primary: AppTheme.primary),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
                         CircularProgressIndicator;
-                        futureRecord =fetchRecordLunch();
+                        futureRecord = fetchRecordLunch();
                       });
                     },
                     child: Wrap(
@@ -149,9 +148,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppTheme.primary
-                    ),
+                    style: ElevatedButton.styleFrom(primary: AppTheme.primary),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -169,9 +166,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppTheme.primary
-                    ),
+                    style: ElevatedButton.styleFrom(primary: AppTheme.primary),
                   ),
                 ],
               ),
@@ -345,34 +340,40 @@ class _MainScreenUserState extends State<MainScreenUser> {
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
 
-    try{
-    //Server link
-    final response = await http.get(Uri.parse('$globalURL/get/fiverecords/$s'));
-    if (response.statusCode == 200) {
-      final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
-      return parsed.map<Record>((json) => Record.fromMap(json)).toList();
+    try {
+      //Server link
+      final response =
+          await http.get(Uri.parse('$globalURL/get/fiverecords/$s'));
+      if (response.statusCode == 200) {
+        final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
+        return parsed.map<Record>((json) => Record.fromMap(json)).toList();
 /*If the connection is successful (Code 200), it gets the information and displays it on the screen,
 if the code is error (401), it means that the user token has expired,
 and the user needs to log in again. */
-    } if (response.statusCode == 401) {
-      return showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return WillPopScope(onWillPop: _onWillPop, child: const Alert401());
-          });
-    }
-    if(response.statusCode == 400){
-      return showDialog(context: context, builder: (BuildContext context){
-        return const AlertNoRecords();
-      });
-    }}catch(e){
-            return showDialog(
+      }
+      if (response.statusCode == 401) {
+        return showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              debugPrint('Wrong Connection!');
-              return const AlertServerError();
+              return WillPopScope(
+                  onWillPop: _onWillPop, child: const Alert401());
             });
+      }
+      if (response.statusCode == 400) {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertNoRecords();
+            });
+      }
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
     }
     throw Exception('Failed to load records.');
   }
@@ -386,7 +387,8 @@ and the user needs to log in again. */
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-    final response = await http.get(Uri.parse('$globalURL/get/fiverecordslunch/$s'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/fiverecordslunch/$s'));
     try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
@@ -427,7 +429,8 @@ and the user needs to log in again. */
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-    final response = await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
     try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

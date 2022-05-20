@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class AlertServerError extends StatelessWidget {
-  const AlertServerError({Key? key}) : super(key: key);
+class AlertServerErrorLogin extends StatelessWidget {
+  const AlertServerErrorLogin({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,9 @@ class AlertServerError extends StatelessWidget {
         ),
         actions: [
           TextButton(
-              onPressed: () async {
+              onPressed: () {
                 //Para borrar T O D O.
-                final SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                sharedPreferences.clear();
-                Navigator.pushNamed(context, '/LoginScreen');
+                Navigator.pop(context);
               },
               child: const Text('alerts.alertResponse3').tr())
         ]);

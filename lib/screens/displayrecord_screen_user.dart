@@ -18,7 +18,7 @@ class DisplayRecordScreenUser extends StatefulWidget {
 }
 
 class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
-  Future<FullRecord>? futureRecord;
+  Future<dynamic>? futureRecord;
   @override
   void initState() {
     super.initState();
@@ -31,8 +31,8 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
       },
     );
   }
- 
-  Future<FullRecord> fetchFullRecord() async {
+
+  Future<dynamic> fetchFullRecord() async {
     UserPreferences userPreferences = UserPreferences();
     var args = ModalRoute.of(context)!.settings.arguments;
     var recorddate = args;
@@ -40,14 +40,24 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
     var userid = userId;
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
-    var s =  userid.toString() + '/' + recorddate.toString() + '/' + usertoken.toString();
+    var s = userid.toString() +
+        '/' +
+        recorddate.toString() +
+        '/' +
+        usertoken.toString();
 
-    final response = await http.get(Uri.parse('$globalURL/get/fulluserrecord/$s'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
       return FullRecord.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
     } else {
-      throw Exception('Failed to load record.');
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
     }
   }
 
@@ -68,7 +78,7 @@ class _DisplayRecordScreenUserState extends State<DisplayRecordScreenUser> {
         /* For layout purposes, there are three list tiles, which are the columns that show each activity,
           There is a wrap that allows you to add more than two icons and more than two text. 
           The spacing is the spacing that there will be between icons, independently of the texts. */
-        body: FutureBuilder<FullRecord>(
+        body: FutureBuilder<dynamic>(
           future: futureRecord,
           builder: (context, snapshot) {
             if (snapshot.hasData) {

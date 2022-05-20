@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, await_only_futures
-
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
@@ -8,7 +7,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'dart:convert';
-
 import 'package:leadoneattendance/variable.dart';
 
 class EditRecordScreenAdmin extends StatefulWidget {
@@ -73,7 +71,8 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Failed to create record.');
+      return showDialog(
+          context: context, builder: (_) => const AlertEditRecordErrorOne());
     }
   }
 
@@ -101,17 +100,18 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
     var y = args['RecordTypeId'].toString();
     var uToken = await userPreferences.getUserToken();
     var z = uToken.toString();
-    final response = await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
     if (response.statusCode == 201) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.
-    } else{
-            return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              debugPrint('Wrong Connection!');
-              return const AlertServerError();
-            });
+    } else {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
     }
   }
 
@@ -208,7 +208,8 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
                                 context: context,
                                 builder: (_) =>
                                     const AlertEditRecordErrorTwo());
-                          } else if (changeEntryTime == null) {
+                          }
+                          if (changeEntryTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(recorddate)); //Fecha
                             var RecordTypeId = recordtypeid;
@@ -217,7 +218,8 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
                             var ExitTime = finalfinalexit;
                             _futureEditRecord = createEditRecord(
                                 RecordDate, RecordTypeId, EntryTime, ExitTime);
-                          } else if (changeFinalTime == null) {
+                          }
+                          if (changeFinalTime == null) {
                             var RecordDate = DateFormat('yyyy-MM-dd')
                                 .format(DateTime.parse(recorddate)); //Fecha
                             var RecordTypeId = recordtypeid;

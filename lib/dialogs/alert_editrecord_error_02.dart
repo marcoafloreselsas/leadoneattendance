@@ -20,8 +20,11 @@ class AlertEditRecordErrorTwo extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children:  [
-              Text(('alerts.alertdisplayrecorderror').tr(),textAlign: TextAlign.center,)
+            children: [
+              Text(
+                ('errors.Lead1_error_002').tr(),
+                textAlign: TextAlign.center,
+              )
             ],
           ),
         ),

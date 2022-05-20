@@ -94,7 +94,7 @@
     "errors":
     {
         "Lead1_error_001" : "Entry time must be lower than the exit time value.",
-        "Lead1_error_002" : "The values are the same, no need for an update.",
+        "Lead1_error_002" : "The values are the same.\nNo need for an update.",
         "Lead1_error_003" : "Only one record per user on the same date with the same record type.",
         "Lead1_error_004" : "Email already in use."
     },
@@ -113,6 +113,7 @@
         "alertResponse3":"OK",
         "alert401":"Session expired. \nPlease log in.",
         "alertlogin":"Verify your email and password.",
+        "alertlogout":"Are you sure to log out?",
         "alertchangepasswordok":"Your password has been successfully updated.",
         "alertchangepassworderror":"The email and/or password are incorrect.",
         "alertdisplayrecorderror":"No information available.",

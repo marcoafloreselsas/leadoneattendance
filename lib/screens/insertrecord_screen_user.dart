@@ -1,9 +1,4 @@
-//NOTA DE EDICIÓN • MAYO 10 DE 2022
-//changeTime será para validar que el usuario haya dado onTap al Time. si no, tome el valor del date.now de la vista.
-//Falta implementar en el botón.
-
-// ignore_for_file: non_constant_identifier_names
-
+// ignore_for_file: non_constant_identifier_names, unused_field, prefer_typing_uninitialized_variables
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,9 +16,7 @@ class InsertRecordScreenUser extends StatefulWidget {
 }
 
 class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
-  // ignore: unused_field
   Future<Future>? _futureInsertRecordEntry;
-  // ignore: unused_field
   Future<Future>? _futureInsertRecordExit;
   DateTime pickedDate = DateTime.parse('0000-00-00');
   late TimeOfDay time;
@@ -123,68 +116,68 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
         //Calendar to select a date.
         child: Column(
           children: [
-                        const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             //LIST TILE WHERE THE DATE PICKER IS SHOWN, AND ITS ICON TO DISPLAY
             Row(
               children: [
-                Text(('insertrecord.selectDate').tr(),       
-                style: const TextStyle(
-                    fontSize: 18.0,
-                )),
+                Text(('insertrecord.selectDate').tr(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                changeDate == null
-                ? "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day}":
-                    changeDate!,
-                textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,)
-              ),
+                  changeDate == null
+                      ? "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day}"
+                      : changeDate!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  )),
               onTap: _pickDate,
             ),
             //LIST TILE WHERE THE TIME PICKER IS SHOWN, AND ITS ICON TO DISPLAY
-                        const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
               children: [
-                Text(('insertrecord.selectTime').tr(),                 
-                style: const TextStyle(
-                    fontSize: 18.0,
-                )),
+                Text(('insertrecord.selectTime').tr(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    )),
                 const Icon(Icons.keyboard_arrow_down_outlined),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
             ListTile(
               title: Text(
-                changeTime == null
-                    ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
-                    : changeTime!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,)
-              ),
+                  changeTime == null
+                      ? "${time.hour}:${time.minute.toString().padLeft(2, '0')}"
+                      : changeTime!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  )),
               onTap: _pickTime,
             ),
-                        const SizedBox(
+            const SizedBox(
               height: 20,
             ),
             //RECORD TYPE
             Row(
               children: [
-                Text(('insertrecord.typeRecord').tr(),                 
-                style: const TextStyle(
-                    fontSize: 18.0,
-                )),
+                Text(('insertrecord.typeRecord').tr(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    )),
                 const Padding(padding: EdgeInsets.all(25.0)),
                 DropdownButton(
                   value: dropdownvalue,
@@ -192,10 +185,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,
-                      child: Text((items),                 
-                      style: const TextStyle(
+                      child: Text((items),
+                          style: const TextStyle(
                             fontSize: 18.0,
-                )),
+                          )),
                     );
                   }).toList(),
                   onChanged: (String? tipoActividad) {
@@ -213,10 +206,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             ),
             //SWITCH
             Row(children: [
-              Text(('insertrecord.in').tr(),                 
-              style: const TextStyle(
+              Text(('insertrecord.in').tr(),
+                  style: const TextStyle(
                     fontSize: 18.0,
-                )),
+                  )),
               const Padding(padding: EdgeInsets.all(10.0)),
               SizedBox(
                 width: 100,
@@ -236,10 +229,10 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
                 ),
               ), //SWITCH WIDGET
               const Padding(padding: EdgeInsets.all(10.0)),
-              Text(('insertrecord.out').tr(),                 
-              style: const TextStyle(
+              Text(('insertrecord.out').tr(),
+                  style: const TextStyle(
                     fontSize: 18.0,
-                )),
+                  )),
             ], mainAxisAlignment: MainAxisAlignment.center),
             const SizedBox(
               height: 20,
@@ -247,38 +240,39 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
             //SAVE CHANGES BUTTON
             TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: AppTheme.primary,
+                    backgroundColor: AppTheme.primary,
                     primary: Colors.white, //TEXT COLOR
                     minimumSize: const Size(120, 50) //TAMANO - WH
                     ),
                 onPressed: () {
                   setState(() {});
-
-                  // ignore: prefer_typing_uninitialized_variables
                   var Time;
-                  // ignore: prefer_typing_uninitialized_variables
                   var RecordDate; //Fecha
                   var RecordTypeId2 = recordTypeId + 1;
                   var FinalRecordTypeId = RecordTypeId2; //Tipo de Actividad
                   var OnOff = isonisoff; //Switch
 
-
-                  if (changeDate == null || changeTime == null || RecordTypeId2 == 0) {
-                    showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
+                  if (changeDate == null ||
+                      changeTime == null ||
+                      RecordTypeId2 == 0) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AlertCompleteInfo();
+                        });
                   } else {
-                    RecordDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
+                    RecordDate =
+                        DateFormat('yyyy-MM-dd').format(finalChangeDate);
                     Time = finalfinal; //Hora
-                                      //Si el si
-                  if (OnOff == false) {
-                    _futureInsertRecordEntry =
-                        createEntryRecord(RecordDate, FinalRecordTypeId, Time);
-                  } else if (OnOff == true) {
-                    _futureInsertRecordExit =
-                        createExitRecord(RecordDate, FinalRecordTypeId, Time);
+                    //Si el si
+                    if (OnOff == false) {
+                      _futureInsertRecordEntry = createEntryRecord(
+                          RecordDate, FinalRecordTypeId, Time);
+                    } else if (OnOff == true) {
+                      _futureInsertRecordExit =
+                          createExitRecord(RecordDate, FinalRecordTypeId, Time);
+                    }
                   }
-                  }
-
-
                 },
                 child: const Text('insertrecord.saveButton').tr()),
           ],
@@ -299,7 +293,6 @@ class _InsertRecordScreenUserState extends State<InsertRecordScreenUser> {
         pickedDate = dateRecord;
         finalChangeDate = dateRecord;
         changeDate = DateFormat('yyyy-MM-dd').format(finalChangeDate);
-
       });
     }
   }

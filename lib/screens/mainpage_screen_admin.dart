@@ -1,3 +1,4 @@
+// ignore_for_file: unused_field
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
@@ -11,6 +12,7 @@ import 'dart:convert';
 import 'dart:async';
 
 int userid = 0;
+
 class MainScreenAdmin extends StatefulWidget {
   const MainScreenAdmin({Key? key}) : super(key: key);
 
@@ -27,16 +29,18 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) => _update());
+    _timer =
+        Timer.periodic(const Duration(milliseconds: 500), (timer) => _update());
     futureRecord = fetchRecord();
     readData();
-    
   }
-    void _update() {
+
+  void _update() {
     setState(() {
       now = DateTime.now(); //Para actualizar la hora en el ListTile
     });
   }
+
 //Para obtener el UserID, y enviarlo como argumento en el Record Seleccionado.
   void readData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -72,10 +76,8 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                 icon: const Icon(Icons.search_outlined)),
             IconButton(
                 onPressed: () async {
-                  final SharedPreferences sharedPreferences =
-                      await SharedPreferences.getInstance();
-                  sharedPreferences.clear();
-                  Navigator.of(context).pushNamed('/LoginScreen');
+                  return showDialog(
+                      context: context, builder: (_) => const AlertLogout());
                 },
                 icon: const Icon(Icons.logout))
           ],
@@ -124,8 +126,8 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                      CircularProgressIndicator;
-                      futureRecord = fetchRecord();
+                        CircularProgressIndicator;
+                        futureRecord = fetchRecord();
                       });
                     },
                     child: Wrap(
@@ -137,15 +139,13 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppTheme.primary
-                    ),
+                    style: ElevatedButton.styleFrom(primary: AppTheme.primary),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
                         CircularProgressIndicator;
-                        futureRecord =fetchRecordLunch();
+                        futureRecord = fetchRecordLunch();
                       });
                     },
                     child: Wrap(
@@ -157,9 +157,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppTheme.primary
-                    ),
+                    style: ElevatedButton.styleFrom(primary: AppTheme.primary),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -177,9 +175,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppTheme.primary
-                    ),
+                    style: ElevatedButton.styleFrom(primary: AppTheme.primary),
                   ),
                 ],
               ),
@@ -379,6 +375,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
           });
     }
   }
+
   //HTTP Request
   Future<dynamic> fetchRecordLunch() async {
     UserPreferences userPreferences = UserPreferences();
@@ -388,7 +385,8 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-    final response = await http.get(Uri.parse('$globalURL/get/fiverecordslunch/$s'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/fiverecordslunch/$s'));
     try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
@@ -429,7 +427,8 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-    final response = await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
+    final response =
+        await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
     try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();

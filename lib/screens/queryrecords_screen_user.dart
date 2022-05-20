@@ -42,14 +42,15 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
           actions: const []),
       body: Column(
         children: [
-                    const SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             children: [
-              Text(('queryrecords.selectDate').tr(), style: const TextStyle(
+              Text(('queryrecords.selectDate').tr(),
+                  style: const TextStyle(
                     fontSize: 18.0,
-                )),
+                  )),
               const Icon(Icons.keyboard_arrow_down_outlined),
             ],
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +58,8 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
           ListTile(
             title: Text(
               changeDate == null
-              ?"${pickedDate.year}-${pickedDate.month}-${pickedDate.day}":changeDate!,
+                  ? "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}"
+                  : changeDate!,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -80,21 +82,25 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
                 var finalRecordTypeID = 1;
                 var finalRecordDate =
                     DateFormat('yyyy-MM-dd').format(pickedDate);
-                if(changeDate == null){
-                  showDialog(context: context, builder: (BuildContext context){ return const AlertSelectDate();});
-                }else{
-                                  futureQueryRecord =
-                    fetchQueryRecord(finalRecordDate, finalRecordTypeID);
-                debugPrint(finalRecordDate + finalRecordTypeID.toString());
+                if (changeDate == null) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertSelectDate();
+                      });
+                } else {
+                  futureQueryRecord =
+                      fetchQueryRecord(finalRecordDate, finalRecordTypeID);
+                  debugPrint(finalRecordDate + finalRecordTypeID.toString());
                 }
               },
               child: const Text('queryrecords.apply').tr()),
-                        const SizedBox(
+          const SizedBox(
             height: 20,
           ),
           const Divider(),
           const SizedBox(
-            height:10,
+            height: 10,
           ),
           Row(
             children: [
@@ -171,35 +177,44 @@ class _QueryRecordsScreenUserState extends State<QueryRecordsScreenUser> {
 
   Future<dynamic> fetchQueryRecord(
       String finalRecordDate, int finalRecordTypeID) async {
-    UserPreferences userPreferences = UserPreferences();
-    var userId = await userPreferences.getUserId();
-    var userid = userId;
-    var userToken = await userPreferences.getUserToken();
-    var usertoken = userToken;
+    try {
+      UserPreferences userPreferences = UserPreferences();
+      var userId = await userPreferences.getUserId();
+      var userid = userId;
+      var userToken = await userPreferences.getUserToken();
+      var usertoken = userToken;
 
 //The following are the parameters used to load a record.
-    var RecordTypeID = finalRecordTypeID;
-    var RecordDate = finalRecordDate;
-    var s = userid.toString() +
-        "/" +
-        RecordDate +
-        "/" +
-        RecordTypeID.toString() +
-        "/" +
-        usertoken.toString();
+      var RecordTypeID = finalRecordTypeID;
+      var RecordDate = finalRecordDate;
+      var s = userid.toString() +
+          "/" +
+          RecordDate +
+          "/" +
+          RecordTypeID.toString() +
+          "/" +
+          usertoken.toString();
 
 //http request GET
-    final response = await http
-        .get(Uri.parse('$globalURL/get/record/$s'));
-    if (response.statusCode == 201) {
-      return QueryRecord.fromJson(jsonDecode(response.body)[0]);
-      //The [0], is to ignore that the json does not have a RECORD header.
-    } if(response.statusCode == 400){
-      showDialog(context: context, builder: (BuildContext context){
-        return const AlertUnavailableRecord();
-      });
-    } else {
-      throw Exception('Failed to load record.');
+      final response = await http.get(Uri.parse('$globalURL/get/record/$s'));
+      if (response.statusCode == 201) {
+        return QueryRecord.fromJson(jsonDecode(response.body)[0]);
+        //The [0], is to ignore that the json does not have a RECORD header.
+      }
+      if (response.statusCode == 400) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertUnavailableRecord();
+            });
+      }
+    } catch (e) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
     }
   }
 

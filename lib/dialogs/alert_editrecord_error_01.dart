@@ -20,9 +20,7 @@ class AlertEditRecordErrorOne extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [
-              Text('La hora de entrada no debe ser mayor a la hora de salida.')
-            ],
+            children: const [Text('Error.')],
           ),
         ),
         actions: [

@@ -93,7 +93,7 @@
     "errors":
     {
         "Lead1_error_001" : "La hora de entrada no debe ser mayor a la hora de salida.", 
-        "Lead1_error_002" : "Los valores de los tiempos son los mismos, no hay necesidad de actualizar.",
+        "Lead1_error_002" : "Los valores de los tiempos son los mismos.\nNo hay necesidad de actualizar.",
         "Lead1_error_003" : "Solo un registro por usuario en la misma fecha y del mismo tipo.",
         "Lead1_error_004" : "Correo electronico ya está en uso."
     },
@@ -112,6 +112,7 @@
         "alertResponse3":"OK",
         "alert401":"Sesión expirada. \nInicie sesión.",
         "alertlogin":"Verifique su correo electrónico y contraseña.",
+        "alertlogout":"¿Está seguro de cerrar sesión?",
         "alertchangepasswordok":"Se ha actualizado su contraseña exitosamente.",
         "alertchangepassworderror":"El correo electronico y/o contraseña son incorrectos.",
         "alertdisplayrecorderror":"No hay información disponible.",
