@@ -72,7 +72,7 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       return showDialog(
-          context: context, builder: (_) => const AlertEditRecordErrorOne());
+          context: context, builder: (_) => const AlertEditRecordErrorThree());
     }
   }
 

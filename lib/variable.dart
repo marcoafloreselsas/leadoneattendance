@@ -1,1 +1,1 @@
-String globalURL = "http://192.168.1.199:3050";
+String globalURL = "https://d4bb-45-65-152-57.ngrok.io";

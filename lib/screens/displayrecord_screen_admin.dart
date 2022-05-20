@@ -171,7 +171,7 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                         if (convertTime(snapshot.data!.entryTime2) == "00:00") {
                           showDialog(
                               context: context,
-                              builder: (_) => const AlertEditRecordErrorTwo());
+                              builder: (_) => const AlertEditRecordErrorOne());
                         } else {
                           Navigator.pushNamed(context, '/EditRecordScreenAdmin',
                               arguments: {
@@ -210,7 +210,7 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                         if (convertTime(snapshot.data!.entrytime3) == "00:00") {
                           showDialog(
                               context: context,
-                              builder: (_) => const AlertEditRecordErrorTwo());
+                              builder: (_) => const AlertEditRecordErrorOne());
                         } else {
                           Navigator.pushNamed(context, '/EditRecordScreenAdmin',
                               arguments: {

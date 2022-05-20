@@ -99,7 +99,7 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
                     DateFormat('Hm').format(now),
                     style: const TextStyle(fontSize: 18),
                   ),
-                  const Text((' • ADMIN'), style: TextStyle(fontSize: 18))
+                  const Text((' • Administrator'), style: TextStyle(fontSize: 18))
                 ],
               ),
               contentPadding:
@@ -337,7 +337,9 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 
   //HTTP Request
   Future<dynamic> fetchRecord() async {
-    UserPreferences userPreferences = UserPreferences();
+
+    try {
+          UserPreferences userPreferences = UserPreferences();
     // Query the stored data and assign it to the variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
@@ -345,7 +347,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
     final response = await http.get(Uri.parse('$globalURL/get/fiverecords/$s'));
-    try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
         return parsed.map<Record>((json) => Record.fromMap(json)).toList();
@@ -378,7 +379,9 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 
   //HTTP Request
   Future<dynamic> fetchRecordLunch() async {
-    UserPreferences userPreferences = UserPreferences();
+
+    try {
+          UserPreferences userPreferences = UserPreferences();
     // Query the stored data and assign it to the variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
@@ -387,7 +390,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var s = userid.toString() + '/' + usertoken.toString();
     final response =
         await http.get(Uri.parse('$globalURL/get/fiverecordslunch/$s'));
-    try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
         return parsed.map<Record>((json) => Record.fromMap(json)).toList();
@@ -420,7 +422,9 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
 
   //HTTP Request
   Future<dynamic> fetchRecordOvertime() async {
-    UserPreferences userPreferences = UserPreferences();
+
+    try {
+          UserPreferences userPreferences = UserPreferences();
     // Query the stored data and assign it to the variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
@@ -429,7 +433,6 @@ class _MainScreenAdmin extends State<MainScreenAdmin> {
     var s = userid.toString() + '/' + usertoken.toString();
     final response =
         await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
-    try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
         return parsed.map<Record>((json) => Record.fromMap(json)).toList();

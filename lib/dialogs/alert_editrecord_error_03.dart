@@ -1,11 +1,10 @@
 // ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class AlertEditRecordErrorOne extends StatelessWidget {
-  const AlertEditRecordErrorOne({Key? key}) : super(key: key);
+class AlertEditRecordErrorThree extends StatelessWidget {
+  const AlertEditRecordErrorThree({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +19,20 @@ class AlertEditRecordErrorOne extends StatelessWidget {
         ]),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const [Text(('This record does not exists.'), textAlign: TextAlign.center,)],
+            children: const [
+              Text(
+                ('ERROR'),
+                textAlign: TextAlign.center,
+              )
+            ],
           ),
         ),
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
-              child: const Text('OK')),
+              child: const Text('OK'))
         ]);
   }
 }

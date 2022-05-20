@@ -5,6 +5,7 @@ export 'package:leadoneattendance/dialogs/alert_changepassword_error.dart';
 export 'package:leadoneattendance/dialogs/alert_changepassword_ok.dart';
 export 'package:leadoneattendance/dialogs/alert_editrecord_error_01.dart';
 export 'package:leadoneattendance/dialogs/alert_editrecord_error_02.dart';
+export 'package:leadoneattendance/dialogs/alert_editrecord_error_03.dart';
 export 'package:leadoneattendance/dialogs/alert_editrecord_ok.dart';
 export 'package:leadoneattendance/dialogs/alert_editrecord_question.dart';
 export 'package:leadoneattendance/dialogs/alert_insertrecord_error.dart';

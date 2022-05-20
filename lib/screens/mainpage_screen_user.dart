@@ -90,7 +90,7 @@ class _MainScreenUserState extends State<MainScreenUser> {
                     DateFormat('Hm').format(now),
                     style: const TextStyle(fontSize: 18),
                   ),
-                  const Text((' • USER'), style: TextStyle(fontSize: 18))
+                  const Text((' • Employee'), style: TextStyle(fontSize: 18))
                 ],
               ),
               contentPadding:
@@ -332,15 +332,16 @@ class _MainScreenUserState extends State<MainScreenUser> {
 
 //Function that obtains the five recent records of a user from the server.
   Future<dynamic> fetchRecord() async {
-    UserPreferences userPreferences = UserPreferences();
+
+
+    try {
+          UserPreferences userPreferences = UserPreferences();
     //Consultas el dato almacenado y la asignas a la variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
     var userToken = await userPreferences.getUserToken();
     var usertoken = userToken;
     var s = userid.toString() + '/' + usertoken.toString();
-
-    try {
       //Server link
       final response =
           await http.get(Uri.parse('$globalURL/get/fiverecords/$s'));
@@ -380,7 +381,8 @@ and the user needs to log in again. */
 
   //HTTP Request
   Future<dynamic> fetchRecordLunch() async {
-    UserPreferences userPreferences = UserPreferences();
+    try{
+ UserPreferences userPreferences = UserPreferences();
     // Query the stored data and assign it to the variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
@@ -418,11 +420,22 @@ and the user needs to log in again. */
             return const AlertServerError();
           });
     }
+    } catch(e){
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            debugPrint('Wrong Connection!');
+            return const AlertServerError();
+          });
+    }
+   
   }
 
   //HTTP Request
   Future<dynamic> fetchRecordOvertime() async {
-    UserPreferences userPreferences = UserPreferences();
+
+    try {
+          UserPreferences userPreferences = UserPreferences();
     // Query the stored data and assign it to the variable userId
     var userId = await userPreferences.getUserId();
     var userid = userId;
@@ -431,7 +444,6 @@ and the user needs to log in again. */
     var s = userid.toString() + '/' + usertoken.toString();
     final response =
         await http.get(Uri.parse('$globalURL/get/fiverecordsovertime/$s'));
-    try {
       if (response.statusCode == 200) {
         final parsed = json.decode(response.body).cast<Map<dynamic, dynamic>>();
         return parsed.map<Record>((json) => Record.fromMap(json)).toList();

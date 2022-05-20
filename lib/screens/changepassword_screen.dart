@@ -44,11 +44,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   icon: const Icon(Icons.save_outlined)),
             ],
           ),
-          body: Card(
-            child: SingleChildScrollView(
-              reverse: true,
+          body: SingleChildScrollView(
+                          reverse: true,
               padding: EdgeInsets.only(bottom: bottom),
-              child: Padding(
+            child: Column(
+              children:[ Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
                   key: _formKey,
@@ -159,7 +159,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
               ),
-            ),
+            ]),
           )),
     );
   }
