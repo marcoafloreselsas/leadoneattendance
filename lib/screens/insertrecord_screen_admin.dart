@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/globals.dart';
+import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

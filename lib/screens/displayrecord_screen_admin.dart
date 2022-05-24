@@ -46,12 +46,6 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
         recorddate.toString() +
         '/' +
         usertoken.toString();
-    debugPrint('Registro a cargar: ' +
-        userid.toString() +
-        ' ' +
-        recorddate.toString() +
-        ' ' +
-        usertoken.toString());
     final response =
         await http.get(Uri.parse('$globalURL/get/fulluserrecord/$s'));
     if (response.statusCode == 200) {
@@ -221,20 +215,6 @@ class _DisplayRecordScreenAdminState extends State<DisplayRecordScreenAdmin> {
                         }
                       },
                     ),
-
-//NOTE Este código, es en el caso de los PERMIT, que no está disponible por el backend.
-                    // ListTile(
-                    //   title: Text("displayrecords.TRpermit".tr()),
-                    //   trailing: Wrap(
-                    //     spacing: 12, // Espacio entre dos íconos.
-                    //     children: <Widget>[
-                    //       const Icon(Icons.arrow_upward_outlined, color: AppTheme.green,), // icon-1
-                    //       Text(convertirHora(snapshot.data!.entrytime4), style: TextStyle(fontSize: 18),),
-                    //       const Icon(Icons.arrow_downward_outlined, color: AppTheme.red,), // icon-2
-                    //       Text('17:30', style: TextStyle(fontSize: 18),)
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               );

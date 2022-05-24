@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../themes/app_themes.dart';
-import '../dialogs/dialogs.dart';
+import 'package:leadoneattendance/themes/app_themes.dart';
+import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -154,11 +154,6 @@ class _GenerateGeneralReportsScreenState
                 if (changeDateFrom == null || changeDateTo == null || activity == 0) {
                   showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
                 }else{
-                debugPrint('te estoy mandando:' +
-                    activity.toString() +
-                    firstDate.toString() +
-                    lastDate.toString() +
-                    usertoken);
                 Navigator.pushNamed(context, '/ReportViewerScreen', arguments: {
                   'activity': activity,
                   'firstDate': firstDate,

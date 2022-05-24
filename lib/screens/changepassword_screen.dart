@@ -24,11 +24,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     final bottom = MediaQuery.of(context)
         .viewInsets
-        .bottom; //Empuja el contenido hacia arriba cuando aparece el teclado.
+        .bottom;
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus
-          ?.unfocus(), //Se oculta el teclado cuando detecta algun gesto en cualquier lugar de la pantalla
+          ?.unfocus(),
 
       child: Scaffold(
           resizeToAvoidBottomInset: false,

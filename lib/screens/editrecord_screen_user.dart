@@ -32,11 +32,11 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
   bool switchValue = false;
   bool isonisoff = false;
   int recordTypeId = 0;
-  String dropdownvalue = 'Attendance';
-
-  // List of items in our dropdown menu
   String? changeEntryTime;
   String? changeFinalTime;
+  // List of items in our dropdown menu
+
+  String dropdownvalue = 'Attendance';
 
   var items = [
     'Attendance',
@@ -93,13 +93,13 @@ class _EditRecordScreenUserState extends State<EditRecordScreenUser> {
 //TO GET THE DATA AND LOAD IT ON THE SCREEN
   Future<dynamic> fetchFullRecord() async {
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
-    var x = args['RecordDate']; //RecordDate
-    var y = args['RecordTypeId'].toString();
+    var recordDate = args['RecordDate']; //RecordDate
+    var recordTypeId = args['RecordTypeId'].toString();
     var userid = await userPreferences.getUserId();
     var userToken = await userPreferences.getUserToken();
     var z = userToken;
     final response =
-        await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
+        await http.get(Uri.parse('$globalURL/get/record/$userid/$recordDate/$recordTypeId/$z'));
     if (response.statusCode == 201) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.

@@ -3,7 +3,7 @@ import 'package:leadoneattendance/globals.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
-import '../themes/app_themes.dart';
+import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
@@ -29,8 +29,6 @@ class _GenerateIndividualReportsScreenState
   String? changeDateFrom;
   String? changeDateTo;
 
-
-
   String dropdownvalue = 'Attendance History';
   var items = ['Attendance History', 'Modifications History'];
     readData() async {
@@ -45,7 +43,6 @@ class _GenerateIndividualReportsScreenState
     pickedDateTo = DateTime.now();
     fetchAndShow();
     readData();
-
   }
 
   Future<bool> _onWillPop() async {
@@ -233,12 +230,6 @@ class _GenerateIndividualReportsScreenState
                 if (changeDateFrom == null || changeDateTo == null || activity == 0 || userID == 0) {
                   showDialog(context: context, builder: (BuildContext context){ return const AlertCompleteInfo();});
                 }else{
-                debugPrint('te estoy mandando:' +
-                    userID.toString() +
-                    activity.toString() +
-                    firstDate.toString() +
-                    lastDate.toString() +
-                    userToken);
                 Navigator.pushNamed(context, '/ReportViewerScreen', arguments: {
                   'userID': userID,
                   'activity': activity,

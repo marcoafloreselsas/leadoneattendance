@@ -33,11 +33,12 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
   bool switchValue = false;
   bool isonisoff = false;
   int recordTypeId = 0;
-  String dropdownvalue = 'Attendance';
-
-  // List of items in our dropdown menu
   String? changeEntryTime;
   String? changeFinalTime;
+
+  // List of items in our dropdown menu
+  String dropdownvalue = 'Attendance';
+
 
   var items = [
     'Attendance',
@@ -96,12 +97,12 @@ class _EditRecordScreenAdminState extends State<EditRecordScreenAdmin> {
     UserPreferences userPreferences = await UserPreferences();
     Map args = ModalRoute.of(context)!.settings.arguments as Map;
     var userid = args['UserID'];
-    var x = args['RecordDate']; //RecordDate
-    var y = args['RecordTypeId'].toString();
+    var recordDate = args['RecordDate']; //RecordDate
+    var recordTypeId = args['RecordTypeId'].toString();
     var uToken = await userPreferences.getUserToken();
     var z = uToken.toString();
     final response =
-        await http.get(Uri.parse('$globalURL/get/record/$userid/$x/$y/$z'));
+        await http.get(Uri.parse('$globalURL/get/record/$userid/$recordDate/$recordTypeId/$z'));
     if (response.statusCode == 201) {
       return FullRecorde.fromJson(jsonDecode(response.body)[0]);
       //The [0], is to ignore that the json does not have a RECORD header.

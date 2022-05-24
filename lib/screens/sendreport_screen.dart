@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
+import 'package:leadoneattendance/globals.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:leadoneattendance/globals.dart';
 
 class SendReportScreen extends StatefulWidget {
   const SendReportScreen({Key? key}) : super(key: key);
@@ -54,7 +54,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center, //Añadido el 3 de mayo de 2022  R E V I S A R
                     children: [
                       const SizedBox(
                         height: 10,
@@ -168,16 +167,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   'Message': message,
                   'Token': usertoken
                 }));
-        debugPrint('AT: ' +
-            email +
-            " " +
-            userid +
-            " " +
-            firstDate +
-            " " +
-            lastDate +
-            " " +
-            usertoken);
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -201,16 +190,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   'Message': message,
                   'Token': usertoken
                 }));
-        debugPrint('MOD: ' +
-            email +
-            " " +
-            userid +
-            " " +
-            firstDate +
-            " " +
-            lastDate +
-            " " +
-            usertoken);
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -233,16 +212,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   'Message': message,
                   'Token': usertoken
                 }));
-        debugPrint('AT GRAL: ' +
-            email +
-            " " +
-            userid +
-            " " +
-            firstDate +
-            " " +
-            lastDate +
-            " " +
-            usertoken);
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -265,16 +234,6 @@ class _SendReportScreenState extends State<SendReportScreen> {
                   'Message': message,
                   'Token': usertoken
                 }));
-        debugPrint('MOD GRAL: ' +
-            email +
-            " " +
-            userid +
-            " " +
-            firstDate +
-            " " +
-            lastDate +
-            " " +
-            usertoken);
         showDialog(
             barrierDismissible: false,
             context: context,

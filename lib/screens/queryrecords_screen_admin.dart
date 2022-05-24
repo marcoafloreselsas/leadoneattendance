@@ -199,9 +199,6 @@ class _QueryRecordsScreenAdminState extends State<QueryRecordsScreenAdmin> {
                             finalfinalUserID,
                             finalRecordDate,
                             finalRecordTypeID);
-                        debugPrint(finalfinalUserID.toString() +
-                            finalRecordDate +
-                            finalRecordTypeID.toString());
                       }
                     });
                   },
