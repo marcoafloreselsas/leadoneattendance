@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'dart:convert';
-final Uri _url = Uri.parse('https://flutter.dev');
+final Uri _url = Uri.parse('http://45.65.152.57:3012/forgotpassword');
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
