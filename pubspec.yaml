@@ -54,6 +54,7 @@ dependencies:
   path_provider: any
   permission_handler: any
   pdf_viewer_plugin: ^2.0.1
+  url_launcher: ^6.1.2
 
 dev_dependencies:
   flutter_test:

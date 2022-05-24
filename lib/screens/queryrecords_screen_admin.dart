@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:leadoneattendance/models/models.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:leadoneattendance/variable.dart';
+import 'package:leadoneattendance/globals.dart';
 
 UserPreferences userPreferences = UserPreferences();
 

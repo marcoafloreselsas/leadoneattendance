@@ -1,1 +1,0 @@
-String globalURL = "https://d4bb-45-65-152-57.ngrok.io";

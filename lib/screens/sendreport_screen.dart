@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:leadoneattendance/variable.dart';
+import 'package:leadoneattendance/globals.dart';
 
 class SendReportScreen extends StatefulWidget {
   const SendReportScreen({Key? key}) : super(key: key);

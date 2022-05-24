@@ -1,12 +1,12 @@
 // ignore_for_file: non_constant_identifier_names, unused_field, prefer_typing_uninitialized_variables
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/themes/app_themes.dart';
-import 'package:leadoneattendance/variable.dart';
-import 'dart:convert';
+import 'package:leadoneattendance/globals.dart';
 import '../dialogs/dialogs.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class InsertRecordScreenUser extends StatefulWidget {
   const InsertRecordScreenUser({Key? key}) : super(key: key);

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:leadoneattendance/variable.dart';
+import 'package:leadoneattendance/globals.dart';
+import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:leadoneattendance/screens/screens.dart';
 import 'package:leadoneattendance/dialogs/dialogs.dart';
 import 'package:http/http.dart' as http;
-import 'package:leadoneattendance/themes/app_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'dart:convert';
+final Uri _url = Uri.parse('https://flutter.dev');
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -155,6 +157,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: const Icon(Icons.settings, size: 18),
                           label: Text(("loginscreen.changepassword").tr(),
                               style: const TextStyle(
+                                fontSize: 18.0,
+                              )),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            launchUrl(_url);
+                          },
+                          child: const Text(("Forgot Password?"),
+                              style: TextStyle(
                                 fontSize: 18.0,
                               )),
                         ),
